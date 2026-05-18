@@ -3,76 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gravemarch V17.1 Archive Import System</title>
+<title>Gravemarch Unified Engine V22.0</title>
 
 <style>
 body{
 margin:0;
 background:#050505;
-color:#f2f2f2;
+color:#f1f1f1;
 font-family:Arial,sans-serif;
 }
 
 .header{
-padding:22px;
 background:#111;
+padding:22px;
 border-bottom:1px solid #333;
 position:sticky;
 top:0;
+z-index:100;
 }
 
 .container{
-max-width:1100px;
+max-width:1400px;
 margin:auto;
 padding:20px;
 }
 
-.card{
-background:#171717;
-border:1px solid #333;
-border-radius:18px;
-padding:20px;
-margin-bottom:20px;
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:18px;
 }
 
-input, textarea{
+.card{
+background:#141414;
+border:1px solid #333;
+border-radius:16px;
+padding:18px;
+margin-bottom:15px;
+}
+
+.module{
+font-size:24px;
+margin-bottom:10px;
+color:#c0392b;
+font-weight: bold;
+}
+
+.tag{
+display:inline-block;
+padding:8px 12px;
+margin:5px;
+background:#1f2a35;
+border:1px solid #5f89aa;
+border-radius:10px;
+font-size: 14px;
+}
+
+.status{
+margin-top:12px;
+padding:10px;
+background:#101010;
+border:1px solid #444;
+border-radius:10px;
+font-size: 13px;
+color: #aaa;
+}
+
+.small{
+color:#888;
+}
+
+textarea{
 width:100%;
-box-sizing:border-box;
+min-height:120px;
 padding:14px;
-margin-top:10px;
+box-sizing:border-box;
 background:#0d0d0d;
 border:1px solid #444;
 border-radius:10px;
 color:white;
 font-size:16px;
+margin-top:10px;
+}
+
+input, select {
+width:100%;
+padding:16px;
+box-sizing:border-box;
+background:#0d0d0d;
+border:2px solid #444;
+border-radius:12px;
+color:white;
+font-size:16px;
+margin-bottom:10px;
 }
 
 button{
-margin-top:12px;
-padding:14px 18px;
+padding:12px 20px;
 background:#c0392b;
 border:none;
 border-radius:10px;
 color:white;
-font-size:15px;
 cursor:pointer;
+margin-top:10px;
+font-weight: bold;
+font-size: 15px;
+margin-right: 10px;
 }
 
-.word{
-font-size:28px;
-margin-bottom:8px;
+button.secondary {
+background: #2c3e50;
+border: 1px solid #34495e;
 }
 
-.tag{
-display:inline-block;
-background:#262626;
-padding:8px 12px;
-margin:5px;
-border-radius:8px;
+.archive{
+margin-top:30px;
 }
 
-.small{
-color:#888;
+.entry{
+background:#101010;
+border:1px solid #333;
+border-radius:12px;
+padding:166px;
+margin-top:14px;
+padding: 16px;
+}
+
+.file-ops {
+display: flex;
+flex-direction: column;
+gap: 10px;
+margin-top: 15px;
+}
+
+.file-input-wrapper {
+position: relative;
+overflow: hidden;
+display: inline-block;
+}
+
+.file-input-wrapper input[type=file] {
+font-size: 100px;
+position: absolute;
+left: 0;
+top: 0;
+opacity: 0;
+cursor: pointer;
 }
 </style>
 </head>
@@ -80,226 +156,223 @@ color:#888;
 <body>
 
 <div class="header">
-<h1 style="color:#c0392b;">Gravemarch V17.1 Archive Import System</h1>
+<h1 style="color:#c0392b; margin:0 0 5px 0;">
+Gravemarch Unified Engine V22.0
+</h1>
+<p class="small" style="margin:0;">
+Permanent master engine architecture — stability-first cinematic cognition engine.
+</p>
 </div>
 
 <div class="container">
 
 <div class="card">
+<h2 style="color:#c0392b; margin-top:0;">Engine Data Core (Emulator Ops)</h2>
+<p class="small">Load outside files into the active engine memory, or back up your system archive state directly to your local file system.</p>
+<div class="file-ops">
+    <div class="file-input-wrapper">
+        <button class="secondary">📥 Inject/Load Archive File</button>
+        <input type="file" id="fileLoadInput" accept=".json,.txt" onchange="loadEngineFile(event)">
+    </div>
+    <div>
+        <button onclick="saveEngineFile()">💾 Export/Save Backup File</button>
+        <button class="secondary" onclick="clearActiveEngineMemory()" style="background:#7f8c8d;">⚠️ Wipe Engine Cache</button>
+    </div>
+</div>
+</div>
 
-<h2>Portable Archive Persistence</h2>
+<div class="grid">
 
-<button onclick="exportArchive()">Export main_archive.gmlx</button>
-
-<input type="file" id="importFile" accept=".gmlx">
-
-<button onclick="importArchive()">Import main_archive.gmlx</button>
-
-<p class="small">
-Importing replaces the current active archive.
-</p>
-
+<div class="card">
+<div class="module">Atmosphere Cognition</div>
+<span class="tag">Environmental Identity</span>
+<span class="tag">Emotional Gravity</span>
+<span class="tag">Existential Atmosphere</span>
+<span class="tag">Sensory Echoes</span>
+<div class="status">Stable isolated cognition module.</div>
 </div>
 
 <div class="card">
+<div class="module">Ritual Cognition</div>
+<span class="tag">Ritual Presence</span>
+<span class="tag">Cultural Atmosphere</span>
+<span class="tag">Ceremonial Identity</span>
+<div class="status">Compartmentalized ceremonial systems.</div>
+</div>
 
-<h2>Add Entry</h2>
+<div class="card">
+<div class="module">Symbolic Cognition</div>
+<span class="tag">Symbolic Objects</span>
+<span class="tag">Mythic Presence</span>
+<span class="tag">Environmental Scars</span>
+<div class="status">Lightweight symbolic memory systems.</div>
+</div>
 
-<input id="word" placeholder="Word or phrase">
-<textarea id="meaning" placeholder="Meaning"></textarea>
-<textarea id="tags" placeholder="Tags separated by commas"></textarea>
+<div class="card">
+<div class="module">Character Cognition</div>
+<span class="tag">Character Aura</span>
+<span class="tag">Interpersonal Tension</span>
+<div class="status">Atmospheric character pressure systems.</div>
+</div>
 
-<button onclick="addEntry()">Add Entry</button>
+<div class="card">
+<div class="module">Scene Cognition</div>
+<span class="tag">Scene Composition</span>
+<span class="tag">Narrative Momentum</span>
+<div class="status">Cinematic scene assembly systems.</div>
+</div>
+
+<div class="card">
+<div class="module">Temporal Cognition</div>
+<span class="tag">Temporal Continuity</span>
+<span class="tag">Era Layering</span>
+<div class="status">Stable historical atmosphere layering.</div>
+</div>
 
 </div>
 
-<div id="results" class="card">
+<div class="archive">
 
-<h2>Main Archive Active</h2>
+<div class="card">
+<h2>Unified Archive Capture</h2>
+<input id="titleInput" placeholder="Entry title (e.g., Blood Ritual Ceremony)...">
+
+<select id="typeInput">
+    <option value="" disabled selected>Select Cognition Module Type...</option>
+    <option value="Atmosphere Cognition">Atmosphere Cognition</option>
+    <option value="Ritual Cognition">Ritual Cognition</option>
+    <option value="Symbolic Cognition">Symbolic Cognition</option>
+    <option value="Character Cognition">Character Cognition</option>
+    <option value="Scene Cognition">Scene Cognition</option>
+    <option value="Temporal Cognition">Temporal Cognition</option>
+    <option value="Retrieval Cognition">Retrieval Cognition</option>
+</select>
+
+<textarea id="contentInput" placeholder="Write archive atmospheric entry description here..."></textarea>
+<button onclick="saveEntry()">Preserve Unified Archive Entry</button>
+</div>
+
+<div class="card">
+<h2>Unified Archive Memory Engine</h2>
+<div id="entries"></div>
+</div>
 
 </div>
 
 </div>
 
 <script>
-
-let archive = JSON.parse(localStorage.getItem("gravemarch_main_archive")) || [];
+let archive = JSON.parse(
+localStorage.getItem("gravemarch_unified_archive")
+) || [];
 
 function saveArchive(){
-
 localStorage.setItem(
-"gravemarch_main_archive",
+"gravemarch_unified_archive",
 JSON.stringify(archive)
 );
-
 }
 
-function splitCSV(v){
+function saveEntry(){
+const title = document.getElementById("titleInput").value.trim();
+const type = document.getElementById("typeInput").value.trim();
+const content = document.getElementById("contentInput").value.trim();
 
-return v.split(",")
-.map(x=>x.trim())
-.filter(Boolean);
-
-}
-
-function renderArchive(){
-
-if(archive.length === 0){
-
-document.getElementById("results").innerHTML = `
-<h2>Archive Empty</h2>
-<p>No entries saved yet.</p>
-`;
-
-return;
-
-}
-
-let html = `<h2>Total Entries: ${archive.length}</h2>`;
-
-archive.slice().reverse().forEach(e=>{
-
-html += `
-
-<div style="margin-top:24px;">
-
-<div class="word">${e.word}</div>
-
-<p>${e.meaning}</p>
-
-<div>
-${(e.tags || []).map(t=>`<span class="tag">${t}</span>`).join("")}
-</div>
-
-<hr style="border:1px solid #333; margin-top:20px;">
-
-</div>
-
-`;
-
-});
-
-document.getElementById("results").innerHTML = html;
-
-}
-
-function addEntry(){
-
-const word = document.getElementById("word").value.trim();
-
-if(!word){
-alert("Enter a word.");
-return;
+if(!title || !type || !content) {
+    alert("Please fill out Title, select a Module, and add an Archive Entry.");
+    return;
 }
 
 archive.push({
-word:word,
-meaning:document.getElementById("meaning").value.trim(),
-tags:splitCSV(document.getElementById("tags").value),
-created:new Date().toISOString()
+    id: Date.now(),
+    title: title,
+    type: type,
+    content: content,
+    created: new Date().toISOString()
 });
 
 saveArchive();
-renderArchive();
+renderEntries();
 
-document.getElementById("word").value = "";
-document.getElementById("meaning").value = "";
-document.getElementById("tags").value = "";
-
-alert("Entry added to archive.");
-
+document.getElementById("titleInput").value="";
+document.getElementById("typeInput").selectedIndex = 0;
+document.getElementById("contentInput").value="";
 }
 
-function exportArchive(){
-
-const saveData = {
-archive_name:"main_archive",
-version:"V17.1",
-exported_at:new Date().toISOString(),
-total_entries:archive.length,
-entries:archive
-};
-
-const blob = new Blob(
-[JSON.stringify(saveData,null,2)],
-{type:"application/octet-stream"}
-);
-
-const a = document.createElement("a");
-
-a.href = URL.createObjectURL(blob);
-
-a.download = "main_archive.gmlx";
-
-document.body.appendChild(a);
-
-a.click();
-
-document.body.removeChild(a);
-
+function renderEntries(){
+const container = document.getElementById("entries");
+if(archive.length===0){
+    container.innerHTML = `<p class="small">No active unified archive entries running in memory core.</p>`;
+    return;
 }
 
-function importArchive(){
-
-const fileInput = document.getElementById("importFile");
-
-if(fileInput.files.length === 0){
-
-alert("Select a .gmlx archive file.");
-return;
-
+let html = "";
+archive.slice().reverse().forEach(entry=>{
+    html += `
+    <div class="entry">
+        <h3 style="margin:0 0 5px 0; color:#c0392b;">${entry.title}</h3>
+        <p class="small" style="margin:0 0 10px 0; font-weight:bold; color:#5f89aa;">
+            Engine Module Context: ${entry.type}
+        </p>
+        <p style="margin:0 0 10px 0; line-height:1.5;">${entry.content}</p>
+        <p class="small" style="margin:0; font-size:11px;">
+            Core Timestamp: ${new Date(entry.created).toLocaleString()}
+        </p>
+    </div>
+    `;
+});
+container.innerHTML = html;
 }
 
-const file = fileInput.files[0];
+function loadEngineFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
 
-const reader = new FileReader();
-
-reader.onload = function(event){
-
-try{
-
-const data = JSON.parse(event.target.result);
-
-if(
-!data.archive_name ||
-!data.entries ||
-!Array.isArray(data.entries)
-){
-
-alert("Invalid Gravemarch archive.");
-return;
-
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            const targetArray = Array.isArray(importedData) ? importedData : importedData.entries || [];
+            
+            if(confirm("Load external file data into engine? This merges files with your current workspace entries.")){
+                archive = archive.concat(targetArray);
+                saveArchive();
+                renderEntries();
+                alert("Core File Processing Complete. " + targetArray.length + " entries initialized.");
+            }
+        } catch (err) {
+            alert("Execution Error: Invalid text structure inside selected lexicon map file.");
+        }
+    };
+    reader.readAsText(file);
+    document.getElementById("fileLoadInput").value = "";
 }
 
-const confirmReplace = confirm(
-"Importing replaces the current archive. Continue?"
-);
-
-if(!confirmReplace){
-return;
+function saveEngineFile() {
+    if(archive.length === 0) {
+        alert("The workspace memory cache is blank. Write or import data before exporting file maps.");
+        return;
+    }
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(archive, null, 2));
+    const downloadAnchor = document.createElement('a');
+    
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "gravemarch_master_archive.json");
+    document.body.appendChild(downloadAnchor);
+    
+    downloadAnchor.click();
+    downloadAnchor.remove();
 }
 
-archive = data.entries;
-
-saveArchive();
-renderArchive();
-
-alert("Archive imported successfully.");
-
-}catch(err){
-
-alert("Failed to import archive.");
-
+function clearActiveEngineMemory() {
+    if(confirm("Warning! This wipes out the live browser active memory block. Make sure you exported your file backup first! Proceed?")) {
+        archive = [];
+        saveArchive();
+        renderEntries();
+    }
 }
 
-};
-
-reader.readAsText(file);
-
-}
-
-renderArchive();
-
+renderEntries();
 </script>
 
 </body>
