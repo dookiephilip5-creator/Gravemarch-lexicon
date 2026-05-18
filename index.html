@@ -1,0 +1,342 @@
+from pathlib import Path
+import zipfile
+
+base = Path("/mnt/data/gravemarch_v17_1_archive_import")
+base.mkdir(exist_ok=True)
+
+html = r"""
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gravemarch V17.1 Archive Import System</title>
+
+<style>
+body{
+margin:0;
+background:#050505;
+color:#f2f2f2;
+font-family:Arial,sans-serif;
+}
+
+.header{
+padding:22px;
+background:#111;
+border-bottom:1px solid #333;
+position:sticky;
+top:0;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:#171717;
+border:1px solid #333;
+border-radius:18px;
+padding:20px;
+margin-bottom:20px;
+}
+
+input, textarea{
+width:100%;
+box-sizing:border-box;
+padding:14px;
+margin-top:10px;
+background:#0d0d0d;
+border:1px solid #444;
+border-radius:10px;
+color:white;
+font-size:16px;
+}
+
+button{
+margin-top:12px;
+padding:14px 18px;
+background:#c0392b;
+border:none;
+border-radius:10px;
+color:white;
+font-size:15px;
+cursor:pointer;
+}
+
+.word{
+font-size:28px;
+margin-bottom:8px;
+}
+
+.tag{
+display:inline-block;
+background:#262626;
+padding:8px 12px;
+margin:5px;
+border-radius:8px;
+}
+
+.small{
+color:#888;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1 style="color:#c0392b;">Gravemarch V17.1 Archive Import System</h1>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Portable Archive Persistence</h2>
+
+<button onclick="exportArchive()">Export main_archive.gmlx</button>
+
+<input type="file" id="importFile" accept=".gmlx">
+
+<button onclick="importArchive()">Import main_archive.gmlx</button>
+
+<p class="small">
+Importing replaces the current active archive.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>Add Entry</h2>
+
+<input id="word" placeholder="Word or phrase">
+<textarea id="meaning" placeholder="Meaning"></textarea>
+<textarea id="tags" placeholder="Tags separated by commas"></textarea>
+
+<button onclick="addEntry()">Add Entry</button>
+
+</div>
+
+<div id="results" class="card">
+
+<h2>Main Archive Active</h2>
+
+</div>
+
+</div>
+
+<script>
+
+let archive = JSON.parse(localStorage.getItem("gravemarch_main_archive")) || [];
+
+function saveArchive(){
+
+localStorage.setItem(
+"gravemarch_main_archive",
+JSON.stringify(archive)
+);
+
+}
+
+function splitCSV(v){
+
+return v.split(",")
+.map(x=>x.trim())
+.filter(Boolean);
+
+}
+
+function renderArchive(){
+
+if(archive.length === 0){
+
+document.getElementById("results").innerHTML = `
+<h2>Archive Empty</h2>
+<p>No entries saved yet.</p>
+`;
+
+return;
+
+}
+
+let html = `<h2>Total Entries: ${archive.length}</h2>`;
+
+archive.slice().reverse().forEach(e=>{
+
+html += `
+
+<div style="margin-top:24px;">
+
+<div class="word">${e.word}</div>
+
+<p>${e.meaning}</p>
+
+<div>
+${(e.tags || []).map(t=>`<span class="tag">${t}</span>`).join("")}
+</div>
+
+<hr style="border:1px solid #333; margin-top:20px;">
+
+</div>
+
+`;
+
+});
+
+document.getElementById("results").innerHTML = html;
+
+}
+
+function addEntry(){
+
+const word = document.getElementById("word").value.trim();
+
+if(!word){
+alert("Enter a word.");
+return;
+}
+
+archive.push({
+word:word,
+meaning:document.getElementById("meaning").value.trim(),
+tags:splitCSV(document.getElementById("tags").value),
+created:new Date().toISOString()
+});
+
+saveArchive();
+renderArchive();
+
+document.getElementById("word").value = "";
+document.getElementById("meaning").value = "";
+document.getElementById("tags").value = "";
+
+alert("Entry added to archive.");
+
+}
+
+function exportArchive(){
+
+const saveData = {
+archive_name:"main_archive",
+version:"V17.1",
+exported_at:new Date().toISOString(),
+total_entries:archive.length,
+entries:archive
+};
+
+const blob = new Blob(
+[JSON.stringify(saveData,null,2)],
+{type:"application/octet-stream"}
+);
+
+const a = document.createElement("a");
+
+a.href = URL.createObjectURL(blob);
+
+a.download = "main_archive.gmlx";
+
+document.body.appendChild(a);
+
+a.click();
+
+document.body.removeChild(a);
+
+}
+
+function importArchive(){
+
+const fileInput = document.getElementById("importFile");
+
+if(fileInput.files.length === 0){
+
+alert("Select a .gmlx archive file.");
+return;
+
+}
+
+const file = fileInput.files[0];
+
+const reader = new FileReader();
+
+reader.onload = function(event){
+
+try{
+
+const data = JSON.parse(event.target.result);
+
+if(
+!data.archive_name ||
+!data.entries ||
+!Array.isArray(data.entries)
+){
+
+alert("Invalid Gravemarch archive.");
+return;
+
+}
+
+const confirmReplace = confirm(
+"Importing replaces the current archive. Continue?"
+);
+
+if(!confirmReplace){
+return;
+}
+
+archive = data.entries;
+
+saveArchive();
+renderArchive();
+
+alert("Archive imported successfully.");
+
+}catch(err){
+
+alert("Failed to import archive.");
+
+}
+
+};
+
+reader.readAsText(file);
+
+}
+
+renderArchive();
+
+</script>
+
+</body>
+</html>
+"""
+
+(base / "index.html").write_text(html, encoding="utf-8")
+
+(base / "README.txt").write_text(
+"""GRAVEMARCH V17.1 ARCHIVE IMPORT SYSTEM
+
+NEW FEATURE
+- Portable archive import system
+
+THIS VERSION ADDS:
+- Import main_archive.gmlx
+- Archive validation
+- Archive restoration
+- Portable save recovery
+
+GOAL
+Complete the second half of Gravemarch portable save architecture.
+""",
+encoding="utf-8"
+)
+
+zip_path = "/mnt/data/gravemarch_v17_1_archive_import_system.zip"
+
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    for file in base.iterdir():
+        z.write(file, arcname=file.name)
+
+print(zip_path)
