@@ -1,52 +1,111 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gravemarch Unified Engine V22.0</title>
+
+<title>Gravemarch Unified Engine V25.0</title>
 
 <style>
+
 body{
 margin:0;
 background:#050505;
-color:#f1f1f1;
+color:#f2f2f2;
 font-family:Arial,sans-serif;
+display:flex;
+height:100vh;
+overflow:hidden;
 }
 
-.header{
+.sidebar{
+width:320px;
 background:#111;
-padding:22px;
-border-bottom:1px solid #333;
-position:sticky;
-top:0;
-z-index:100;
-}
-
-.container{
-max-width:1400px;
-margin:auto;
+border-right:1px solid #333;
 padding:20px;
+box-sizing:border-box;
+overflow-y:auto;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:18px;
+.logo{
+font-size:28px;
+color:#c0392b;
+margin-bottom:20px;
 }
 
-.card{
+.nav-btn{
+width:100%;
+padding:14px;
+margin-bottom:10px;
+background:#181818;
+border:1px solid #333;
+border-radius:10px;
+color:white;
+cursor:pointer;
+text-align:left;
+}
+
+.nav-btn:hover{
+background:#222;
+}
+
+.main{
+flex:1;
+overflow-y:auto;
+padding:20px;
+box-sizing:border-box;
+}
+
+.panel{
+display:none;
 background:#141414;
 border:1px solid #333;
 border-radius:16px;
-padding:18px;
-margin-bottom:15px;
+padding:20px;
+margin-bottom:20px;
 }
 
-.module{
-font-size:24px;
-margin-bottom:10px;
+.active{
+display:block;
+}
+
+.title{
+font-size:26px;
 color:#c0392b;
-font-weight: bold;
+margin-bottom:14px;
+}
+
+.card{
+background:#101010;
+border:1px solid #333;
+border-radius:12px;
+padding:16px;
+margin-top:14px;
+}
+
+.kernel-card{
+border-left:4px solid #7bd88f;
+}
+
+.warning-card{
+border-left:4px solid #ffcc66;
+}
+
+.good{
+color:#7bd88f;
+}
+
+.warning{
+color:#ffcc66;
+}
+
+.error{
+color:#ff6b6b;
+}
+
+.small{
+color:#888;
 }
 
 .tag{
@@ -54,325 +113,851 @@ display:inline-block;
 padding:8px 12px;
 margin:5px;
 background:#1f2a35;
-border:1px solid #5f89aa;
+border:1px solid #6a8daf;
 border-radius:10px;
-font-size: 14px;
 }
 
-.status{
-margin-top:12px;
-padding:10px;
-background:#101010;
-border:1px solid #444;
+.kernel-tag{
+display:inline-block;
+padding:8px 12px;
+margin:5px;
+background:#35241f;
+border:1px solid #b8865b;
 border-radius:10px;
-font-size: 13px;
-color: #aaa;
 }
 
-.small{
-color:#888;
-}
-
-textarea{
+input, textarea, select{
 width:100%;
-min-height:120px;
 padding:14px;
-box-sizing:border-box;
 background:#0d0d0d;
 border:1px solid #444;
 border-radius:10px;
 color:white;
-font-size:16px;
 margin-top:10px;
-}
-
-input, select {
-width:100%;
-padding:16px;
 box-sizing:border-box;
-background:#0d0d0d;
-border:2px solid #444;
-border-radius:12px;
-color:white;
-font-size:16px;
-margin-bottom:10px;
 }
 
 button{
-padding:12px 20px;
+padding:12px 16px;
 background:#c0392b;
 border:none;
 border-radius:10px;
 color:white;
 cursor:pointer;
-margin-top:10px;
-font-weight: bold;
-font-size: 15px;
-margin-right: 10px;
+margin-top:12px;
+margin-right:8px;
 }
 
-button.secondary {
-background: #2c3e50;
-border: 1px solid #34495e;
-}
-
-.archive{
-margin-top:30px;
-}
-
-.entry{
-background:#101010;
+.workspace-bar{
+padding:12px;
+background:#0f0f0f;
 border:1px solid #333;
-border-radius:12px;
-padding:166px;
-margin-top:14px;
-padding: 16px;
+border-radius:10px;
+margin-bottom:14px;
 }
 
-.file-ops {
-display: flex;
-flex-direction: column;
-gap: 10px;
-margin-top: 15px;
-}
-
-.file-input-wrapper {
-position: relative;
-overflow: hidden;
-display: inline-block;
-}
-
-.file-input-wrapper input[type=file] {
-font-size: 100px;
-position: absolute;
-left: 0;
-top: 0;
-opacity: 0;
-cursor: pointer;
-}
 </style>
+
 </head>
 
 <body>
 
-<div class="header">
-<h1 style="color:#c0392b; margin:0 0 5px 0;">
-Gravemarch Unified Engine V22.0
-</h1>
-<p class="small" style="margin:0;">
-Permanent master engine architecture — stability-first cinematic cognition engine.
+<div class="sidebar">
+
+<div class="logo">
+Gravemarch V25.0
+</div>
+
+<button class="nav-btn" onclick="showPanel('dashboard')">
+Kernel Dashboard
+</button>
+
+<button class="nav-btn" onclick="showPanel('statePanel')">
+Centralized State Manager
+</button>
+
+<button class="nav-btn" onclick="showPanel('retrievalPanel')">
+Unified Retrieval Router
+</button>
+
+<button class="nav-btn" onclick="showPanel('validationPanel')">
+Validation Kernel
+</button>
+
+<button class="nav-btn" onclick="showPanel('partitionPanel')">
+Partition Router
+</button>
+
+<button class="nav-btn" onclick="showPanel('diagnosticsPanel')">
+Kernel Diagnostics
+</button>
+
+</div>
+
+<div class="main">
+
+<div class="workspace-bar">
+
+<strong>Active Workspace:</strong>
+<span id="workspaceLabel"></span>
+
+</div>
+
+<div id="dashboard" class="panel active">
+
+<div class="title">
+Deterministic Engine Kernel
+</div>
+
+<div class="card kernel-card">
+
+<h3 class="good">
+Kernel Consolidation Stable
+</h3>
+
+<span class="tag">Unified Kernel</span>
+<span class="tag">Shared Validation</span>
+<span class="tag">Partition Routing</span>
+<span class="tag">Deterministic Retrieval</span>
+
+<p class="small">
+V25.0 establishes the permanent Gravemarch engine backbone.
 </p>
-</div>
 
-<div class="container">
-
-<div class="card">
-<h2 style="color:#c0392b; margin-top:0;">Engine Data Core (Emulator Ops)</h2>
-<p class="small">Load outside files into the active engine memory, or back up your system archive state directly to your local file system.</p>
-<div class="file-ops">
-    <div class="file-input-wrapper">
-        <button class="secondary">📥 Inject/Load Archive File</button>
-        <input type="file" id="fileLoadInput" accept=".json,.txt" onchange="loadEngineFile(event)">
-    </div>
-    <div>
-        <button onclick="saveEngineFile()">💾 Export/Save Backup File</button>
-        <button class="secondary" onclick="clearActiveEngineMemory()" style="background:#7f8c8d;">⚠️ Wipe Engine Cache</button>
-    </div>
-</div>
-</div>
-
-<div class="grid">
-
-<div class="card">
-<div class="module">Atmosphere Cognition</div>
-<span class="tag">Environmental Identity</span>
-<span class="tag">Emotional Gravity</span>
-<span class="tag">Existential Atmosphere</span>
-<span class="tag">Sensory Echoes</span>
-<div class="status">Stable isolated cognition module.</div>
 </div>
 
 <div class="card">
-<div class="module">Ritual Cognition</div>
-<span class="tag">Ritual Presence</span>
-<span class="tag">Cultural Atmosphere</span>
-<span class="tag">Ceremonial Identity</span>
-<div class="status">Compartmentalized ceremonial systems.</div>
-</div>
 
-<div class="card">
-<div class="module">Symbolic Cognition</div>
-<span class="tag">Symbolic Objects</span>
-<span class="tag">Mythic Presence</span>
-<span class="tag">Environmental Scars</span>
-<div class="status">Lightweight symbolic memory systems.</div>
-</div>
+<h3>
+Kernel Overview
+</h3>
 
-<div class="card">
-<div class="module">Character Cognition</div>
-<span class="tag">Character Aura</span>
-<span class="tag">Interpersonal Tension</span>
-<div class="status">Atmospheric character pressure systems.</div>
-</div>
+<p id="kernelStats"></p>
 
-<div class="card">
-<div class="module">Scene Cognition</div>
-<span class="tag">Scene Composition</span>
-<span class="tag">Narrative Momentum</span>
-<div class="status">Cinematic scene assembly systems.</div>
-</div>
-
-<div class="card">
-<div class="module">Temporal Cognition</div>
-<span class="tag">Temporal Continuity</span>
-<span class="tag">Era Layering</span>
-<div class="status">Stable historical atmosphere layering.</div>
 </div>
 
 </div>
 
-<div class="archive">
+<div id="statePanel" class="panel">
 
-<div class="card">
-<h2>Unified Archive Capture</h2>
-<input id="titleInput" placeholder="Entry title (e.g., Blood Ritual Ceremony)...">
+<div class="title">
+Centralized State Manager
+</div>
 
-<select id="typeInput">
-    <option value="" disabled selected>Select Cognition Module Type...</option>
-    <option value="Atmosphere Cognition">Atmosphere Cognition</option>
-    <option value="Ritual Cognition">Ritual Cognition</option>
-    <option value="Symbolic Cognition">Symbolic Cognition</option>
-    <option value="Character Cognition">Character Cognition</option>
-    <option value="Scene Cognition">Scene Cognition</option>
-    <option value="Temporal Cognition">Temporal Cognition</option>
-    <option value="Retrieval Cognition">Retrieval Cognition</option>
+<input id="entryTitle" placeholder="Kernel entry title...">
+
+<select id="moduleInput">
+
+<option value="canon">Canon Module</option>
+<option value="production">Production Module</option>
+<option value="dialogue">Dialogue Module</option>
+<option value="archive">Archive Module</option>
+<option value="assets">Asset Module</option>
+
 </select>
 
-<textarea id="contentInput" placeholder="Write archive atmospheric entry description here..."></textarea>
-<button onclick="saveEntry()">Preserve Unified Archive Entry</button>
+<select id="partitionInput">
+
+<option value="lore_partition">Lore Partition</option>
+<option value="canon_partition">Canon Partition</option>
+<option value="dialogue_partition">Dialogue Partition</option>
+<option value="asset_partition">Asset Partition</option>
+<option value="production_partition">Production Partition</option>
+
+</select>
+
+<select id="lifecycleInput">
+
+<option value="active">Active</option>
+<option value="draft">Draft</option>
+<option value="approved">Approved</option>
+<option value="deprecated">Deprecated</option>
+<option value="archived">Archived</option>
+<option value="locked">Locked</option>
+<option value="historical">Historical</option>
+
+</select>
+
+<textarea id="entryDescription" placeholder="Kernel state notes..."></textarea>
+
+<button onclick="registerKernelEntry()">
+Register Kernel Entry
+</button>
+
+<div id="stateView"></div>
+
 </div>
 
-<div class="card">
-<h2>Unified Archive Memory Engine</h2>
-<div id="entries"></div>
+<div id="retrievalPanel" class="panel">
+
+<div class="title">
+Unified Retrieval Router
 </div>
+
+<input
+id="searchInput"
+placeholder="Search deterministic kernel..."
+onkeyup="runSearch()"
+>
+
+<select id="moduleFilter" onchange="runSearch()">
+
+<option value="">All Modules</option>
+<option value="canon">Canon</option>
+<option value="production">Production</option>
+<option value="dialogue">Dialogue</option>
+<option value="archive">Archive</option>
+<option value="assets">Assets</option>
+
+</select>
+
+<div id="searchResults"></div>
+
+</div>
+
+<div id="validationPanel" class="panel">
+
+<div class="title">
+Shared Validation Kernel
+</div>
+
+<button onclick="runValidation()">
+Run Kernel Validation
+</button>
+
+<div id="validationResults"></div>
+
+</div>
+
+<div id="partitionPanel" class="panel">
+
+<div class="title">
+Engine Partition Router
+</div>
+
+<div id="partitionView"></div>
+
+</div>
+
+<div id="diagnosticsPanel" class="panel">
+
+<div class="title">
+Kernel Diagnostics
+</div>
+
+<div id="diagnosticsView"></div>
 
 </div>
 
 </div>
 
 <script>
-let archive = JSON.parse(
-localStorage.getItem("gravemarch_unified_archive")
-) || [];
 
-function saveArchive(){
+const ENGINE_KEY = "gravemarch_v25_kernel";
+const ACTIVE_KEY = "gravemarch_v25_workspace";
+const NAV_KEY = "gravemarch_v25_nav";
+
+const VALID_LIFECYCLES = [
+"active",
+"draft",
+"approved",
+"deprecated",
+"archived",
+"locked",
+"historical"
+];
+
+const VALID_MODULES = [
+"canon",
+"production",
+"dialogue",
+"archive",
+"assets"
+];
+
+const VALID_PARTITIONS = [
+"lore_partition",
+"canon_partition",
+"dialogue_partition",
+"asset_partition",
+"production_partition"
+];
+
+let engine = JSON.parse(
+localStorage.getItem(ENGINE_KEY)
+) || {};
+
+let activeWorkspace = localStorage.getItem(ACTIVE_KEY);
+
+if(!activeWorkspace){
+
+activeWorkspace = "default_workspace";
+
+engine[activeWorkspace] = [];
+
+persist();
+
+}
+
+if(!engine[activeWorkspace]){
+
+engine[activeWorkspace] = [];
+
+persist();
+
+}
+
+function persist(){
+
 localStorage.setItem(
-"gravemarch_unified_archive",
-JSON.stringify(archive)
+ENGINE_KEY,
+JSON.stringify(engine)
 );
+
 }
 
-function saveEntry(){
-const title = document.getElementById("titleInput").value.trim();
-const type = document.getElementById("typeInput").value.trim();
-const content = document.getElementById("contentInput").value.trim();
+function getEntries(){
 
-if(!title || !type || !content) {
-    alert("Please fill out Title, select a Module, and add an Archive Entry.");
-    return;
+return engine[activeWorkspace] || [];
+
 }
 
-archive.push({
-    id: Date.now(),
-    title: title,
-    type: type,
-    content: content,
-    created: new Date().toISOString()
+function saveEntries(data){
+
+engine[activeWorkspace] = data;
+
+persist();
+
+}
+
+function preserveText(text){
+
+return text.trim();
+
+}
+
+function normalize(text){
+
+return text.trim().toLowerCase();
+
+}
+
+function createID(){
+
+return "KRN-" + Math.random()
+.toString(36)
+.substring(2,10)
+.toUpperCase();
+
+}
+
+function showPanel(id){
+
+document.querySelectorAll(".panel")
+.forEach(panel=>{
+
+panel.classList.remove("active");
+
 });
 
-saveArchive();
-renderEntries();
+document.getElementById(id)
+.classList.add("active");
 
-document.getElementById("titleInput").value="";
-document.getElementById("typeInput").selectedIndex = 0;
-document.getElementById("contentInput").value="";
+localStorage.setItem(
+NAV_KEY,
+id
+);
+
 }
 
-function renderEntries(){
-const container = document.getElementById("entries");
-if(archive.length===0){
-    container.innerHTML = `<p class="small">No active unified archive entries running in memory core.</p>`;
-    return;
+function restoreNavigation(){
+
+const last = localStorage.getItem(NAV_KEY);
+
+if(last){
+
+showPanel(last);
+
+}
+
+}
+
+function updateWorkspaceLabel(){
+
+document.getElementById("workspaceLabel")
+.textContent = activeWorkspace;
+
+}
+
+function validateEntry(entry){
+
+const errors = [];
+
+if(!entry.id){
+
+errors.push("Missing kernel ID");
+
+}
+
+if(!entry.title){
+
+errors.push("Missing title");
+
+}
+
+if(!VALID_MODULES.includes(entry.module)){
+
+errors.push("Invalid module");
+
+}
+
+if(!VALID_PARTITIONS.includes(entry.partition)){
+
+errors.push("Invalid partition");
+
+}
+
+if(!VALID_LIFECYCLES.includes(entry.lifecycle)){
+
+errors.push("Invalid lifecycle");
+
+}
+
+return errors;
+
+}
+
+function registerKernelEntry(){
+
+const entries = getEntries();
+
+const entry = {
+
+id:createID(),
+
+title:preserveText(
+document.getElementById("entryTitle").value
+),
+
+module:document.getElementById("moduleInput").value,
+
+partition:document.getElementById("partitionInput").value,
+
+lifecycle:document.getElementById("lifecycleInput").value,
+
+description:preserveText(
+document.getElementById("entryDescription").value
+),
+
+searchIndex:"",
+
+created:new Date().toISOString()
+
+};
+
+entry.searchIndex = normalize(
+[
+entry.title,
+entry.module,
+entry.partition,
+entry.lifecycle,
+entry.description
+].join(" ")
+);
+
+const errors = validateEntry(entry);
+
+if(errors.length > 0){
+
+alert(
+"Kernel Validation Failed:\\n" +
+errors.join("\\n")
+);
+
+return;
+
+}
+
+entries.push(entry);
+
+saveEntries(entries);
+
+renderState();
+renderPartitions();
+renderDiagnostics();
+updateStats();
+
+document.getElementById("entryTitle").value="";
+document.getElementById("entryDescription").value="";
+
+}
+
+function renderState(){
+
+const entries = getEntries();
+
+if(entries.length===0){
+
+document.getElementById("stateView").innerHTML = `
+<p class="small">
+No kernel entries registered.
+</p>
+`;
+
+return;
+
 }
 
 let html = "";
-archive.slice().reverse().forEach(entry=>{
-    html += `
-    <div class="entry">
-        <h3 style="margin:0 0 5px 0; color:#c0392b;">${entry.title}</h3>
-        <p class="small" style="margin:0 0 10px 0; font-weight:bold; color:#5f89aa;">
-            Engine Module Context: ${entry.type}
-        </p>
-        <p style="margin:0 0 10px 0; line-height:1.5;">${entry.content}</p>
-        <p class="small" style="margin:0; font-size:11px;">
-            Core Timestamp: ${new Date(entry.created).toLocaleString()}
-        </p>
-    </div>
-    `;
+
+entries.slice().reverse().forEach(entry=>{
+
+html += `
+
+<div class="card kernel-card">
+
+<h3>
+${entry.title}
+</h3>
+
+<span class="tag">
+${entry.module}
+</span>
+
+<span class="kernel-tag">
+${entry.lifecycle}
+</span>
+
+<span class="tag">
+${entry.partition}
+</span>
+
+<p>
+${entry.description}
+</p>
+
+</div>
+
+`;
+
 });
-container.innerHTML = html;
+
+document.getElementById("stateView").innerHTML = html;
+
 }
 
-function loadEngineFile(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+function runSearch(){
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const importedData = JSON.parse(e.target.result);
-            const targetArray = Array.isArray(importedData) ? importedData : importedData.entries || [];
-            
-            if(confirm("Load external file data into engine? This merges files with your current workspace entries.")){
-                archive = archive.concat(targetArray);
-                saveArchive();
-                renderEntries();
-                alert("Core File Processing Complete. " + targetArray.length + " entries initialized.");
-            }
-        } catch (err) {
-            alert("Execution Error: Invalid text structure inside selected lexicon map file.");
-        }
-    };
-    reader.readAsText(file);
-    document.getElementById("fileLoadInput").value = "";
+const query = normalize(
+document.getElementById("searchInput").value
+);
+
+const filter = document.getElementById("moduleFilter").value;
+
+const entries = getEntries();
+
+let results = entries.filter(entry=>
+
+entry.searchIndex.includes(query)
+
+);
+
+if(filter){
+
+results = results.filter(entry=>
+
+entry.module === filter
+
+);
+
 }
 
-function saveEngineFile() {
-    if(archive.length === 0) {
-        alert("The workspace memory cache is blank. Write or import data before exporting file maps.");
-        return;
-    }
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(archive, null, 2));
-    const downloadAnchor = document.createElement('a');
-    
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "gravemarch_master_archive.json");
-    document.body.appendChild(downloadAnchor);
-    
-    downloadAnchor.click();
-    downloadAnchor.remove();
+const priority = {
+active:7,
+approved:6,
+draft:5,
+locked:4,
+historical:3,
+archived:2,
+deprecated:1
+};
+
+results.sort((a,b)=>{
+
+return priority[b.lifecycle] - priority[a.lifecycle];
+
+});
+
+let html = `
+<p class="small">
+${results.length} deterministic matches found.
+</p>
+`;
+
+results.forEach(entry=>{
+
+html += `
+
+<div class="card kernel-card">
+
+<h3>
+${entry.title}
+</h3>
+
+<span class="tag">
+${entry.module}
+</span>
+
+<span class="kernel-tag">
+${entry.lifecycle}
+</span>
+
+<span class="tag">
+${entry.partition}
+</span>
+
+<p>
+${entry.description}
+</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("searchResults").innerHTML = html;
+
 }
 
-function clearActiveEngineMemory() {
-    if(confirm("Warning! This wipes out the live browser active memory block. Make sure you exported your file backup first! Proceed?")) {
-        archive = [];
-        saveArchive();
-        renderEntries();
-    }
+function renderPartitions(){
+
+const entries = getEntries();
+
+let partitions = {};
+
+entries.forEach(entry=>{
+
+partitions[entry.partition] =
+(partitions[entry.partition] || 0) + 1;
+
+});
+
+let html = "";
+
+Object.keys(partitions).forEach(partition=>{
+
+html += `
+
+<div class="card">
+
+<h3>
+${partition}
+</h3>
+
+<p>
+Entries:
+${partitions[partition]}
+</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("partitionView").innerHTML = html;
+
 }
 
-renderEntries();
+function renderDiagnostics(){
+
+const entries = getEntries();
+
+let modules = {};
+let lifecycles = {};
+
+entries.forEach(entry=>{
+
+modules[entry.module] =
+(modules[entry.module] || 0) + 1;
+
+lifecycles[entry.lifecycle] =
+(lifecycles[entry.lifecycle] || 0) + 1;
+
+});
+
+document.getElementById("diagnosticsView").innerHTML = `
+
+<div class="card">
+
+<p>
+Kernel Entries:
+<strong>${entries.length}</strong>
+</p>
+
+<p>
+Active Modules:
+<strong>${Object.keys(modules).length}</strong>
+</p>
+
+<p>
+Lifecycle States:
+<strong>${Object.keys(lifecycles).length}</strong>
+</p>
+
+<p>
+Kernel Stability:
+<strong class="good">
+stable
+</strong>
+</p>
+
+</div>
+
+`;
+
+}
+
+function detectDuplicates(){
+
+const entries = getEntries();
+
+let duplicates = 0;
+
+for(let i=0;i<entries.length;i++){
+
+for(let j=i+1;j<entries.length;j++){
+
+if(
+normalize(entries[i].title) ===
+normalize(entries[j].title)
+&&
+entries[i].module === entries[j].module
+){
+
+duplicates++;
+
+}
+
+}
+
+}
+
+return duplicates;
+
+}
+
+function runValidation(){
+
+const entries = getEntries();
+
+let malformed = 0;
+let duplicates = detectDuplicates();
+let partitionErrors = 0;
+
+entries.forEach(entry=>{
+
+const errors = validateEntry(entry);
+
+if(errors.length > 0){
+
+malformed++;
+
+}
+
+if(!VALID_PARTITIONS.includes(entry.partition)){
+
+partitionErrors++;
+
+}
+
+});
+
+document.getElementById("validationResults").innerHTML = `
+
+<div class="card">
+
+<p>
+Malformed Kernel Entries:
+<strong class="error">${malformed}</strong>
+</p>
+
+<p>
+Duplicate Routing Conflicts:
+<strong class="warning">${duplicates}</strong>
+</p>
+
+<p>
+Partition Routing Errors:
+<strong class="warning">${partitionErrors}</strong>
+</p>
+
+<p>
+Kernel Integrity:
+<strong class="good">
+${malformed===0 && partitionErrors===0 ? "stable" : "review required"}
+</strong>
+</p>
+
+</div>
+
+`;
+
+}
+
+function updateStats(){
+
+const entries = getEntries();
+
+let modules = {};
+let partitions = {};
+
+entries.forEach(entry=>{
+
+modules[entry.module] =
+(modules[entry.module] || 0) + 1;
+
+partitions[entry.partition] =
+(partitions[entry.partition] || 0) + 1;
+
+});
+
+let html = `
+Workspace:
+${activeWorkspace}
+<br><br>
+
+Kernel Entries:
+${entries.length}
+<br><br>
+`;
+
+Object.keys(modules).forEach(module=>{
+
+html += `${module}: ${modules[module]}<br>`;
+
+});
+
+html += `<br>`;
+
+Object.keys(partitions).forEach(partition=>{
+
+html += `${partition}: ${partitions[partition]}<br>`;
+
+});
+
+document.getElementById("kernelStats").innerHTML = html;
+
+}
+
+renderState();
+renderPartitions();
+renderDiagnostics();
+updateWorkspaceLabel();
+updateStats();
+restoreNavigation();
+
 </script>
 
 </body>
