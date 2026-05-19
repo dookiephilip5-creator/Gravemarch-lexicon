@@ -7,324 +7,323 @@
 
 <style>
 :root{
-  --bg:#050607;
-  --panel:#101316;
-  --panel2:#15191d;
-  --line:#2a3337;
-  --mint:#67ffbf;
-  --crimson:#8f1025;
-  --crimsonBright:#e02b46;
-  --text:#e8f0ea;
-  --muted:#7b8782;
+--bg:#050607;
+--panel:#101316;
+--panel2:#15191d;
+--line:#2a3337;
+--mint:#67ffbf;
+--crimson:#8f1025;
+--crimsonBright:#e02b46;
+--text:#e8f0ea;
+--muted:#7b8782;
 }
 
 *{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
 }
 
 html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  background:var(--bg);
-  color:var(--text);
-  overflow:hidden;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+margin:0;
+width:100%;
+height:100%;
+background:var(--bg);
+color:var(--text);
+overflow:hidden;
+font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
 }
 
 .app{
-  width:100%;
-  height:100%;
-  display:grid;
-  grid-template-rows:58px 1fr 30px;
+width:100%;
+height:100%;
+display:grid;
+grid-template-rows:58px 1fr 30px;
 }
 
 .topbar,.statusbar{
-  display:flex;
-  align-items:center;
-  background:#07090b;
+display:flex;
+align-items:center;
+background:#07090b;
 }
 
 .topbar{
-  gap:12px;
-  padding:0 14px;
-  border-bottom:1px solid var(--line);
+gap:12px;
+padding:0 14px;
+border-bottom:1px solid var(--line);
 }
 
 .statusbar{
-  justify-content:space-between;
-  padding:0 12px;
-  border-top:1px solid var(--line);
-  color:var(--muted);
-  font-size:12px;
+justify-content:space-between;
+padding:0 12px;
+border-top:1px solid var(--line);
+font-size:12px;
+color:var(--muted);
 }
 
 .brand{
-  font-weight:800;
-  color:var(--mint);
-  letter-spacing:.08em;
-  white-space:nowrap;
+font-weight:800;
+color:var(--mint);
+letter-spacing:.08em;
+white-space:nowrap;
 }
 
 .worldLabel{
-  font-size:12px;
-  color:var(--muted);
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+font-size:12px;
+color:var(--muted);
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
 }
 
 .sidebarToggle{
-  border:none;
-  background:none;
-  color:var(--crimsonBright);
-  font-size:24px;
-  cursor:pointer;
-  width:auto;
-  padding:0;
+border:none;
+background:none;
+color:var(--crimsonBright);
+font-size:24px;
+cursor:pointer;
+width:auto;
+padding:0;
 }
 
 .main{
-  width:100%;
-  height:100%;
-  display:grid;
-  grid-template-columns:0 1fr;
-  overflow:hidden;
-  transition:.2s ease;
+width:100%;
+height:100%;
+display:grid;
+grid-template-columns:0 1fr;
+overflow:hidden;
+transition:.2s ease;
 }
 
 .main.open{
-  grid-template-columns:320px 1fr;
+grid-template-columns:320px 1fr;
 }
 
 .sidebar{
-  overflow:auto;
-  background:#090d10;
-  border-right:1px solid var(--line);
-  padding:12px;
+overflow:auto;
+background:#090d10;
+border-right:1px solid var(--line);
+padding:12px;
 }
 
 .workspace{
-  overflow:auto;
-  padding:18px;
+overflow:auto;
+padding:18px;
 }
 
 .panel{
-  width:100%;
-  max-width:1100px;
-  margin:auto;
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:18px;
-  box-shadow:0 0 40px rgba(0,0,0,.25);
+width:100%;
+max-width:1150px;
+margin:auto;
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:16px;
+padding:18px;
+box-shadow:0 0 40px rgba(0,0,0,.25);
 }
 
 .panel h1{
-  margin-top:0;
-  color:var(--mint);
+margin-top:0;
+color:var(--mint);
 }
 
 .group{
-  border:1px solid var(--line);
-  background:var(--panel);
-  border-radius:12px;
-  padding:10px;
-  margin-bottom:10px;
+border:1px solid var(--line);
+background:var(--panel);
+border-radius:12px;
+padding:10px;
+margin-bottom:10px;
 }
 
 .group h3{
-  margin:0 0 10px;
-  color:var(--mint);
-  font-size:13px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
+margin:0 0 10px;
+color:var(--mint);
+font-size:13px;
+letter-spacing:.08em;
+text-transform:uppercase;
 }
 
 button,input,textarea,select{
-  font:inherit;
+font:inherit;
 }
 
 button{
-  width:100%;
-  margin:4px 0;
-  padding:10px 12px;
-  background:#11161a;
-  border:1px solid var(--line);
-  color:var(--mint);
-  border-radius:10px;
-  cursor:pointer;
+width:100%;
+margin:4px 0;
+padding:10px 12px;
+background:#11161a;
+border:1px solid var(--line);
+color:var(--mint);
+border-radius:10px;
+cursor:pointer;
 }
 
 button:hover{
-  border-color:var(--mint);
+border-color:var(--mint);
 }
 
 button.danger{
-  border-color:var(--crimson);
-  color:#ffdbe0;
-  background:#19070a;
+border-color:var(--crimson);
+color:#ffdbe0;
+background:#19070a;
 }
 
 button.activeChapter{
-  border-color:var(--mint);
-  background:#0d241c;
+border-color:var(--mint);
+background:#0d241c;
 }
 
 input,textarea,select{
-  width:100%;
-  margin:4px 0;
-  padding:10px;
-  background:#050708;
-  border:1px solid var(--line);
-  border-radius:10px;
-  color:var(--text);
+width:100%;
+margin:4px 0;
+padding:10px;
+background:#050708;
+border:1px solid var(--line);
+border-radius:10px;
+color:var(--text);
 }
 
 textarea{
-  resize:vertical;
-  line-height:1.8;
+resize:vertical;
+line-height:1.8;
 }
 
 .manuscript{
-  min-height:65vh;
-  font-size:18px;
+min-height:65vh;
+font-size:18px;
 }
 
 .card{
-  border:1px solid var(--line);
-  background:var(--panel2);
-  border-radius:12px;
-  padding:12px;
-  margin:10px 0;
+border:1px solid var(--line);
+background:var(--panel2);
+border-radius:12px;
+padding:12px;
+margin:10px 0;
 }
 
 .card b{
-  color:var(--mint);
-}
-
-.alert{
-  border-color:var(--crimson);
-  color:#ffd8df;
+color:var(--mint);
 }
 
 .small{
-  font-size:12px;
-  color:var(--muted);
+font-size:12px;
+color:var(--muted);
 }
 
 .grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
 }
 
 .chapterRow{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-bottom:10px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:10px;
 }
 
 .chapterList button{
-  text-align:left;
-  font-size:13px;
+text-align:left;
+font-size:13px;
 }
 
 .entryTag{
-  display:inline-block;
-  padding:4px 8px;
-  border:1px solid var(--line);
-  border-radius:999px;
-  font-size:11px;
-  margin:2px;
-  color:var(--mint);
+display:inline-block;
+padding:4px 8px;
+border:1px solid var(--line);
+border-radius:999px;
+font-size:11px;
+margin:2px;
+color:var(--mint);
 }
 
 .entryMeta{
-  margin-top:8px;
-  font-size:12px;
-  color:var(--muted);
+margin-top:8px;
+font-size:12px;
+color:var(--muted);
 }
 
 .characterSection{
-  border-top:1px solid var(--line);
-  margin-top:12px;
-  padding-top:12px;
+border-top:1px solid var(--line);
+margin-top:12px;
+padding-top:12px;
 }
 
 .characterSection h4{
-  margin:0 0 8px;
-  color:var(--mint);
-  font-size:13px;
-  letter-spacing:.05em;
+margin:0 0 8px;
+font-size:13px;
+letter-spacing:.05em;
+color:var(--mint);
+}
+
+.alert{
+border-color:var(--crimson);
+color:#ffd8df;
 }
 
 .zen .topbar,
 .zen .statusbar,
 .zen .sidebar{
-  display:none;
+display:none;
 }
 
 .zen .main{
-  grid-template-columns:1fr;
+grid-template-columns:1fr;
 }
 
 .zen .workspace{
-  padding:0;
+padding:0;
 }
 
 .zen .panel{
-  max-width:none;
-  min-height:100vh;
-  border:0;
-  border-radius:0;
+max-width:none;
+min-height:100vh;
+border:0;
+border-radius:0;
 }
 
 @media(max-width:800px){
 
-  .main{
-    display:block;
-    position:relative;
-  }
+.main{
+display:block;
+position:relative;
+}
 
-  .sidebar{
-    position:fixed;
-    top:58px;
-    left:-88vw;
-    width:82vw;
-    max-width:340px;
-    height:calc(100vh - 58px);
-    z-index:100;
-    transition:left .2s ease;
-    box-shadow:0 0 40px rgba(0,0,0,.6);
-  }
+.sidebar{
+position:fixed;
+top:58px;
+left:-88vw;
+width:82vw;
+max-width:340px;
+height:calc(100vh - 58px);
+z-index:100;
+transition:left .2s ease;
+box-shadow:0 0 40px rgba(0,0,0,.6);
+}
 
-  .main.open .sidebar{
-    left:0;
-  }
+.main.open .sidebar{
+left:0;
+}
 
-  .workspace{
-    width:100%;
-    height:100%;
-    padding:14px;
-  }
+.workspace{
+width:100%;
+height:100%;
+padding:14px;
+}
 
-  .panel{
-    max-width:none;
-    padding:14px;
-  }
+.panel{
+max-width:none;
+padding:14px;
+}
 
-  .grid,
-  .chapterRow{
-    grid-template-columns:1fr;
-  }
+.grid,.chapterRow{
+grid-template-columns:1fr;
+}
 
-  .manuscript{
-    min-height:60vh;
-    font-size:17px;
-  }
+.manuscript{
+min-height:60vh;
+font-size:17px;
+}
 }
 </style>
 </head>
@@ -333,125 +332,107 @@ textarea{
 
 <div class="app">
 
-  <div class="topbar">
-    <button class="sidebarToggle" onclick="toggleSidebar()">☰</button>
+<div class="topbar">
+<button class="sidebarToggle" onclick="toggleSidebar()">☰</button>
 
-    <div class="brand">
-      OFFLINE CREATOR ENGINE
-    </div>
+<div class="brand">
+OFFLINE CREATOR ENGINE
+</div>
 
-    <div class="worldLabel" id="worldLabel">
-      No World Loaded
-    </div>
-  </div>
+<div class="worldLabel" id="worldLabel">
+No World Loaded
+</div>
+</div>
 
-  <div class="main" id="main">
+<div class="main" id="main">
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-      <div class="group">
-        <h3>Franchise Tree</h3>
+<div class="group">
+<h3>Franchise Tree</h3>
 
-        <input id="newWorldName" placeholder="New world name">
+<input id="newWorldName" placeholder="New world name">
 
-        <button onclick="createWorld()">
-          Create World
-        </button>
+<button onclick="createWorld()">
+Create World
+</button>
 
-        <select id="worldSelect" onchange="loadWorld(this.value)"></select>
+<select id="worldSelect" onchange="loadWorld(this.value)"></select>
 
-        <button class="danger" onclick="deleteWorld()">
-          Delete Active World
-        </button>
-      </div>
+<button class="danger" onclick="deleteWorld()">
+Delete Active World
+</button>
+</div>
 
-      <div class="group">
-        <h3>Workspace</h3>
+<div class="group">
+<h3>Workspace</h3>
 
-        <button onclick="showModule('manuscript')">
-          Manuscript Workspace
-        </button>
+<button onclick="showModule('manuscript')">Manuscript Workspace</button>
 
-        <button onclick="showModule('lore')">
-          Lore Database
-        </button>
+<button onclick="showModule('entries')">Entry Archive</button>
 
-        <button onclick="showModule('entries')">
-          Entry Archive
-        </button>
+<button onclick="showModule('characters')">Character Vault</button>
 
-        <button onclick="showModule('characters')">
-          Character Vault
-        </button>
+<button onclick="showModule('lore')">Lore Database</button>
 
-        <button onclick="showModule('chronology')">
-          Chronology Matrix
-        </button>
+<button onclick="showModule('chronology')">Chronology Matrix</button>
 
-        <button onclick="showModule('diagnostics')">
-          Diagnostics
-        </button>
+<button onclick="showModule('diagnostics')">Diagnostics</button>
 
-        <button onclick="showModule('reference')">
-          Global Reference
-        </button>
-      </div>
+<button onclick="showModule('reference')">Global Reference</button>
+</div>
 
-      <div class="group">
-        <h3>Chapter Index</h3>
-        <div id="chapterList" class="chapterList small">
-          No world loaded.
-        </div>
-      </div>
+<div class="group">
+<h3>Chapter Index</h3>
+<div id="chapterList" class="chapterList small">
+No world loaded.
+</div>
+</div>
 
-      <div class="group">
-        <h3>Forge Core</h3>
+<div class="group">
+<h3>Forge Core</h3>
 
-        <button onclick="extractCore()">
-          Forge Core Extract
-        </button>
+<button onclick="extractCore()">
+Forge Core Extract
+</button>
 
-        <input
-          type="file"
-          accept=".json"
-          onchange="injectCore(event)"
-        >
+<input type="file" accept=".json" onchange="injectCore(event)">
 
-        <button onclick="saveWorld(false)">
-          Manual Save
-        </button>
-      </div>
+<button onclick="saveWorld(false)">
+Manual Save
+</button>
+</div>
 
-      <div class="group">
-        <h3>Engine Governor</h3>
+<div class="group">
+<h3>Engine Governor</h3>
 
-        <button onclick="toggleZen()">
-          Zen Mode Toggle
-        </button>
-      </div>
+<button onclick="toggleZen()">
+Zen Mode Toggle
+</button>
+</div>
 
-    </aside>
+</aside>
 
-    <main class="workspace">
-      <section class="panel" id="screen"></section>
-    </main>
+<main class="workspace">
+<section class="panel" id="screen"></section>
+</main>
 
-  </div>
+</div>
 
-  <div class="statusbar">
-    <span id="saveStatus">
-      Stable diagnostics online.
-    </span>
+<div class="statusbar">
+<span id="saveStatus">
+Stable diagnostics online.
+</span>
 
-    <span>
-      © 2026 Offline Creator Engine
-    </span>
-  </div>
+<span>
+© 2026 Offline Creator Engine
+</span>
+</div>
 
 </div>
 
 <script>
-const ENGINE_VERSION="1.3.0";
+const ENGINE_VERSION="1.4.0";
 const MASTER_INDEX="OCE_MASTER_INDEX";
 
 let activeWorld=null;
@@ -459,748 +440,880 @@ let activeWorldId=null;
 let currentModule="manuscript";
 
 /* ======================================================
-   CORE
+CORE
 ====================================================== */
 
 function getIndex(){
-  return JSON.parse(localStorage.getItem(MASTER_INDEX)||"[]");
+return JSON.parse(localStorage.getItem(MASTER_INDEX)||"[]");
 }
 
 function setIndex(i){
-  localStorage.setItem(MASTER_INDEX,JSON.stringify(i));
+localStorage.setItem(MASTER_INDEX,JSON.stringify(i));
 }
 
 function projectKey(id){
-  return "OCE_PROJECT_"+id;
+return "OCE_PROJECT_"+id;
 }
 
 function escapeHTML(s){
-  return String(s||"")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#39;");
+return String(s||"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#39;");
 }
 
 function closeMobileSidebar(){
-  if(innerWidth<=800){
-    document.getElementById("main")
-      .classList.remove("open");
-  }
+if(innerWidth<=800){
+document.getElementById("main").classList.remove("open");
+}
 }
 
 function toggleSidebar(){
-  document.getElementById("main")
-    .classList.toggle("open");
+document.getElementById("main").classList.toggle("open");
 }
 
 function toggleZen(){
-  document.body.classList.toggle("zen");
+document.body.classList.toggle("zen");
 }
 
 /* ======================================================
-   WORLD TEMPLATE
+WORLD TEMPLATE
 ====================================================== */
 
 function blankWorld(name){
 
-  return{
+return{
 
-    meta:{
-      engine:"Offline Creator Engine",
-      version:ENGINE_VERSION,
-      id:"oce_"+Date.now(),
-      name:name||"Untitled World",
-      createdAt:new Date().toISOString(),
-      updatedAt:new Date().toISOString()
-    },
+meta:{
+engine:"Offline Creator Engine",
+version:ENGINE_VERSION,
+id:"oce_"+Date.now(),
+name:name||"Untitled World",
+createdAt:new Date().toISOString(),
+updatedAt:new Date().toISOString()
+},
 
-    manifesto:"",
+manuscript:{
+activeChapter:"chapter_1",
+chapters:[
+{
+id:"chapter_1",
+title:"Chapter 1",
+body:""
+}
+]
+},
 
-    manuscript:{
-      activeChapter:"chapter_1",
-      chapters:[
-        {
-          id:"chapter_1",
-          title:"Chapter 1",
-          body:""
-        }
-      ]
-    },
+entries:[],
+characters:[],
+lore:[],
+chronology:[],
+diagnostics:[],
 
-    lore:[],
-    chronology:[],
-    diagnostics:[],
-    entries:[],
-
-    characters:[],
-
-    worldState:{
-      stability:100,
-      laws:[]
-    }
-  };
+worldState:{
+stability:100,
+laws:[]
+}
+};
 }
 
 /* ======================================================
-   WORLD MANAGEMENT
+WORLD MANAGEMENT
 ====================================================== */
 
 function createWorld(){
 
-  const input=document.getElementById("newWorldName");
-  const name=input.value.trim();
+const input=document.getElementById("newWorldName");
+const name=input.value.trim();
 
-  if(!name){
-    alert("Enter a world name.");
-    return;
-  }
+if(!name){
+alert("Enter a world name.");
+return;
+}
 
-  const world=blankWorld(name);
-  const index=getIndex();
+const world=blankWorld(name);
+const index=getIndex();
 
-  localStorage.setItem(
-    projectKey(world.meta.id),
-    JSON.stringify(world)
-  );
+localStorage.setItem(
+projectKey(world.meta.id),
+JSON.stringify(world)
+);
 
-  index.push({
-    id:world.meta.id,
-    name:world.meta.name,
-    updatedAt:world.meta.updatedAt
-  });
+index.push({
+id:world.meta.id,
+name:world.meta.name,
+updatedAt:world.meta.updatedAt
+});
 
-  setIndex(index);
+setIndex(index);
 
-  input.value="";
+input.value="";
 
-  renderWorldList();
+renderWorldList();
 
-  loadWorld(world.meta.id);
+loadWorld(world.meta.id);
 }
 
 function renderWorldList(){
 
-  const select=document.getElementById("worldSelect");
+const select=document.getElementById("worldSelect");
 
-  select.innerHTML=
-    getIndex().map(w=>`
-      <option value="${w.id}">
-        ${escapeHTML(w.name)}
-      </option>
-    `).join("");
+select.innerHTML=
+getIndex().map(w=>`
+<option value="${w.id}">
+${escapeHTML(w.name)}
+</option>
+`).join("");
 }
 
 function loadWorld(id){
 
-  if(!id)return;
+if(!id)return;
 
-  const raw=
-    localStorage.getItem(projectKey(id));
+const raw=localStorage.getItem(projectKey(id));
 
-  if(!raw)return;
+if(!raw)return;
 
-  activeWorld=JSON.parse(raw);
-  activeWorldId=id;
+activeWorld=JSON.parse(raw);
+activeWorldId=id;
 
-  document.getElementById("worldLabel")
-    .textContent=
-      "World: "+activeWorld.meta.name;
+document.getElementById("worldLabel")
+.textContent="World: "+activeWorld.meta.name;
 
-  document.getElementById("worldSelect")
-    .value=id;
+document.getElementById("worldSelect").value=id;
 
-  renderChapterList();
+renderChapterList();
 
-  showModule(currentModule);
+showModule(currentModule);
 }
 
 function saveWorld(silent=true){
 
-  if(!activeWorld)return;
+if(!activeWorld)return;
 
-  activeWorld.meta.updatedAt=
-    new Date().toISOString();
+activeWorld.meta.updatedAt=
+new Date().toISOString();
 
-  localStorage.setItem(
-    projectKey(activeWorld.meta.id),
-    JSON.stringify(activeWorld)
-  );
+localStorage.setItem(
+projectKey(activeWorld.meta.id),
+JSON.stringify(activeWorld)
+);
 
-  setIndex(
-    getIndex().map(w=>
-      w.id===activeWorld.meta.id
-      ?{
-        id:activeWorld.meta.id,
-        name:activeWorld.meta.name,
-        updatedAt:activeWorld.meta.updatedAt
-      }
-      :w
-    )
-  );
+setIndex(
+getIndex().map(w=>
+w.id===activeWorld.meta.id
+?{
+id:activeWorld.meta.id,
+name:activeWorld.meta.name,
+updatedAt:activeWorld.meta.updatedAt
+}
+:w
+)
+);
 
-  renderWorldList();
-  renderChapterList();
+renderWorldList();
+renderChapterList();
 
-  document.getElementById("saveStatus")
-    .textContent=
-      silent
-      ?"Autosaved."
-      :"Manual save complete.";
+document.getElementById("saveStatus")
+.textContent=
+silent
+?"Autosaved."
+:"Manual save complete.";
 }
 
 function deleteWorld(){
 
-  if(!activeWorld)return;
+if(!activeWorld)return;
 
-  if(!confirm(
-    "Delete active world from browser storage?"
-  ))return;
+if(!confirm("Delete active world?"))return;
 
-  localStorage.removeItem(
-    projectKey(activeWorld.meta.id)
-  );
+localStorage.removeItem(
+projectKey(activeWorld.meta.id)
+);
 
-  setIndex(
-    getIndex().filter(
-      w=>w.id!==activeWorld.meta.id
-    )
-  );
+setIndex(
+getIndex().filter(
+w=>w.id!==activeWorld.meta.id
+)
+);
 
-  activeWorld=null;
-  activeWorldId=null;
+activeWorld=null;
+activeWorldId=null;
 
-  renderWorldList();
-  renderChapterList();
+renderWorldList();
+renderChapterList();
 
-  welcomeScreen();
+welcomeScreen();
 }
 
 /* ======================================================
-   MODULE SWITCH
+MODULES
 ====================================================== */
 
 function showModule(m){
 
-  currentModule=m;
+currentModule=m;
 
-  closeMobileSidebar();
+closeMobileSidebar();
 
-  if(!activeWorld&&m!=="reference"){
-    return welcomeScreen();
-  }
+if(!activeWorld&&m!=="reference"){
+return welcomeScreen();
+}
 
-  ({
-    manuscript:renderManuscript,
-    lore:renderLore,
-    entries:renderEntries,
-    characters:renderCharacters,
-    chronology:renderChronology,
-    diagnostics:renderDiagnostics,
-    reference:renderReference
-  }[m])();
+({
+manuscript:renderManuscript,
+entries:renderEntries,
+characters:renderCharacters,
+lore:renderLore,
+chronology:renderChronology,
+diagnostics:renderDiagnostics,
+reference:renderReference
+}[m])();
 }
 
 function welcomeScreen(){
 
-  document.getElementById("screen")
-    .innerHTML=`
-      <h1>
-        A Tool for the Last True Creators.
-      </h1>
+document.getElementById("screen").innerHTML=`
+<h1>
+A Tool for the Last True Creators.
+</h1>
 
-      <div class="card">
-        Foundation Build v1.3
-      </div>
+<div class="card">
+Foundation Build v1.4
+</div>
 
-      <div class="card">
-        Character Vault &
-        Simulation Base Upgrade
-      </div>
-    `;
+<div class="card">
+Stability Merge Build
+</div>
+`;
 }
 
 /* ======================================================
-   MANUSCRIPT
+MANUSCRIPT
 ====================================================== */
 
 function renderChapterList(){
 
-  const box=document.getElementById("chapterList");
+const box=document.getElementById("chapterList");
 
-  if(!activeWorld){
-    box.textContent="No world loaded.";
-    return;
-  }
+if(!activeWorld){
+box.textContent="No world loaded.";
+return;
+}
 
-  box.innerHTML=
-    activeWorld.manuscript.chapters
-    .map((c,i)=>`
-      <button
-        class="${
-          c.id===activeWorld.manuscript.activeChapter
-          ?"activeChapter":""
-        }"
-        onclick="switchChapter('${c.id}')"
-      >
-        ${i+1}. ${escapeHTML(c.title)}
-      </button>
-    `).join("");
+box.innerHTML=
+activeWorld.manuscript.chapters.map((c,i)=>`
+<button
+class="${
+c.id===activeWorld.manuscript.activeChapter
+?"activeChapter":""
+}"
+onclick="switchChapter('${c.id}')"
+>
+${i+1}. ${escapeHTML(c.title)}
+</button>
+`).join("");
 }
 
 function currentChapter(){
 
-  return activeWorld.manuscript.chapters.find(
-    c=>c.id===activeWorld.manuscript.activeChapter
-  )||activeWorld.manuscript.chapters[0];
+return activeWorld.manuscript.chapters.find(
+c=>c.id===activeWorld.manuscript.activeChapter
+)||activeWorld.manuscript.chapters[0];
 }
 
 function renderManuscript(){
 
-  const chapters=activeWorld.manuscript.chapters;
-  const ch=currentChapter();
+const chapters=activeWorld.manuscript.chapters;
+const ch=currentChapter();
 
-  document.getElementById("screen")
-    .innerHTML=`
-      <h1>Manuscript Workspace</h1>
+document.getElementById("screen").innerHTML=`
+<h1>Manuscript Workspace</h1>
 
-      <div class="chapterRow">
+<div class="chapterRow">
 
-        <select onchange="switchChapter(this.value)">
-          ${
-            chapters.map((c,i)=>`
-              <option
-                value="${c.id}"
-                ${
-                  c.id===ch.id
-                  ?"selected":""
-                }
-              >
-                ${i+1}. ${escapeHTML(c.title)}
-              </option>
-            `).join("")
-          }
-        </select>
+<select onchange="switchChapter(this.value)">
+${
+chapters.map((c,i)=>`
+<option
+value="${c.id}"
+${c.id===ch.id?"selected":""}
+>
+${i+1}. ${escapeHTML(c.title)}
+</option>
+`).join("")
+}
+</select>
 
-        <input
-          value="${escapeHTML(ch.title)}"
-          oninput="updateChapterTitle(this.value)"
-        >
+<input
+value="${escapeHTML(ch.title)}"
+oninput="updateChapterTitle(this.value)"
+>
 
-      </div>
+</div>
 
-      <textarea
-        class="manuscript"
-        oninput="updateChapterBody(this.value)"
-      >${escapeHTML(ch.body)}</textarea>
+<textarea
+class="manuscript"
+oninput="updateChapterBody(this.value)"
+>${escapeHTML(ch.body)}</textarea>
 
-      <div class="chapterRow">
+<div class="chapterRow">
 
-        <button onclick="addChapter()">
-          Add Chapter
-        </button>
+<button onclick="addChapter()">
+Add Chapter
+</button>
 
-        <button
-          class="danger"
-          onclick="deleteChapter()"
-        >
-          Delete Chapter
-        </button>
+<button
+class="danger"
+onclick="deleteChapter()"
+>
+Delete Chapter
+</button>
 
-      </div>
+</div>
 
-      <button onclick="exportManuscript()">
-        Export Manuscript TXT
-      </button>
+<button onclick="exportManuscript()">
+Export Manuscript TXT
+</button>
 
-      <div class="small">
-        Chapters: ${chapters.length}
-        | Build ${ENGINE_VERSION}
-      </div>
-    `;
+<div class="small">
+Chapters: ${chapters.length}
+| Build ${ENGINE_VERSION}
+</div>
+`;
 }
 
 function switchChapter(id){
 
-  activeWorld.manuscript.activeChapter=id;
+activeWorld.manuscript.activeChapter=id;
 
-  saveWorld();
+saveWorld();
 
-  if(currentModule==="manuscript"){
-    renderManuscript();
-  }
+renderManuscript();
 }
 
 function addChapter(){
 
-  const n=
-    activeWorld.manuscript.chapters.length+1;
+const n=
+activeWorld.manuscript.chapters.length+1;
 
-  const ch={
-    id:"chapter_"+Date.now(),
-    title:"Chapter "+n,
-    body:""
-  };
+const ch={
+id:"chapter_"+Date.now(),
+title:"Chapter "+n,
+body:""
+};
 
-  activeWorld.manuscript.chapters.push(ch);
+activeWorld.manuscript.chapters.push(ch);
 
-  activeWorld.manuscript.activeChapter=ch.id;
+activeWorld.manuscript.activeChapter=ch.id;
 
-  saveWorld();
+saveWorld();
 
-  renderManuscript();
+renderManuscript();
 }
 
 function deleteChapter(){
 
-  const chapters=
-    activeWorld.manuscript.chapters;
+const chapters=
+activeWorld.manuscript.chapters;
 
-  if(chapters.length<=1){
-    return alert(
-      "At least one chapter must remain."
-    );
-  }
+if(chapters.length<=1){
+return alert(
+"At least one chapter must remain."
+);
+}
 
-  if(!confirm("Delete current chapter?"))return;
+if(!confirm("Delete chapter?"))return;
 
-  const id=
-    activeWorld.manuscript.activeChapter;
+const id=
+activeWorld.manuscript.activeChapter;
 
-  activeWorld.manuscript.chapters=
-    chapters.filter(c=>c.id!==id);
+activeWorld.manuscript.chapters=
+chapters.filter(c=>c.id!==id);
 
-  activeWorld.manuscript.activeChapter=
-    activeWorld.manuscript.chapters[0].id;
+activeWorld.manuscript.activeChapter=
+activeWorld.manuscript.chapters[0].id;
 
-  saveWorld();
+saveWorld();
 
-  renderManuscript();
+renderManuscript();
 }
 
 function updateChapterTitle(v){
 
-  currentChapter().title=v;
+currentChapter().title=v;
 
-  saveWorld();
+saveWorld();
 }
 
 function updateChapterBody(v){
 
-  currentChapter().body=v;
+currentChapter().body=v;
 
-  saveWorld();
+saveWorld();
 }
 
 function exportManuscript(){
 
-  const text=
-    activeWorld.manuscript.chapters
-    .map((c,i)=>`
+const text=
+activeWorld.manuscript.chapters
+.map((c,i)=>`
 ${i+1}. ${c.title}
 
 ${c.body}
-    `).join("\n\n---\n\n");
+`).join("\n\n---\n\n");
 
-  downloadFile(
-    activeWorld.meta.name
-      .replace(/\s+/g,"_")
-      +"_manuscript.txt",
-    text,
-    "text/plain"
-  );
+downloadFile(
+activeWorld.meta.name
+.replace(/\s+/g,"_")
++"_manuscript.txt",
+text,
+"text/plain"
+);
 }
 
 /* ======================================================
-   ENTRY ARCHIVE
+ENTRY ARCHIVE
 ====================================================== */
 
 function renderEntries(){
 
-  document.getElementById("screen")
-    .innerHTML=`
-      <h1>Entry Archive</h1>
+document.getElementById("screen").innerHTML=`
 
-      <div class="card">
-        Existing Entry Archive system stable.
-      </div>
-    `;
+<h1>Entry Archive</h1>
+
+<div class="grid">
+
+<input
+id="entryTitle"
+placeholder="Entry title"
+>
+
+<select id="entryType">
+<option>Dialogue</option>
+<option>SFX</option>
+<option>Atmosphere</option>
+<option>Combat</option>
+<option>Emotion</option>
+<option>Horror</option>
+<option>Transition</option>
+<option>Monologue</option>
+</select>
+
+</div>
+
+<input
+id="entryTags"
+placeholder="Tags separated by commas"
+>
+
+<textarea
+id="entryBody"
+placeholder="Write entry..."
+></textarea>
+
+<button onclick="addEntry()">
+Add Entry
+</button>
+
+<input
+id="entrySearch"
+placeholder="Search entries..."
+oninput="filterEntries(this.value)"
+>
+
+<div id="entryResults">
+${renderEntryCards(activeWorld.entries)}
+</div>
+`;
+}
+
+function renderEntryCards(entries){
+
+if(!entries.length){
+return `
+<div class="card">
+No entries created.
+</div>
+`;
+}
+
+return entries.map((e,i)=>`
+
+<div class="card">
+
+<b>
+${escapeHTML(e.title)}
+</b>
+
+<div class="entryMeta">
+Type: ${escapeHTML(e.type)}
+</div>
+
+<p>
+${escapeHTML(e.body)}
+</p>
+
+<div>
+${
+e.tags.map(tag=>`
+<span class="entryTag">
+${escapeHTML(tag)}
+</span>
+`).join("")
+}
+</div>
+
+<button onclick="sendEntryToManuscript(${i})">
+Send to Manuscript
+</button>
+
+<button
+class="danger"
+onclick="deleteEntry(${i})"
+>
+Delete
+</button>
+
+</div>
+
+`).join("");
+}
+
+function addEntry(){
+
+const title=
+document.getElementById("entryTitle")
+.value.trim();
+
+const type=
+document.getElementById("entryType")
+.value;
+
+const tags=
+document.getElementById("entryTags")
+.value
+.split(",")
+.map(t=>t.trim())
+.filter(Boolean);
+
+const body=
+document.getElementById("entryBody")
+.value.trim();
+
+if(!title||!body){
+return alert(
+"Entry title and body required."
+);
+}
+
+activeWorld.entries.unshift({
+id:"entry_"+Date.now(),
+title,
+type,
+tags,
+body,
+createdAt:new Date().toISOString()
+});
+
+saveWorld();
+
+renderEntries();
+}
+
+function filterEntries(query){
+
+query=query.toLowerCase().trim();
+
+const results=
+activeWorld.entries.filter(e=>
+JSON.stringify(e)
+.toLowerCase()
+.includes(query)
+);
+
+document.getElementById("entryResults")
+.innerHTML=
+renderEntryCards(results);
+}
+
+function sendEntryToManuscript(i){
+
+const e=activeWorld.entries[i];
+
+currentChapter().body+=
+"\n\n"+e.body;
+
+saveWorld();
+
+alert("Entry sent to manuscript.");
+}
+
+function deleteEntry(i){
+
+if(!confirm("Delete entry?"))return;
+
+activeWorld.entries.splice(i,1);
+
+saveWorld();
+
+renderEntries();
 }
 
 /* ======================================================
-   CHARACTER VAULT v1.3
+CHARACTER VAULT
 ====================================================== */
 
 function renderCharacters(){
 
-  document.getElementById("screen")
-    .innerHTML=`
+document.getElementById("screen").innerHTML=`
 
-      <h1>Character Vault</h1>
+<h1>Character Vault</h1>
 
-      <input
-        id="charSearch"
-        placeholder="Search characters..."
-        oninput="filterCharacters(this.value)"
-      >
+<input
+id="charSearch"
+placeholder="Search characters..."
+oninput="filterCharacters(this.value)"
+>
 
-      <div class="characterSection">
-        <h4>Profile Vault</h4>
+<div class="characterSection">
 
-        <div class="grid">
+<h4>Profile Vault</h4>
 
-          <input id="charName" placeholder="Name">
-          <input id="charAge" placeholder="Age">
-          <input id="charFaction" placeholder="Faction">
-          <input id="charRank" placeholder="Rank">
+<div class="grid">
 
-        </div>
+<input id="charName" placeholder="Name">
+<input id="charAge" placeholder="Age">
+<input id="charFaction" placeholder="Faction">
+<input id="charRank" placeholder="Rank">
 
-        <textarea
-          id="charAppearance"
-          placeholder="Appearance"
-        ></textarea>
-      </div>
+</div>
 
-      <div class="characterSection">
+<textarea
+id="charAppearance"
+placeholder="Appearance"
+></textarea>
 
-        <h4>Psyche Vault</h4>
+</div>
 
-        <textarea
-          id="charMotives"
-          placeholder="Motives"
-        ></textarea>
+<div class="characterSection">
 
-        <textarea
-          id="charFlaws"
-          placeholder="Fatal flaws"
-        ></textarea>
+<h4>Psyche Vault</h4>
 
-        <textarea
-          id="charTriggers"
-          placeholder="Emotional triggers"
-        ></textarea>
+<textarea
+id="charMotives"
+placeholder="Motives"
+></textarea>
 
-        <input
-          id="charBreaking"
-          placeholder="Breaking point"
-        >
+<textarea
+id="charFlaws"
+placeholder="Fatal flaws"
+></textarea>
 
-      </div>
+<textarea
+id="charTriggers"
+placeholder="Emotional triggers"
+></textarea>
 
-      <div class="characterSection">
+<input
+id="charBreaking"
+placeholder="Breaking point"
+>
 
-        <h4>History Vault</h4>
+</div>
 
-        <textarea
-          id="charTrauma"
-          placeholder="Trauma / past events"
-        ></textarea>
+<div class="characterSection">
 
-        <textarea
-          id="charRelations"
-          placeholder="Relationships / alliances"
-        ></textarea>
+<h4>History Vault</h4>
 
-        <textarea
-          id="charLawTies"
-          placeholder="World law ties"
-        ></textarea>
+<textarea
+id="charTrauma"
+placeholder="Trauma"
+></textarea>
 
-      </div>
+<textarea
+id="charRelations"
+placeholder="Relationships"
+></textarea>
 
-      <input
-        id="charTags"
-        placeholder="Tags separated by commas"
-      >
+<textarea
+id="charLawTies"
+placeholder="World law ties"
+></textarea>
 
-      <button onclick="addCharacter()">
-        Add Character
-      </button>
+</div>
 
-      <div id="characterResults">
-        ${
-          renderCharacterCards(
-            activeWorld.characters
-          )
-        }
-      </div>
-    `;
+<input
+id="charTags"
+placeholder="Tags separated by commas"
+>
+
+<button onclick="addCharacter()">
+Add Character
+</button>
+
+<div id="characterResults">
+${renderCharacterCards(activeWorld.characters)}
+</div>
+`;
 }
 
 function renderCharacterCards(chars){
 
-  if(!chars.length){
-    return `
-      <div class="card">
-        No characters created.
-      </div>
-    `;
-  }
+if(!chars.length){
+return `
+<div class="card">
+No characters created.
+</div>
+`;
+}
 
-  return chars.map((c,i)=>`
+return chars.map((c,i)=>`
 
-    <div class="card">
+<div class="card">
 
-      <b>
-        ${escapeHTML(c.profile.name)}
-      </b>
+<b>
+${escapeHTML(c.profile.name)}
+</b>
 
-      <div class="entryMeta">
-        ${escapeHTML(c.profile.faction)}
-        | ${escapeHTML(c.profile.rank)}
-      </div>
+<div class="entryMeta">
+${escapeHTML(c.profile.faction)}
+| ${escapeHTML(c.profile.rank)}
+</div>
 
-      <div class="characterSection">
+<div class="characterSection">
 
-        <h4>Profile Vault</h4>
+<h4>Profile Vault</h4>
 
-        <p>
-          ${
-            escapeHTML(
-              c.profile.appearance
-            )
-          }
-        </p>
+<p>
+${escapeHTML(c.profile.appearance)}
+</p>
 
-      </div>
+</div>
 
-      <div class="characterSection">
+<div class="characterSection">
 
-        <h4>Psyche Vault</h4>
+<h4>Psyche Vault</h4>
 
-        <p>
-          <b>Motives:</b>
-          ${
-            escapeHTML(
-              c.psyche.motives
-            )
-          }
-        </p>
+<p>
+<b>Motives:</b>
+${escapeHTML(c.psyche.motives)}
+</p>
 
-        <p>
-          <b>Flaws:</b>
-          ${
-            escapeHTML(
-              c.psyche.flaws
-            )
-          }
-        </p>
+<p>
+<b>Flaws:</b>
+${escapeHTML(c.psyche.flaws)}
+</p>
 
-      </div>
+</div>
 
-      <div class="characterSection">
+<div class="characterSection">
 
-        <h4>History Vault</h4>
+<h4>History Vault</h4>
 
-        <p>
-          ${
-            escapeHTML(
-              c.history.trauma
-            )
-          }
-        </p>
+<p>
+${escapeHTML(c.history.trauma)}
+</p>
 
-      </div>
+</div>
 
-      <div>
-        ${
-          c.tags.map(tag=>`
-            <span class="entryTag">
-              ${escapeHTML(tag)}
-            </span>
-          `).join("")
-        }
-      </div>
+<div>
+${
+c.tags.map(tag=>`
+<span class="entryTag">
+${escapeHTML(tag)}
+</span>
+`).join("")
+}
+</div>
 
-      <button onclick="injectCharacter(${i})">
-        Send to Manuscript
-      </button>
+<button onclick="injectCharacter(${i})">
+Send to Manuscript
+</button>
 
-      <button
-        class="danger"
-        onclick="deleteCharacter(${i})"
-      >
-        Delete
-      </button>
+<button
+class="danger"
+onclick="deleteCharacter(${i})"
+>
+Delete
+</button>
 
-    </div>
+</div>
 
-  `).join("");
+`).join("");
 }
 
 function addCharacter(){
 
-  const character={
+const character={
 
-    id:"char_"+Date.now(),
+id:"char_"+Date.now(),
 
-    profile:{
-      name:document.getElementById("charName").value.trim(),
-      age:document.getElementById("charAge").value.trim(),
-      faction:document.getElementById("charFaction").value.trim(),
-      rank:document.getElementById("charRank").value.trim(),
-      appearance:document.getElementById("charAppearance").value.trim()
-    },
+profile:{
+name:document.getElementById("charName").value.trim(),
+age:document.getElementById("charAge").value.trim(),
+faction:document.getElementById("charFaction").value.trim(),
+rank:document.getElementById("charRank").value.trim(),
+appearance:document.getElementById("charAppearance").value.trim()
+},
 
-    psyche:{
-      motives:document.getElementById("charMotives").value.trim(),
-      flaws:document.getElementById("charFlaws").value.trim(),
-      triggers:document.getElementById("charTriggers").value.trim(),
-      breaking:document.getElementById("charBreaking").value.trim()
-    },
+psyche:{
+motives:document.getElementById("charMotives").value.trim(),
+flaws:document.getElementById("charFlaws").value.trim(),
+triggers:document.getElementById("charTriggers").value.trim(),
+breaking:document.getElementById("charBreaking").value.trim()
+},
 
-    history:{
-      trauma:document.getElementById("charTrauma").value.trim(),
-      relations:document.getElementById("charRelations").value.trim(),
-      lawTies:document.getElementById("charLawTies").value.trim()
-    },
+history:{
+trauma:document.getElementById("charTrauma").value.trim(),
+relations:document.getElementById("charRelations").value.trim(),
+lawTies:document.getElementById("charLawTies").value.trim()
+},
 
-    tags:
-      document.getElementById("charTags")
-      .value
-      .split(",")
-      .map(t=>t.trim())
-      .filter(Boolean),
+tags:
+document.getElementById("charTags")
+.value
+.split(",")
+.map(t=>t.trim())
+.filter(Boolean),
 
-    createdAt:new Date().toISOString()
-  };
+createdAt:new Date().toISOString()
+};
 
-  if(!character.profile.name){
-    return alert(
-      "Character name required."
-    );
-  }
+if(!character.profile.name){
+return alert("Character name required.");
+}
 
-  activeWorld.characters.unshift(character);
+activeWorld.characters.unshift(character);
 
-  saveWorld();
+saveWorld();
 
-  renderCharacters();
+renderCharacters();
 }
 
 function filterCharacters(query){
 
-  query=query.toLowerCase().trim();
+query=query.toLowerCase().trim();
 
-  const results=
-    activeWorld.characters.filter(c=>
-      JSON.stringify(c)
-      .toLowerCase()
-      .includes(query)
-    );
+const results=
+activeWorld.characters.filter(c=>
+JSON.stringify(c)
+.toLowerCase()
+.includes(query)
+);
 
-  document.getElementById("characterResults")
-    .innerHTML=
-      renderCharacterCards(results);
+document.getElementById("characterResults")
+.innerHTML=
+renderCharacterCards(results);
 }
 
 function injectCharacter(i){
 
-  const c=activeWorld.characters[i];
+const c=activeWorld.characters[i];
 
-  currentChapter().body+=`
+currentChapter().body+=`
 
 ${c.profile.name}
 
@@ -1217,346 +1330,341 @@ Flaws:
 ${c.psyche.flaws}
 `;
 
-  saveWorld();
+saveWorld();
 
-  alert("Character sent to manuscript.");
+alert("Character sent to manuscript.");
 }
 
 function deleteCharacter(i){
 
-  if(!confirm("Delete character?"))return;
+if(!confirm("Delete character?"))return;
 
-  activeWorld.characters.splice(i,1);
+activeWorld.characters.splice(i,1);
 
-  saveWorld();
+saveWorld();
 
-  renderCharacters();
+renderCharacters();
 }
 
 /* ======================================================
-   SIMPLE MODULES
+SIMPLE MODULES
 ====================================================== */
 
 function renderLore(){
-  renderSimpleModule(
-    "Lore Database",
-    "lore",
-    ["title","type","body"]
-  );
+renderSimpleModule(
+"Lore Database",
+"lore",
+["title","type","body"]
+);
 }
 
 function renderChronology(){
-  renderSimpleModule(
-    "Chronology Matrix",
-    "chronology",
-    ["title","marker","chapter","body"]
-  );
+renderSimpleModule(
+"Chronology Matrix",
+"chronology",
+["title","marker","chapter","body"]
+);
 }
 
 function renderSimpleModule(title,key,fields){
 
-  document.getElementById("screen")
-    .innerHTML=`
-      <h1>${title}</h1>
+document.getElementById("screen")
+.innerHTML=`
+<h1>${title}</h1>
 
-      <div class="grid">
-        ${
-          fields.map(f=>`
-            <input
-              id="field_${f}"
-              placeholder="${f}"
-            >
-          `).join("")
-        }
-      </div>
+<div class="grid">
+${
+fields.map(f=>`
+<input
+id="field_${f}"
+placeholder="${f}"
+>
+`).join("")
+}
+</div>
 
-      <button
-        onclick='addItem(
-          "${key}",
-          ${JSON.stringify(fields)}
-        )'
-      >
-        Add Entry
-      </button>
+<button
+onclick='addItem(
+"${key}",
+${JSON.stringify(fields)}
+)'
+>
+Add Entry
+</button>
 
-      ${
-        activeWorld[key]
-        .map((item,i)=>`
+${
+activeWorld[key].map((item,i)=>`
 
-          <div class="card">
+<div class="card">
 
-            <b>
-              ${
-                escapeHTML(
-                  item.title||
-                  item.name||
-                  "Untitled"
-                )
-              }
-            </b>
+<b>
+${
+escapeHTML(
+item.title||
+item.name||
+"Untitled"
+)
+}
+</b>
 
-            <p>
-              ${
-                escapeHTML(
-                  item.body||
-                  ""
-                )
-              }
-            </p>
+<p>
+${
+escapeHTML(
+item.body||
+""
+)
+}
+</p>
 
-            <button
-              onclick='sendToManuscript(
-                "${key}",
-                ${i}
-              )'
-            >
-              Send to Manuscript
-            </button>
+<button
+onclick='sendToManuscript(
+"${key}",
+${i}
+)'
+>
+Send to Manuscript
+</button>
 
-            <button
-              class="danger"
-              onclick='removeItem(
-                "${key}",
-                ${i}
-              )'
-            >
-              Delete
-            </button>
+<button
+class="danger"
+onclick='removeItem(
+"${key}",
+${i}
+)'
+>
+Delete
+</button>
 
-          </div>
+</div>
 
-        `).join("")
-      }
-    `;
+`).join("")
+}
+`;
 }
 
 function addItem(key,fields){
 
-  const item={
-    id:key+"_"+Date.now()
-  };
+const item={
+id:key+"_"+Date.now()
+};
 
-  fields.forEach(f=>{
-    item[f]=
-      document.getElementById(
-        "field_"+f
-      ).value;
-  });
+fields.forEach(f=>{
+item[f]=
+document.getElementById(
+"field_"+f
+).value;
+});
 
-  activeWorld[key].push(item);
+activeWorld[key].push(item);
 
-  saveWorld();
+saveWorld();
 
-  showModule(currentModule);
+showModule(currentModule);
 }
 
 function removeItem(key,i){
 
-  activeWorld[key].splice(i,1);
+activeWorld[key].splice(i,1);
 
-  saveWorld();
+saveWorld();
 
-  showModule(currentModule);
+showModule(currentModule);
 }
 
 function sendToManuscript(key,i){
 
-  const item=activeWorld[key][i];
+const item=activeWorld[key][i];
 
-  currentChapter().body+=
-    "\n\n"+
-    (
-      item.body||
-      item.title||
-      ""
-    );
+currentChapter().body+=
+"\n\n"+
+(item.body||item.title||"");
 
-  saveWorld();
+saveWorld();
 
-  alert("Sent to manuscript.");
+alert("Sent to manuscript.");
 }
 
 /* ======================================================
-   DIAGNOSTICS
+DIAGNOSTICS
 ====================================================== */
 
 function renderDiagnostics(){
 
-  const alerts=[];
+const alerts=[];
 
-  if(activeWorld.lore.length===0){
-    alerts.push("No lore entries created.");
-  }
+if(activeWorld.lore.length===0){
+alerts.push("No lore entries created.");
+}
 
-  if(activeWorld.characters.length===0){
-    alerts.push("No characters created.");
-  }
+if(activeWorld.characters.length===0){
+alerts.push("No characters created.");
+}
 
-  document.getElementById("screen")
-    .innerHTML=`
+document.getElementById("screen")
+.innerHTML=`
 
-      <h1>
-        Diagnostics / Law Matrix
-      </h1>
+<h1>
+Diagnostics / Law Matrix
+</h1>
 
-      <div class="card">
-        <b>World Stability:</b>
-        ${activeWorld.worldState.stability}%
-      </div>
+<div class="card">
+<b>World Stability:</b>
+${activeWorld.worldState.stability}%
+</div>
 
-      ${
-        alerts.length
-        ?alerts.map(a=>`
-          <div class="card alert">
-            ⚠ ${escapeHTML(a)}
-          </div>
-        `).join("")
-        :`
-          <div class="card">
-            Stable foundation.
-          </div>
-        `
-      }
-    `;
+${
+alerts.length
+?alerts.map(a=>`
+<div class="card alert">
+⚠ ${escapeHTML(a)}
+</div>
+`).join("")
+:`
+<div class="card">
+Stable foundation.
+</div>
+`
+}
+`;
 }
 
 function renderReference(){
 
-  document.getElementById("screen")
-    .innerHTML=`
-      <h1>
-        Global Reference Vault
-      </h1>
+document.getElementById("screen")
+.innerHTML=`
+<h1>
+Global Reference Vault
+</h1>
 
-      <div class="card">
-        Dictionary/thesaurus integration
-        arrives in future builds.
-      </div>
-    `;
+<div class="card">
+Dictionary/thesaurus integration
+arrives in future builds.
+</div>
+`;
 }
 
 /* ======================================================
-   EXPORT / IMPORT
+EXPORT / IMPORT
 ====================================================== */
 
 function downloadFile(name,content,type){
 
-  const blob=new Blob([content],{type});
+const blob=new Blob([content],{type});
 
-  const a=document.createElement("a");
+const a=document.createElement("a");
 
-  a.href=URL.createObjectURL(blob);
+a.href=URL.createObjectURL(blob);
 
-  a.download=name;
+a.download=name;
 
-  a.click();
+a.click();
 
-  URL.revokeObjectURL(a.href);
+URL.revokeObjectURL(a.href);
 }
 
 function extractCore(){
 
-  if(!activeWorld){
-    return alert("No active world.");
-  }
+if(!activeWorld){
+return alert("No active world.");
+}
 
-  saveWorld();
+saveWorld();
 
-  downloadFile(
-    activeWorld.meta.name
-      .replace(/\s+/g,"_")
-      +".oce.json",
+downloadFile(
+activeWorld.meta.name
+.replace(/\s+/g,"_")
++".oce.json",
 
-    JSON.stringify(activeWorld,null,2),
+JSON.stringify(activeWorld,null,2),
 
-    "application/json"
-  );
+"application/json"
+);
 }
 
 function injectCore(e){
 
-  const file=e.target.files[0];
+const file=e.target.files[0];
 
-  if(!file)return;
+if(!file)return;
 
-  const r=new FileReader();
+const r=new FileReader();
 
-  r.onload=()=>{
+r.onload=()=>{
 
-    try{
+try{
 
-      const data=JSON.parse(r.result);
+const data=JSON.parse(r.result);
 
-      if(!data.meta||!data.meta.name){
-        throw Error("Invalid save.");
-      }
+if(!data.meta||!data.meta.name){
+throw Error("Invalid save.");
+}
 
-      data.meta.id=
-        "oce_"+Date.now();
+data.meta.id=
+"oce_"+Date.now();
 
-      data.meta.updatedAt=
-        new Date().toISOString();
+data.meta.updatedAt=
+new Date().toISOString();
 
-      localStorage.setItem(
-        projectKey(data.meta.id),
-        JSON.stringify(data)
-      );
+localStorage.setItem(
+projectKey(data.meta.id),
+JSON.stringify(data)
+);
 
-      const index=getIndex();
+const index=getIndex();
 
-      index.push({
-        id:data.meta.id,
-        name:data.meta.name,
-        updatedAt:data.meta.updatedAt
-      });
+index.push({
+id:data.meta.id,
+name:data.meta.name,
+updatedAt:data.meta.updatedAt
+});
 
-      setIndex(index);
+setIndex(index);
 
-      renderWorldList();
+renderWorldList();
 
-      loadWorld(data.meta.id);
+loadWorld(data.meta.id);
 
-    }catch(err){
+}catch(err){
 
-      alert("Forge Core Inject failed.");
+alert("Forge Core Inject failed.");
 
-    }
-  };
+}
+};
 
-  r.readAsText(file);
+r.readAsText(file);
 }
 
 /* ======================================================
-   AUTOSAVE
+AUTOSAVE
 ====================================================== */
 
 setInterval(()=>{
-  if(activeWorld){
-    saveWorld();
-  }
+if(activeWorld){
+saveWorld();
+}
 },60000);
 
 window.addEventListener("beforeunload",()=>{
-  if(activeWorld){
-    saveWorld();
-  }
+if(activeWorld){
+saveWorld();
+}
 });
 
 /* ======================================================
-   BOOT
+BOOT
 ====================================================== */
 
 function boot(){
 
-  renderWorldList();
+renderWorldList();
 
-  const index=getIndex();
+const index=getIndex();
 
-  if(index[0]){
-    loadWorld(index[0].id);
-  }else{
-    welcomeScreen();
-  }
+if(index[0]){
+loadWorld(index[0].id);
+}else{
+welcomeScreen();
+}
 }
 
 boot();
