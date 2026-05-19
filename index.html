@@ -1,296 +1,474 @@
-html = r'''<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Gravemarch Engine E13.1</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Offline Creator Engine</title>
 <style>
-/*
-Gravemarch Engine E13.1 — Product Foundation Refactor
-© 2026 Philip Dookie. All rights reserved.
-Mission: A Tool for the Last True Creators.
-Offline-only. No external requests. No dependencies.
-*/
-:root{--bg:#030303;--panel:#101010;--panel2:#161616;--line:#2a2a2a;--text:#ededed;--muted:#9a9a9a;--ok:#7fffd4;--bad:#8b0000;--warn:#ffbf47}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;height:100vh;display:flex;overflow:hidden}
-aside{width:310px;background:#070707;border-right:1px solid var(--line);padding:16px;overflow:auto}
-main{flex:1;padding:18px;overflow:auto}
-h1{font-size:24px;margin:0 0 4px;color:var(--ok)}h2{font-size:18px;margin:0 0 14px;color:var(--muted)}
-button{background:#111;border:1px solid var(--line);color:var(--text);padding:11px;border-radius:8px;cursor:pointer;font-weight:bold}
-button:hover{border-color:var(--ok)}.nav{width:100%;margin:5px 0;text-align:left}.danger{border-color:var(--bad);color:#ff9a9a}.ok{color:var(--ok)}
-.panel{display:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}.active{display:block}
-.card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-input,textarea,select{width:100%;background:#050505;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;margin:6px 0}
-textarea{min-height:88px}.log{border-left:4px solid var(--ok);background:#151515;padding:10px;border-radius:8px;margin:8px 0;white-space:pre-wrap}
-.alert{border-left-color:var(--bad)}.warn{border-left-color:var(--warn)}.small{font-size:12px;color:var(--muted)}
-.badge{display:inline-block;border:1px solid var(--line);border-radius:20px;padding:4px 8px;margin:2px;color:var(--ok);font-size:12px}
-hr{border:0;border-top:1px solid var(--line);margin:14px 0}
-@media(max-width:850px){body{display:block;height:auto;overflow:auto}aside{width:100%;height:auto}main{overflow:visible}.grid{grid-template-columns:1fr}}
+:root{
+  --bg:#050607;
+  --panel:#101316;
+  --panel2:#15191d;
+  --line:#2b3338;
+  --crimson:#8b1024;
+  --crimson2:#d7263d;
+  --mint:#67ffbf;
+  --text:#e7eee9;
+  --muted:#7f8b86;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  height:100vh;
+  overflow:hidden;
+}
+button,input,textarea,select{
+  font:inherit;
+}
+button{
+  background:#11171a;
+  color:var(--mint);
+  border:1px solid var(--line);
+  padding:9px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+button:hover{border-color:var(--mint)}
+.danger{color:#ffd8de;border-color:var(--crimson);background:#19070b}
+.app{
+  height:100vh;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+}
+.topbar,.statusbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  background:#080a0c;
+  border-bottom:1px solid var(--line);
+}
+.statusbar{
+  border-top:1px solid var(--line);
+  border-bottom:0;
+  color:var(--muted);
+  font-size:12px;
+}
+.brand{
+  color:var(--mint);
+  font-weight:800;
+  letter-spacing:.08em;
+}
+.sidebarToggle{
+  color:var(--crimson2);
+  font-size:22px;
+}
+.main{
+  display:grid;
+  grid-template-columns:0 1fr;
+  height:100%;
+  transition:.2s;
+}
+.main.open{grid-template-columns:310px 1fr}
+.sidebar{
+  overflow:auto;
+  background:#090d10;
+  border-right:1px solid var(--line);
+  padding:12px;
+}
+.group{
+  border:1px solid var(--line);
+  background:var(--panel);
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:10px;
+}
+.group h3{
+  margin:0 0 8px;
+  font-size:13px;
+  color:var(--mint);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.group button,.group input,.group select{
+  width:100%;
+  margin:4px 0;
+}
+.workspace{
+  overflow:auto;
+  padding:18px;
+}
+.panel{
+  max-width:1100px;
+  margin:auto;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 0 30px rgba(0,0,0,.25);
+}
+.panel h1{
+  margin-top:0;
+  color:var(--mint);
+}
+textarea,input,select{
+  width:100%;
+  background:#050708;
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+}
+textarea{
+  min-height:240px;
+  resize:vertical;
+  line-height:1.8;
+}
+.manuscript{
+  min-height:65vh;
+  font-size:18px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.card{
+  border:1px solid var(--line);
+  background:var(--panel2);
+  border-radius:12px;
+  padding:12px;
+  margin:10px 0;
+}
+.card b{color:var(--mint)}
+.alert{
+  border-color:var(--crimson);
+  color:#ffd9df;
+}
+.small{font-size:12px;color:var(--muted)}
+.hidden{display:none}
+.zen .topbar,.zen .sidebar,.zen .statusbar{display:none}
+.zen .main{grid-template-columns:1fr}
+.zen .workspace{padding:0}
+.zen .panel{
+  max-width:none;
+  min-height:100vh;
+  border:0;
+  border-radius:0;
+}
 </style>
 </head>
 <body>
-<aside>
-<h1>GRAVEMARCH</h1>
-<h2>E13.1 Product Foundation Refactor</h2>
-<div class="small">© 2026 Philip Dookie. All rights reserved.</div>
-<hr>
-<button class="nav" onclick="show('dash')">Command Dashboard</button>
-<button class="nav" onclick="show('lex')">Lexicon Synapse</button>
-<button class="nav" onclick="show('lore')">Lore Database</button>
-<button class="nav" onclick="show('chars')">Character Sandbox</button>
-<button class="nav" onclick="show('sim')">Interrogation Chat</button>
-<button class="nav" onclick="show('diag')">Logic Gates & Diagnostics</button>
-<button class="nav" onclick="show('save')">Save / Export</button>
-<button class="nav" onclick="show('security')">Product Security</button>
-<hr>
-<button class="nav danger" onclick="hardReset()">Hard Reset Local Data</button>
-</aside>
+<div class="app" id="app">
+  <div class="topbar">
+    <button class="sidebarToggle" onclick="toggleSidebar()">☰</button>
+    <div class="brand">OFFLINE CREATOR ENGINE</div>
+    <div class="small" id="activeWorld">No World Loaded</div>
+  </div>
 
-<main>
-<section id="dash" class="panel active">
-<h1>Offline Storytelling & Simulation Engine</h1>
-<h2>A Tool for the Last True Creators.</h2>
-<div class="card">
-<b>System Rules</b><br>
-<span class="badge">100% Offline</span><span class="badge">Zero Dependencies</span><span class="badge">Vanilla HTML/CSS/JS</span><span class="badge">LocalStorage</span><span class="badge">No Cloud Requests</span>
-</div>
-<div class="grid">
-<div class="card"><b>Kernel Status</b><div id="kernelStatus"></div></div>
-<div class="card"><b>Project Metrics</b><div id="metrics"></div></div>
-</div>
-<div class="card">
-<b>Consolidation Note</b>
-<p>This build converts the previous recursive layers into a stable product shell. The old systems are preserved as DNA: memory, emotion, trust, attachment, belonging, culture, civilization, diagnostics, and authorship now feed the actual app modules.</p>
-</div>
-</section>
+  <div class="main" id="main">
+    <aside class="sidebar">
+      <div class="group">
+        <h3>Franchise Tree</h3>
+        <input id="newWorldName" placeholder="New world name">
+        <button onclick="createWorld()">Create World</button>
+        <select id="worldSelect" onchange="loadWorld(this.value)"></select>
+        <button class="danger" onclick="deleteWorld()">Delete Active World</button>
+      </div>
 
-<section id="lex" class="panel">
-<h1>Lexicon Synapse</h1>
-<h2>Offline dictionary + thesaurus + custom lore search.</h2>
-<input id="lexQuery" placeholder="Search word or phrase">
-<button onclick="searchLexicon()">Search Synapse</button>
-<div id="lexOut"></div>
-</section>
+      <div class="group">
+        <h3>Modules</h3>
+        <button onclick="showModule('manuscript')">Manuscript Workspace</button>
+        <button onclick="showModule('lore')">Lore Database</button>
+        <button onclick="showModule('entries')">Entry Archive</button>
+        <button onclick="showModule('characters')">Character Vault</button>
+        <button onclick="showModule('chronology')">Chronology Matrix</button>
+        <button onclick="showModule('diagnostics')">Diagnostics</button>
+        <button onclick="showModule('reference')">Global Reference</button>
+      </div>
 
-<section id="lore" class="panel">
-<h1>Lore Database</h1>
-<h2>Local custom canon, phrases, rules, and worldbuilding notes.</h2>
-<input id="loreKey" placeholder="Lore Key / Keyword">
-<select id="loreType">
-<option>World Law</option><option>Faction</option><option>Character Note</option><option>Location</option><option>Magic/System Rule</option><option>Custom Phrase</option>
-</select>
-<textarea id="loreNote" placeholder="Lore note"></textarea>
-<button onclick="addLore()">Save Lore</button>
-<div id="loreOut"></div>
-</section>
+      <div class="group">
+        <h3>Forge Core</h3>
+        <button onclick="extractCore()">Forge Core Extract</button>
+        <input type="file" id="injectFile" accept=".json" onchange="injectCore(event)">
+        <button onclick="saveActiveWorld()">Manual Save</button>
+      </div>
 
-<section id="chars" class="panel">
-<h1>Character Sandbox</h1>
-<h2>Profile Vault + Psyche Vault + History Vault.</h2>
-<div class="grid">
-<div>
-<h3>Profile Vault</h3>
-<input id="cName" placeholder="Name">
-<input id="cFaction" placeholder="Faction">
-<textarea id="cAppearance" placeholder="Appearance"></textarea>
+      <div class="group">
+        <h3>Engine Governor</h3>
+        <button onclick="toggleZen()">Zen Mode Toggle</button>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <section class="panel" id="screen"></section>
+    </main>
+  </div>
+
+  <div class="statusbar">
+    <span id="saveStatus">Stable diagnostics online.</span>
+    <span>© 2026 Offline Creator Engine. All rights reserved.</span>
+  </div>
 </div>
-<div>
-<h3>Psyche Vault</h3>
-<input id="cMotive" placeholder="Core Motive">
-<input id="cTriggers" placeholder="Psychological / physiological triggers, comma-separated">
-<input id="cBreaking" placeholder="Breaking Points / Heat Limit">
-</div>
-</div>
-<h3>History Vault</h3>
-<textarea id="cHistory" placeholder="Past traumas, narrative anchors, world-law ties"></textarea>
-<input id="cThreshold" type="number" min="0" max="100" placeholder="Civilizational stability strike threshold, e.g. 35">
-<button onclick="addCharacter()">Save Character</button>
-<div id="charOut"></div>
-</section>
-
-<section id="sim" class="panel">
-<h1>Deterministic Interrogation Chat</h1>
-<h2>Offline character response logic. No AI calls. No cloud.</h2>
-<select id="chatChar"></select>
-<textarea id="chatIn" placeholder="Ask or confront the selected character"></textarea>
-<button onclick="interrogate()">Interrogate</button>
-<div id="chatOut"></div>
-</section>
-
-<section id="diag" class="panel">
-<h1>Narrative Logic Gates & Diagnostics</h1>
-<h2>World-law stability, character strike logic, plot-hole warnings.</h2>
-<input id="lawName" placeholder="World Law Name">
-<select id="lawState"><option>Stable</option><option>Broken</option><option>Contradicted</option><option>Under Stress</option></select>
-<textarea id="lawNote" placeholder="Law note / contradiction details"></textarea>
-<button onclick="addLaw()">Record World Law</button>
-<hr>
-<label>Civilizational Stability</label>
-<input id="civStability" type="number" min="0" max="100">
-<button onclick="runDiagnostics()">Run Diagnostics</button>
-<div id="diagOut"></div>
-</section>
-
-<section id="save" class="panel">
-<h1>Sovereign Save / Export</h1>
-<h2>Local ownership of project data.</h2>
-<button onclick="exportProject()">Export JSON</button>
-<input type="file" id="importFile" accept=".json" onchange="importProject(event)">
-<textarea id="exportBox" placeholder="Exported project JSON appears here"></textarea>
-</section>
-
-<section id="security" class="panel">
-<h1>Product Security Layer</h1>
-<h2>Release identity, copyright, and obfuscation prep.</h2>
-<div class="card">
-<b>Copyright Notice</b>
-<div class="log">© 2026 Philip Dookie. All rights reserved. Gravemarch Engine. A Tool for the Last True Creators.</div>
-</div>
-<div class="card">
-<b>Release Strategy</b>
-<ul>
-<li>Standalone offline asset.</li>
-<li>One-time payment. User keeps it forever.</li>
-<li>No subscriptions. No cloud dependency. No server overhead.</li>
-<li>Final public build should be obfuscated after testing.</li>
-<li>Trademark app name/logo before major commercial release.</li>
-</ul>
-</div>
-</section>
-</main>
 
 <script>
 /*
-Gravemarch Engine E13.1 — Product Foundation Refactor
-© 2026 Philip Dookie. All rights reserved.
-Offline-only local browser application.
+OFFLINE CREATOR ENGINE
+© 2026. All rights reserved.
+Pure offline HTML/CSS/JS foundation.
+No frameworks. No cloud. No external requests.
 */
 
-const KEY="gravemarch_e13_1_product";
-const starterDict={
-sovereign:{definition:"Having independent authority, control, or self-governing power.",synonyms:["independent","autonomous","self-ruling"],usage:"A sovereign creator owns their tools and creative direction."},
-continuity:{definition:"Consistent preservation of events, logic, identity, or sequence over time.",synonyms:["consistency","persistence","coherence"],usage:"Narrative continuity prevents contradictions between chapters."},
-lore:{definition:"Collected knowledge, history, rules, legends, and background of a fictional world.",synonyms:["mythos","worldbuilding","canon"],usage:"Strong lore grounds characters in the world."},
-motive:{definition:"The reason behind a character's action, desire, or decision.",synonyms:["drive","purpose","reason"],usage:"A clear motive prevents random character behavior."},
-diagnostic:{definition:"A process used to detect problems, instability, or errors.",synonyms:["analysis","inspection","check"],usage:"Diagnostics flag broken world laws."}
-};
+const ENGINE_VERSION="1.0.0-foundation";
+const INDEX_KEY="OCE_MASTER_INDEX";
+let activeId=null;
+let active=null;
+let currentModule="manuscript";
+let saveTimer=null;
 
-let S=JSON.parse(localStorage.getItem(KEY))||{
-meta:{name:"Untitled Project",created:new Date().toISOString(),version:"E13.1"},
-dict:starterDict,
-lore:[
-{key:"Gravemarch",type:"Brand",note:"Offline creator engine for storytelling, lore, simulation, and diagnostics."},
-{key:"World Law",type:"System Rule",note:"A fictional rule that must remain consistent unless intentionally broken and logged."}
-],
-characters:[],
-laws:[],
-civ:{stability:70},
-events:[]
-};
-
-function save(){localStorage.setItem(KEY,JSON.stringify(S));renderAll()}
-function log(x,type="ok"){S.events.push({t:new Date().toISOString(),x,type});localStorage.setItem(KEY,JSON.stringify(S))}
-function show(id){document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");renderAll()}
-function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
-function words(s){return String(s||"").toLowerCase().split(/[^a-z0-9']+/).filter(Boolean)}
-function hasAny(text,arr){let w=words(text);return arr.some(a=>w.includes(String(a).toLowerCase().trim()))}
-
-function renderAll(){renderMetrics();renderLore();renderChars();renderChatSelect();renderDiag()}
-function renderMetrics(){
-document.getElementById("kernelStatus").innerHTML=`<div class="log">OFFLINE MODE ACTIVE<br>No external requests. Local browser storage only.</div>`;
-document.getElementById("metrics").innerHTML=`Lore: ${S.lore.length}<br>Characters: ${S.characters.length}<br>World Laws: ${S.laws.length}<br>Events: ${S.events.length}<br>Stability: ${S.civ.stability}`;
-}
-
-function searchLexicon(){
-let q=document.getElementById("lexQuery").value.trim().toLowerCase(), d=S.dict[q], lore=S.lore.filter(x=>(x.key+" "+x.note+" "+x.type).toLowerCase().includes(q));
-let out="";
-if(d)out+=`<div class="card"><b>Standard Definition: ${esc(q)}</b><br>${esc(d.definition)}<br><br><b>Synonyms:</b> ${esc((d.synonyms||[]).join(", "))}<br><br><b>Usage:</b> ${esc(d.usage)}</div>`;
-else out+=`<div class="log warn">No standard dictionary entry found. Add a local dictionary database later in /data/dictionary.</div>`;
-out+=`<div class="card"><b>Custom Lore Matches</b>${lore.length?lore.map(x=>`<div class="log"><b>${esc(x.key)}</b> [${esc(x.type)}]<br>${esc(x.note)}</div>`).join(""):"<div class='log warn'>No lore match.</div>"}</div>`;
-document.getElementById("lexOut").innerHTML=out;
-}
-
-function addLore(){
-let key=loreKey.value.trim(),type=loreType.value,note=loreNote.value.trim();if(!key||!note)return;
-S.lore.push({key,type,note});log("Lore saved: "+key);save();loreKey.value=loreNote.value="";
-}
-function renderLore(){
-document.getElementById("loreOut").innerHTML=S.lore.slice().reverse().map(x=>`<div class="log"><b>${esc(x.key)}</b> [${esc(x.type)}]<br>${esc(x.note)}</div>`).join("");
-}
-
-function addCharacter(){
-let ch={
-name:cName.value.trim(),faction:cFaction.value.trim(),appearance:cAppearance.value.trim(),
-motive:cMotive.value.trim(),triggers:cTriggers.value.split(",").map(x=>x.trim()).filter(Boolean),
-breaking:cBreaking.value.trim(),history:cHistory.value.trim(),threshold:Number(cThreshold.value||35),
-memory:[],state:"stable"
-};
-if(!ch.name)return;
-S.characters.push(ch);log("Character saved: "+ch.name);save();
-["cName","cFaction","cAppearance","cMotive","cTriggers","cBreaking","cHistory","cThreshold"].forEach(id=>document.getElementById(id).value="")
-}
-function renderChars(){
-document.getElementById("charOut").innerHTML=S.characters.map(c=>`<div class="card"><b>${esc(c.name)}</b> — ${esc(c.faction)}<br><span class="small">Threshold: ${c.threshold}</span><br><b>Motive:</b> ${esc(c.motive)}<br><b>Triggers:</b> ${esc(c.triggers.join(", "))}<br><b>Breaking:</b> ${esc(c.breaking)}<br><b>History:</b> ${esc(c.history)}</div>`).join("");
-}
-function renderChatSelect(){
-let o=S.characters.map((c,i)=>`<option value="${i}">${esc(c.name)}</option>`).join("");
-document.getElementById("chatChar").innerHTML=o;
-}
-
-function interrogate(){
-let i=chatChar.value,msg=chatIn.value.trim();if(i===""||!msg)return;
-let c=S.characters[i], lower=msg.toLowerCase(), response="";
-let triggerHit=c.triggers.find(t=>lower.includes(t.toLowerCase()));
-if(triggerHit)response=`${c.name} reacts sharply. The word "${triggerHit}" touches a programmed trigger. Their motive resurfaces: ${c.motive}`;
-else if(hasAny(msg,words(c.history)))response=`${c.name} connects your question to their history. ${c.history}`;
-else if(lower.includes("why")||lower.includes("motive"))response=`${c.name}: "My motive is simple: ${c.motive}."`;
-else if(lower.includes("break")||lower.includes("limit"))response=`${c.name}: "My limit is ${c.breaking}. Push past that and the story changes."`;
-else response=`${c.name} remains controlled. Their current state is "${c.state}", guided by motive: ${c.motive}`;
-c.memory.push({q:msg,a:response,t:new Date().toISOString()});log("Interrogation: "+c.name);
-chatOut.innerHTML=`<div class="log"><b>You:</b> ${esc(msg)}<br><br><b>${esc(c.name)}:</b> ${esc(response)}</div>`+chatOut.innerHTML;
-chatIn.value="";save();
-}
-
-function addLaw(){
-let name=lawName.value.trim(),state=lawState.value,note=lawNote.value.trim();if(!name)return;
-S.laws.push({name,state,note,t:new Date().toISOString()});log("World law recorded: "+name+" = "+state,state==="Stable"?"ok":"warn");save();lawName.value=lawNote.value="";
-}
-function runDiagnostics(){
-S.civ.stability=Number(civStability.value||S.civ.stability||70);
-let broken=S.laws.filter(l=>["Broken","Contradicted","Under Stress"].includes(l.state));
-let out="";
-out+=broken.length?`<div class="log alert"><b>World Law Warnings:</b><br>${broken.map(l=>esc(l.name+" — "+l.state+": "+l.note)).join("<br>")}</div>`:`<div class="log">World laws stable.</div>`;
-S.characters.forEach(c=>{
-let lawTie=broken.find(l=>(c.history+" "+c.motive).toLowerCase().includes(l.name.toLowerCase()));
-if(S.civ.stability<=c.threshold||lawTie){
-c.state="preparing_to_strike";
-out+=`<div class="log alert"><b>${esc(c.name)} Triggered</b><br>Reason: ${S.civ.stability<=c.threshold?"civilizational stability below threshold. ":""}${lawTie?"linked world law broken: "+esc(lawTie.name):""}<br>Prompt: ${esc(c.name)} begins acting from motive: ${esc(c.motive)}</div>`;
-}else c.state="stable";
+const blankWorld=name=>({
+  meta:{
+    engine:"Offline Creator Engine",
+    version:ENGINE_VERSION,
+    id:"oce_"+Date.now(),
+    name:name||"Untitled World",
+    createdAt:new Date().toISOString(),
+    updatedAt:new Date().toISOString()
+  },
+  manifesto:"",
+  manuscript:{chapters:[{id:"ch_1",title:"Chapter 1",body:""}],activeChapter:"ch_1"},
+  lore:[],
+  entries:[],
+  characters:[],
+  chronology:[],
+  diagnostics:[],
+  worldState:{stability:100,laws:[]}
 });
-document.getElementById("diagOut").innerHTML=out;log("Diagnostics executed");save();
-}
-function renderDiag(){
-civStability.value=S.civ.stability;
-}
 
-function exportProject(){
-let data=JSON.stringify(S,null,2);
-exportBox.value=data;
-log("Project exported to JSON box");save();
+function getIndex(){
+  return JSON.parse(localStorage.getItem(INDEX_KEY)||"[]");
 }
-function importProject(e){
-let f=e.target.files[0];if(!f)return;
-let r=new FileReader();
-r.onload=()=>{try{S=JSON.parse(r.result);save();log("Project imported")}catch(err){alert("Invalid JSON import.")}};
-r.readAsText(f);
+function setIndex(index){
+  localStorage.setItem(INDEX_KEY,JSON.stringify(index));
 }
-function hardReset(){
-if(confirm("Erase all local Gravemarch E13.1 data?")){
-localStorage.removeItem(KEY);location.reload();
+function projectKey(id){
+  return "OCE_PROJECT_"+id;
 }
+function boot(){
+  renderWorldList();
+  const index=getIndex();
+  if(index[0]) loadWorld(index[0].id);
+  else showWelcome();
+  saveTimer=setInterval(()=>{if(active)saveActiveWorld(true)},60000);
+  window.addEventListener("beforeunload",()=>{if(active)saveActiveWorld(true)});
 }
-
-renderAll();
+function toggleSidebar(){
+  document.getElementById("main").classList.toggle("open");
+}
+function toggleZen(){
+  document.body.classList.toggle("zen");
+}
+function createWorld(){
+  const name=document.getElementById("newWorldName").value.trim();
+  if(!name)return alert("Enter a world name.");
+  const world=blankWorld(name);
+  const index=getIndex();
+  index.push({id:world.meta.id,name:world.meta.name,updatedAt:world.meta.updatedAt});
+  setIndex(index);
+  localStorage.setItem(projectKey(world.meta.id),JSON.stringify(world));
+  document.getElementById("newWorldName").value="";
+  renderWorldList();
+  loadWorld(world.meta.id);
+}
+function renderWorldList(){
+  const sel=document.getElementById("worldSelect");
+  const index=getIndex();
+  sel.innerHTML=index.map(w=>`<option value="${w.id}">${escapeHTML(w.name)}</option>`).join("");
+}
+function loadWorld(id){
+  if(!id)return;
+  if(active)saveActiveWorld(true);
+  const raw=localStorage.getItem(projectKey(id));
+  if(!raw)return;
+  activeId=id;
+  active=JSON.parse(raw);
+  document.getElementById("activeWorld").textContent="World: "+active.meta.name;
+  document.getElementById("worldSelect").value=id;
+  showModule(currentModule);
+}
+function saveActiveWorld(silent=false){
+  if(!active)return;
+  active.meta.updatedAt=new Date().toISOString();
+  localStorage.setItem(projectKey(active.meta.id),JSON.stringify(active));
+  const index=getIndex().map(w=>w.id===active.meta.id?{id:active.meta.id,name:active.meta.name,updatedAt:active.meta.updatedAt}:w);
+  setIndex(index);
+  renderWorldList();
+  document.getElementById("saveStatus").textContent=silent?"Autosaved.":"Manual save complete.";
+}
+function deleteWorld(){
+  if(!active)return;
+  if(!confirm("Delete this world from browser storage? Export first if needed."))return;
+  localStorage.removeItem(projectKey(active.meta.id));
+  setIndex(getIndex().filter(w=>w.id!==active.meta.id));
+  active=null;activeId=null;
+  renderWorldList();
+  showWelcome();
+}
+function extractCore(){
+  if(!active)return alert("No world loaded.");
+  saveActiveWorld(true);
+  const blob=new Blob([JSON.stringify(active,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=active.meta.name.replace(/\s+/g,"_")+".oce.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function injectCore(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const data=JSON.parse(reader.result);
+      if(!data.meta||!data.meta.id)throw Error("Invalid save.");
+      data.meta.id="oce_"+Date.now();
+      data.meta.updatedAt=new Date().toISOString();
+      const index=getIndex();
+      index.push({id:data.meta.id,name:data.meta.name+" Injected",updatedAt:data.meta.updatedAt});
+      data.meta.name=data.meta.name+" Injected";
+      setIndex(index);
+      localStorage.setItem(projectKey(data.meta.id),JSON.stringify(data));
+      renderWorldList();
+      loadWorld(data.meta.id);
+    }catch(err){alert("Forge Core Inject failed. Invalid file.");}
+  };
+  reader.readAsText(file);
+}
+function showWelcome(){
+  document.getElementById("activeWorld").textContent="No World Loaded";
+  document.getElementById("screen").innerHTML=`
+    <h1>A Tool for the Last True Creators.</h1>
+    <p>This is the clean offline foundation. Create a world to begin.</p>
+    <div class="card"><b>Status:</b> No cloud. No frameworks. No external requests.</div>
+  `;
+}
+function showModule(name){
+  currentModule=name;
+  if(!active&&name!=="reference")return showWelcome();
+  const map={
+    manuscript:renderManuscript,
+    lore:renderLore,
+    entries:renderEntries,
+    characters:renderCharacters,
+    chronology:renderChronology,
+    diagnostics:renderDiagnostics,
+    reference:renderReference
+  };
+  map[name]();
+}
+function renderManuscript(){
+  const ch=active.manuscript.chapters.find(c=>c.id===active.manuscript.activeChapter)||active.manuscript.chapters[0];
+  document.getElementById("screen").innerHTML=`
+    <h1>Manuscript Workspace</h1>
+    <input value="${escapeHTML(ch.title)}" oninput="updateChapterTitle(this.value)">
+    <textarea class="manuscript" oninput="updateChapterBody(this.value)" placeholder="Begin writing...">${escapeHTML(ch.body)}</textarea>
+    <button onclick="addChapter()">Add Chapter</button>
+    <button onclick="exportManuscript()">Export Manuscript TXT</button>
+    <div class="small">Kinetic formatting base: spacing and SFX are preserved as typed.</div>
+  `;
+}
+function updateChapterTitle(v){active.manuscript.chapters.find(c=>c.id===active.manuscript.activeChapter).title=v;saveActiveWorld(true)}
+function updateChapterBody(v){active.manuscript.chapters.find(c=>c.id===active.manuscript.activeChapter).body=v;saveActiveWorld(true)}
+function addChapter(){
+  const n=active.manuscript.chapters.length+1;
+  const ch={id:"ch_"+Date.now(),title:"Chapter "+n,body:""};
+  active.manuscript.chapters.push(ch);
+  active.manuscript.activeChapter=ch.id;
+  saveActiveWorld(true);renderManuscript();
+}
+function exportManuscript(){
+  const text=active.manuscript.chapters.map(c=>`${c.title}\n\n${c.body}`).join("\n\n---\n\n");
+  const blob=new Blob([text],{type:"text/plain"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=active.meta.name.replace(/\s+/g,"_")+"_manuscript.txt";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function renderLore(){renderListModule("Lore Database","lore",["title","type","body"])}
+function renderEntries(){renderListModule("Entry Archive","entries",["title","type","tone","body"])}
+function renderCharacters(){renderListModule("Character Vault","characters",["name","profile","psyche","history"])}
+function renderChronology(){renderListModule("Chronology Matrix","chronology",["title","marker","chapter","body"])}
+function renderDiagnostics(){
+  const alerts=[];
+  if(active.lore.length===0)alerts.push("No lore entries created.");
+  if(active.characters.length===0)alerts.push("No characters created.");
+  if(active.manuscript.chapters.every(c=>!c.body.trim()))alerts.push("Manuscript is empty.");
+  document.getElementById("screen").innerHTML=`
+    <h1>Diagnostics / Law Matrix</h1>
+    <div class="card"><b>World Stability:</b> ${active.worldState.stability}%</div>
+    ${alerts.map(a=>`<div class="card alert">⚠ ${escapeHTML(a)}</div>`).join("")||'<div class="card"><b>Stable:</b> No foundation conflicts detected.</div>'}
+  `;
+}
+function renderReference(){
+  document.getElementById("screen").innerHTML=`
+    <h1>Global Reference Vault</h1>
+    <input id="refSearch" placeholder="Search word or lore term..." oninput="searchReference(this.value)">
+    <div id="refResult" class="card">Dictionary/thesaurus file support comes later. Current base checks active world lore and entries.</div>
+  `;
+}
+function searchReference(q){
+  const box=document.getElementById("refResult");
+  if(!q.trim()){box.textContent="Enter a term.";return}
+  const term=q.toLowerCase();
+  const hits=active?[...active.lore,...active.entries].filter(x=>JSON.stringify(x).toLowerCase().includes(term)):[];
+  box.innerHTML=hits.length?hits.map(h=>`<div class="card"><b>${escapeHTML(h.title||h.name||"Entry")}</b><br>${escapeHTML(h.body||h.profile||"")}</div>`).join(""):"No active-world match found.";
+}
+function renderListModule(title,key,fields){
+  document.getElementById("screen").innerHTML=`
+    <h1>${title}</h1>
+    <div class="grid">${fields.map(f=>`<input id="f_${f}" placeholder="${f}">`).join("")}</div>
+    <textarea id="f_body_extra" placeholder="Main text / notes"></textarea>
+    <button onclick='addItem("${key}",${JSON.stringify(fields)})'>Add Entry</button>
+    <div>${active[key].map((item,i)=>`
+      <div class="card">
+        <b>${escapeHTML(item.title||item.name||item.type||"Untitled")}</b>
+        <p>${escapeHTML(item.body||item.profile||item.psyche||item.history||"")}</p>
+        <button onclick='sendToManuscript("${key}",${i})'>Send to Manuscript</button>
+        <button class="danger" onclick='removeItem("${key}",${i})'>Delete</button>
+      </div>`).join("")}</div>
+  `;
+}
+function addItem(key,fields){
+  const obj={id:key+"_"+Date.now(),createdAt:new Date().toISOString()};
+  fields.forEach(f=>obj[f]=document.getElementById("f_"+f)?.value||"");
+  const extra=document.getElementById("f_body_extra").value;
+  if(extra&&!obj.body)obj.body=extra;
+  active[key].push(obj);
+  saveActiveWorld(true);
+  showModule(currentModule);
+}
+function removeItem(key,i){
+  active[key].splice(i,1);
+  saveActiveWorld(true);
+  showModule(currentModule);
+}
+function sendToManuscript(key,i){
+  const item=active[key][i];
+  const text="\n\n"+(item.body||item.profile||item.psyche||item.history||item.title||item.name||"");
+  const ch=active.manuscript.chapters.find(c=>c.id===active.manuscript.activeChapter);
+  ch.body+=text;
+  saveActiveWorld(true);
+  alert("Sent to manuscript.");
+}
+function escapeHTML(s){
+  return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+}
+boot();
 </script>
 </body>
-</html>'''
+</html>
