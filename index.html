@@ -248,6 +248,19 @@ textarea{
   color:var(--muted);
 }
 
+.characterSection{
+  border-top:1px solid var(--line);
+  margin-top:12px;
+  padding-top:12px;
+}
+
+.characterSection h4{
+  margin:0 0 8px;
+  color:var(--mint);
+  font-size:13px;
+  letter-spacing:.05em;
+}
+
 .zen .topbar,
 .zen .statusbar,
 .zen .sidebar{
@@ -438,12 +451,16 @@ textarea{
 </div>
 
 <script>
-const ENGINE_VERSION="1.2.0";
+const ENGINE_VERSION="1.3.0";
 const MASTER_INDEX="OCE_MASTER_INDEX";
 
 let activeWorld=null;
 let activeWorldId=null;
 let currentModule="manuscript";
+
+/* ======================================================
+   CORE
+====================================================== */
 
 function getIndex(){
   return JSON.parse(localStorage.getItem(MASTER_INDEX)||"[]");
@@ -482,6 +499,10 @@ function toggleZen(){
   document.body.classList.toggle("zen");
 }
 
+/* ======================================================
+   WORLD TEMPLATE
+====================================================== */
+
 function blankWorld(name){
 
   return{
@@ -509,11 +530,11 @@ function blankWorld(name){
     },
 
     lore:[],
-    characters:[],
     chronology:[],
     diagnostics:[],
-
     entries:[],
+
+    characters:[],
 
     worldState:{
       stability:100,
@@ -521,6 +542,10 @@ function blankWorld(name){
     }
   };
 }
+
+/* ======================================================
+   WORLD MANAGEMENT
+====================================================== */
 
 function createWorld(){
 
@@ -558,20 +583,21 @@ function createWorld(){
 function renderWorldList(){
 
   const select=document.getElementById("worldSelect");
-  const index=getIndex();
 
-  select.innerHTML=index.map(w=>`
-    <option value="${w.id}">
-      ${escapeHTML(w.name)}
-    </option>
-  `).join("");
+  select.innerHTML=
+    getIndex().map(w=>`
+      <option value="${w.id}">
+        ${escapeHTML(w.name)}
+      </option>
+    `).join("");
 }
 
 function loadWorld(id){
 
   if(!id)return;
 
-  const raw=localStorage.getItem(projectKey(id));
+  const raw=
+    localStorage.getItem(projectKey(id));
 
   if(!raw)return;
 
@@ -579,7 +605,8 @@ function loadWorld(id){
   activeWorldId=id;
 
   document.getElementById("worldLabel")
-    .textContent="World: "+activeWorld.meta.name;
+    .textContent=
+      "World: "+activeWorld.meta.name;
 
   document.getElementById("worldSelect")
     .value=id;
@@ -617,9 +644,10 @@ function saveWorld(silent=true){
   renderChapterList();
 
   document.getElementById("saveStatus")
-    .textContent=silent
-    ?"Autosaved."
-    :"Manual save complete.";
+    .textContent=
+      silent
+      ?"Autosaved."
+      :"Manual save complete.";
 }
 
 function deleteWorld(){
@@ -648,6 +676,10 @@ function deleteWorld(){
 
   welcomeScreen();
 }
+
+/* ======================================================
+   MODULE SWITCH
+====================================================== */
 
 function showModule(m){
 
@@ -679,22 +711,23 @@ function welcomeScreen(){
       </h1>
 
       <div class="card">
-        Foundation Build v1.2
+        Foundation Build v1.3
       </div>
 
       <div class="card">
-        <b>Status:</b>
-        No frameworks. No cloud.
-        No external requests.
+        Character Vault &
+        Simulation Base Upgrade
       </div>
     `;
 }
 
+/* ======================================================
+   MANUSCRIPT
+====================================================== */
+
 function renderChapterList(){
 
   const box=document.getElementById("chapterList");
-
-  if(!box)return;
 
   if(!activeWorld){
     box.textContent="No world loaded.";
@@ -753,7 +786,6 @@ function renderManuscript(){
         <input
           value="${escapeHTML(ch.title)}"
           oninput="updateChapterTitle(this.value)"
-          placeholder="Chapter title"
         >
 
       </div>
@@ -761,7 +793,6 @@ function renderManuscript(){
       <textarea
         class="manuscript"
         oninput="updateChapterBody(this.value)"
-        placeholder="Begin writing..."
       >${escapeHTML(ch.body)}</textarea>
 
       <div class="chapterRow">
@@ -775,18 +806,6 @@ function renderManuscript(){
           onclick="deleteChapter()"
         >
           Delete Chapter
-        </button>
-
-      </div>
-
-      <div class="chapterRow">
-
-        <button onclick="moveChapter(-1)">
-          Move Chapter Up
-        </button>
-
-        <button onclick="moveChapter(1)">
-          Move Chapter Down
         </button>
 
       </div>
@@ -860,28 +879,6 @@ function deleteChapter(){
   renderManuscript();
 }
 
-function moveChapter(dir){
-
-  const arr=
-    activeWorld.manuscript.chapters;
-
-  const id=
-    activeWorld.manuscript.activeChapter;
-
-  const i=
-    arr.findIndex(c=>c.id===id);
-
-  const j=i+dir;
-
-  if(j<0||j>=arr.length)return;
-
-  [arr[i],arr[j]]=[arr[j],arr[i]];
-
-  saveWorld();
-
-  renderManuscript();
-}
-
 function updateChapterTitle(v){
 
   currentChapter().title=v;
@@ -916,95 +913,200 @@ ${c.body}
 }
 
 /* ======================================================
-   ENTRY ARCHIVE v1.2
+   ENTRY ARCHIVE
 ====================================================== */
 
 function renderEntries(){
-
-  const entries=activeWorld.entries;
 
   document.getElementById("screen")
     .innerHTML=`
       <h1>Entry Archive</h1>
 
-      <div class="grid">
+      <div class="card">
+        Existing Entry Archive system stable.
+      </div>
+    `;
+}
+
+/* ======================================================
+   CHARACTER VAULT v1.3
+====================================================== */
+
+function renderCharacters(){
+
+  document.getElementById("screen")
+    .innerHTML=`
+
+      <h1>Character Vault</h1>
+
+      <input
+        id="charSearch"
+        placeholder="Search characters..."
+        oninput="filterCharacters(this.value)"
+      >
+
+      <div class="characterSection">
+        <h4>Profile Vault</h4>
+
+        <div class="grid">
+
+          <input id="charName" placeholder="Name">
+          <input id="charAge" placeholder="Age">
+          <input id="charFaction" placeholder="Faction">
+          <input id="charRank" placeholder="Rank">
+
+        </div>
+
+        <textarea
+          id="charAppearance"
+          placeholder="Appearance"
+        ></textarea>
+      </div>
+
+      <div class="characterSection">
+
+        <h4>Psyche Vault</h4>
+
+        <textarea
+          id="charMotives"
+          placeholder="Motives"
+        ></textarea>
+
+        <textarea
+          id="charFlaws"
+          placeholder="Fatal flaws"
+        ></textarea>
+
+        <textarea
+          id="charTriggers"
+          placeholder="Emotional triggers"
+        ></textarea>
 
         <input
-          id="entryTitle"
-          placeholder="Entry title"
+          id="charBreaking"
+          placeholder="Breaking point"
         >
 
-        <select id="entryType">
-          <option>Dialogue</option>
-          <option>SFX</option>
-          <option>Atmosphere</option>
-          <option>Combat</option>
-          <option>Horror</option>
-          <option>Emotion</option>
-          <option>Transition</option>
-          <option>Monologue</option>
-          <option>Symbolism</option>
-        </select>
+      </div>
+
+      <div class="characterSection">
+
+        <h4>History Vault</h4>
+
+        <textarea
+          id="charTrauma"
+          placeholder="Trauma / past events"
+        ></textarea>
+
+        <textarea
+          id="charRelations"
+          placeholder="Relationships / alliances"
+        ></textarea>
+
+        <textarea
+          id="charLawTies"
+          placeholder="World law ties"
+        ></textarea>
 
       </div>
 
       <input
-        id="entryTags"
+        id="charTags"
         placeholder="Tags separated by commas"
       >
 
-      <textarea
-        id="entryBody"
-        placeholder="Write entry..."
-      ></textarea>
-
-      <button onclick="addEntry()">
-        Add Entry
+      <button onclick="addCharacter()">
+        Add Character
       </button>
 
-      <input
-        id="entrySearch"
-        placeholder="Search entries..."
-        oninput="filterEntries(this.value)"
-      >
-
-      <div id="entryResults">
+      <div id="characterResults">
         ${
-          renderEntryCards(entries)
+          renderCharacterCards(
+            activeWorld.characters
+          )
         }
       </div>
     `;
 }
 
-function renderEntryCards(entries){
+function renderCharacterCards(chars){
 
-  if(!entries.length){
+  if(!chars.length){
     return `
       <div class="card">
-        No entries created.
+        No characters created.
       </div>
     `;
   }
 
-  return entries.map((e,i)=>`
+  return chars.map((c,i)=>`
 
     <div class="card">
 
       <b>
-        ${escapeHTML(e.title)}
+        ${escapeHTML(c.profile.name)}
       </b>
 
       <div class="entryMeta">
-        Type: ${escapeHTML(e.type)}
+        ${escapeHTML(c.profile.faction)}
+        | ${escapeHTML(c.profile.rank)}
       </div>
 
-      <p>
-        ${escapeHTML(e.body)}
-      </p>
+      <div class="characterSection">
+
+        <h4>Profile Vault</h4>
+
+        <p>
+          ${
+            escapeHTML(
+              c.profile.appearance
+            )
+          }
+        </p>
+
+      </div>
+
+      <div class="characterSection">
+
+        <h4>Psyche Vault</h4>
+
+        <p>
+          <b>Motives:</b>
+          ${
+            escapeHTML(
+              c.psyche.motives
+            )
+          }
+        </p>
+
+        <p>
+          <b>Flaws:</b>
+          ${
+            escapeHTML(
+              c.psyche.flaws
+            )
+          }
+        </p>
+
+      </div>
+
+      <div class="characterSection">
+
+        <h4>History Vault</h4>
+
+        <p>
+          ${
+            escapeHTML(
+              c.history.trauma
+            )
+          }
+        </p>
+
+      </div>
 
       <div>
         ${
-          e.tags.map(tag=>`
+          c.tags.map(tag=>`
             <span class="entryTag">
               ${escapeHTML(tag)}
             </span>
@@ -1012,13 +1114,13 @@ function renderEntryCards(entries){
         }
       </div>
 
-      <button onclick="sendEntryToManuscript(${i})">
+      <button onclick="injectCharacter(${i})">
         Send to Manuscript
       </button>
 
       <button
         class="danger"
-        onclick="deleteEntry(${i})"
+        onclick="deleteCharacter(${i})"
       >
         Delete
       </button>
@@ -1028,84 +1130,107 @@ function renderEntryCards(entries){
   `).join("");
 }
 
-function addEntry(){
+function addCharacter(){
 
-  const title=
-    document.getElementById("entryTitle")
-    .value.trim();
+  const character={
 
-  const type=
-    document.getElementById("entryType")
-    .value;
+    id:"char_"+Date.now(),
 
-  const tags=
-    document.getElementById("entryTags")
-    .value
-    .split(",")
-    .map(t=>t.trim())
-    .filter(Boolean);
+    profile:{
+      name:document.getElementById("charName").value.trim(),
+      age:document.getElementById("charAge").value.trim(),
+      faction:document.getElementById("charFaction").value.trim(),
+      rank:document.getElementById("charRank").value.trim(),
+      appearance:document.getElementById("charAppearance").value.trim()
+    },
 
-  const body=
-    document.getElementById("entryBody")
-    .value.trim();
+    psyche:{
+      motives:document.getElementById("charMotives").value.trim(),
+      flaws:document.getElementById("charFlaws").value.trim(),
+      triggers:document.getElementById("charTriggers").value.trim(),
+      breaking:document.getElementById("charBreaking").value.trim()
+    },
 
-  if(!title||!body){
+    history:{
+      trauma:document.getElementById("charTrauma").value.trim(),
+      relations:document.getElementById("charRelations").value.trim(),
+      lawTies:document.getElementById("charLawTies").value.trim()
+    },
+
+    tags:
+      document.getElementById("charTags")
+      .value
+      .split(",")
+      .map(t=>t.trim())
+      .filter(Boolean),
+
+    createdAt:new Date().toISOString()
+  };
+
+  if(!character.profile.name){
     return alert(
-      "Entry title and body required."
+      "Character name required."
     );
   }
 
-  activeWorld.entries.unshift({
-    id:"entry_"+Date.now(),
-    title,
-    type,
-    tags,
-    body,
-    createdAt:new Date().toISOString()
-  });
+  activeWorld.characters.unshift(character);
 
   saveWorld();
 
-  renderEntries();
+  renderCharacters();
 }
 
-function filterEntries(query){
+function filterCharacters(query){
 
   query=query.toLowerCase().trim();
 
   const results=
-    activeWorld.entries.filter(e=>
-      JSON.stringify(e)
+    activeWorld.characters.filter(c=>
+      JSON.stringify(c)
       .toLowerCase()
       .includes(query)
     );
 
-  document.getElementById("entryResults")
+  document.getElementById("characterResults")
     .innerHTML=
-      renderEntryCards(results);
+      renderCharacterCards(results);
 }
 
-function sendEntryToManuscript(i){
+function injectCharacter(i){
 
-  const e=activeWorld.entries[i];
+  const c=activeWorld.characters[i];
 
-  currentChapter().body+=
-    "\n\n"+e.body;
+  currentChapter().body+=`
+
+${c.profile.name}
+
+Faction: ${c.profile.faction}
+Rank: ${c.profile.rank}
+
+Appearance:
+${c.profile.appearance}
+
+Motives:
+${c.psyche.motives}
+
+Flaws:
+${c.psyche.flaws}
+`;
 
   saveWorld();
 
-  alert("Entry sent to manuscript.");
+  alert("Character sent to manuscript.");
 }
 
-function deleteEntry(i){
+function deleteCharacter(i){
 
-  if(!confirm("Delete entry?"))return;
+  if(!confirm("Delete character?"))return;
 
-  activeWorld.entries.splice(i,1);
+  activeWorld.characters.splice(i,1);
 
   saveWorld();
 
-  renderEntries();
+  renderCharacters();
 }
 
 /* ======================================================
@@ -1117,14 +1242,6 @@ function renderLore(){
     "Lore Database",
     "lore",
     ["title","type","body"]
-  );
-}
-
-function renderCharacters(){
-  renderSimpleModule(
-    "Character Vault",
-    "characters",
-    ["name","profile","psyche","history"]
   );
 }
 
@@ -1182,9 +1299,6 @@ function renderSimpleModule(title,key,fields){
               ${
                 escapeHTML(
                   item.body||
-                  item.profile||
-                  item.psyche||
-                  item.history||
                   ""
                 )
               }
@@ -1253,11 +1367,7 @@ function sendToManuscript(key,i){
     "\n\n"+
     (
       item.body||
-      item.profile||
-      item.psyche||
-      item.history||
       item.title||
-      item.name||
       ""
     );
 
@@ -1324,6 +1434,10 @@ function renderReference(){
       </div>
     `;
 }
+
+/* ======================================================
+   EXPORT / IMPORT
+====================================================== */
 
 function downloadFile(name,content,type){
 
@@ -1412,6 +1526,10 @@ function injectCore(e){
   r.readAsText(file);
 }
 
+/* ======================================================
+   AUTOSAVE
+====================================================== */
+
 setInterval(()=>{
   if(activeWorld){
     saveWorld();
@@ -1423,6 +1541,10 @@ window.addEventListener("beforeunload",()=>{
     saveWorld();
   }
 });
+
+/* ======================================================
+   BOOT
+====================================================== */
 
 function boot(){
 
