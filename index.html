@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gravemarch Unified Engine V25.0</title>
+<title>Gravemarch Engine — E4.0</title>
 
 <style>
 
@@ -21,15 +21,16 @@ overflow:hidden;
 
 .sidebar{
 width:320px;
-background:#111;
+background:#101010;
 border-right:1px solid #333;
 padding:20px;
-box-sizing:border-box;
 overflow-y:auto;
+box-sizing:border-box;
 }
 
 .logo{
-font-size:28px;
+font-size:30px;
+font-weight:bold;
 color:#c0392b;
 margin-bottom:20px;
 }
@@ -52,14 +53,14 @@ background:#222;
 
 .main{
 flex:1;
-overflow-y:auto;
 padding:20px;
+overflow-y:auto;
 box-sizing:border-box;
 }
 
 .panel{
 display:none;
-background:#141414;
+background:#131313;
 border:1px solid #333;
 border-radius:16px;
 padding:20px;
@@ -71,25 +72,76 @@ display:block;
 }
 
 .title{
-font-size:26px;
+font-size:30px;
 color:#c0392b;
-margin-bottom:14px;
+margin-bottom:16px;
 }
 
 .card{
-background:#101010;
+background:#111;
 border:1px solid #333;
 border-radius:12px;
 padding:16px;
 margin-top:14px;
 }
 
-.kernel-card{
+.entry{
+padding:12px;
+margin-top:12px;
+background:#151515;
 border-left:4px solid #7bd88f;
+border-radius:10px;
+white-space:pre-wrap;
 }
 
-.warning-card{
-border-left:4px solid #ffcc66;
+.federation{
+padding:14px;
+margin-top:14px;
+background:#1d1d1d;
+border-left:4px solid #c0392b;
+border-radius:10px;
+}
+
+.metric{
+margin-top:12px;
+padding:12px;
+background:#181818;
+border-radius:10px;
+border:1px solid #333;
+}
+
+.bar{
+height:18px;
+background:#222;
+border-radius:10px;
+overflow:hidden;
+margin-top:8px;
+}
+
+.fill{
+height:100%;
+background:#7bd88f;
+}
+
+textarea,input{
+width:100%;
+padding:12px;
+margin-top:10px;
+background:#0f0f0f;
+border:1px solid #333;
+border-radius:10px;
+color:white;
+box-sizing:border-box;
+}
+
+button{
+padding:12px 16px;
+margin-top:12px;
+background:#c0392b;
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
 }
 
 .good{
@@ -100,64 +152,7 @@ color:#7bd88f;
 color:#ffcc66;
 }
 
-.error{
-color:#ff6b6b;
-}
-
-.small{
-color:#888;
-}
-
-.tag{
-display:inline-block;
-padding:8px 12px;
-margin:5px;
-background:#1f2a35;
-border:1px solid #6a8daf;
-border-radius:10px;
-}
-
-.kernel-tag{
-display:inline-block;
-padding:8px 12px;
-margin:5px;
-background:#35241f;
-border:1px solid #b8865b;
-border-radius:10px;
-}
-
-input, textarea, select{
-width:100%;
-padding:14px;
-background:#0d0d0d;
-border:1px solid #444;
-border-radius:10px;
-color:white;
-margin-top:10px;
-box-sizing:border-box;
-}
-
-button{
-padding:12px 16px;
-background:#c0392b;
-border:none;
-border-radius:10px;
-color:white;
-cursor:pointer;
-margin-top:12px;
-margin-right:8px;
-}
-
-.workspace-bar{
-padding:12px;
-background:#0f0f0f;
-border:1px solid #333;
-border-radius:10px;
-margin-bottom:14px;
-}
-
 </style>
-
 </head>
 
 <body>
@@ -165,187 +160,183 @@ margin-bottom:14px;
 <div class="sidebar">
 
 <div class="logo">
-Gravemarch V25.0
+Gravemarch E4.0
 </div>
 
 <button class="nav-btn" onclick="showPanel('dashboard')">
-Kernel Dashboard
+Federation Core
 </button>
 
-<button class="nav-btn" onclick="showPanel('statePanel')">
-Centralized State Manager
+<button class="nav-btn" onclick="showPanel('protocols')">
+Protocol Layer
 </button>
 
-<button class="nav-btn" onclick="showPanel('retrievalPanel')">
-Unified Retrieval Router
+<button class="nav-btn" onclick="showPanel('boundaries')">
+Sovereign Boundaries
 </button>
 
-<button class="nav-btn" onclick="showPanel('validationPanel')">
-Validation Kernel
+<button class="nav-btn" onclick="showPanel('constitution')">
+Federation Constitution
 </button>
 
-<button class="nav-btn" onclick="showPanel('partitionPanel')">
-Partition Router
+<button class="nav-btn" onclick="showPanel('stability')">
+Stability Layer
 </button>
 
-<button class="nav-btn" onclick="showPanel('diagnosticsPanel')">
-Kernel Diagnostics
+<button class="nav-btn" onclick="showPanel('advisory')">
+Federation Advisory
+</button>
+
+<button class="nav-btn" onclick="showPanel('diagnostics')">
+Diagnostics
 </button>
 
 </div>
 
 <div class="main">
 
-<div class="workspace-bar">
-
-<strong>Active Workspace:</strong>
-<span id="workspaceLabel"></span>
-
-</div>
-
 <div id="dashboard" class="panel active">
 
 <div class="title">
-Deterministic Engine Kernel
-</div>
-
-<div class="card kernel-card">
-
-<h3 class="good">
-Kernel Consolidation Stable
-</h3>
-
-<span class="tag">Unified Kernel</span>
-<span class="tag">Shared Validation</span>
-<span class="tag">Partition Routing</span>
-<span class="tag">Deterministic Retrieval</span>
-
-<p class="small">
-V25.0 establishes the permanent Gravemarch engine backbone.
-</p>
-
+Deterministic Civilization Federation Layer
 </div>
 
 <div class="card">
 
-<h3>
-Kernel Overview
+<h3 class="good">
+Sovereign Federation Infrastructure Initialized
 </h3>
 
-<p id="kernelStats"></p>
+<p>
+E4.0 transforms sovereign civilization systems into deterministic federation infrastructure.
+</p>
+
+</div>
+
+<div class="federation">
+
+Civilization A
+↔ Federation Protocol
+↔ Civilization B
+
+WITHOUT:
+identity collapse
+dependency fusion
+continuity corruption
 
 </div>
 
 </div>
 
-<div id="statePanel" class="panel">
+<div id="protocols" class="panel">
 
 <div class="title">
-Centralized State Manager
+Federation Protocol Layer
 </div>
 
-<input id="entryTitle" placeholder="Kernel entry title...">
+<input id="protocolTitle"
+placeholder="Federation protocol">
 
-<select id="moduleInput">
+<textarea id="protocolDesc"
+rows="5"
+placeholder="Safe interaction pathway"></textarea>
 
-<option value="canon">Canon Module</option>
-<option value="production">Production Module</option>
-<option value="dialogue">Dialogue Module</option>
-<option value="archive">Archive Module</option>
-<option value="assets">Asset Module</option>
-
-</select>
-
-<select id="partitionInput">
-
-<option value="lore_partition">Lore Partition</option>
-<option value="canon_partition">Canon Partition</option>
-<option value="dialogue_partition">Dialogue Partition</option>
-<option value="asset_partition">Asset Partition</option>
-<option value="production_partition">Production Partition</option>
-
-</select>
-
-<select id="lifecycleInput">
-
-<option value="active">Active</option>
-<option value="draft">Draft</option>
-<option value="approved">Approved</option>
-<option value="deprecated">Deprecated</option>
-<option value="archived">Archived</option>
-<option value="locked">Locked</option>
-<option value="historical">Historical</option>
-
-</select>
-
-<textarea id="entryDescription" placeholder="Kernel state notes..."></textarea>
-
-<button onclick="registerKernelEntry()">
-Register Kernel Entry
+<button onclick="saveProtocol()">
+Save Federation Protocol
 </button>
 
-<div id="stateView"></div>
+<div id="protocolList"></div>
 
 </div>
 
-<div id="retrievalPanel" class="panel">
+<div id="boundaries" class="panel">
 
 <div class="title">
-Unified Retrieval Router
+Sovereign Boundary Architecture
 </div>
 
-<input
-id="searchInput"
-placeholder="Search deterministic kernel..."
-onkeyup="runSearch()"
->
+<input id="boundaryTitle"
+placeholder="Boundary structure">
 
-<select id="moduleFilter" onchange="runSearch()">
+<textarea id="boundaryDesc"
+rows="5"
+placeholder="Sovereignty-preserving interaction"></textarea>
 
-<option value="">All Modules</option>
-<option value="canon">Canon</option>
-<option value="production">Production</option>
-<option value="dialogue">Dialogue</option>
-<option value="archive">Archive</option>
-<option value="assets">Assets</option>
-
-</select>
-
-<div id="searchResults"></div>
-
-</div>
-
-<div id="validationPanel" class="panel">
-
-<div class="title">
-Shared Validation Kernel
-</div>
-
-<button onclick="runValidation()">
-Run Kernel Validation
+<button onclick="saveBoundary()">
+Save Boundary Structure
 </button>
 
-<div id="validationResults"></div>
+<div id="boundaryList"></div>
 
 </div>
 
-<div id="partitionPanel" class="panel">
+<div id="constitution" class="panel">
 
 <div class="title">
-Engine Partition Router
+Constitutional Federation Mapping
 </div>
 
-<div id="partitionView"></div>
+<input id="constitutionTitle"
+placeholder="Federation law">
+
+<textarea id="constitutionDesc"
+rows="5"
+placeholder="Constitutional integrity chain"></textarea>
+
+<button onclick="saveConstitution()">
+Save Federation Law
+</button>
+
+<div id="constitutionList"></div>
 
 </div>
 
-<div id="diagnosticsPanel" class="panel">
+<div id="stability" class="panel">
 
 <div class="title">
-Kernel Diagnostics
+Inter-Civilization Stability Layer
 </div>
 
-<div id="diagnosticsView"></div>
+<input id="stabilityName"
+placeholder="Federation anchor">
+
+<input id="stabilityValue"
+type="number"
+placeholder="Stability strength 0-100">
+
+<button onclick="saveStability()">
+Save Stability Anchor
+</button>
+
+<div id="stabilityList"></div>
+
+</div>
+
+<div id="advisory" class="panel">
+
+<div class="title">
+Deterministic Federation Advisory Layer
+</div>
+
+<button onclick="generateAdvisories()">
+Generate Federation Guidance
+</button>
+
+<div id="advisoryResults"></div>
+
+</div>
+
+<div id="diagnostics" class="panel">
+
+<div class="title">
+Federation Civilization Diagnostics
+</div>
+
+<button onclick="runDiagnostics()">
+Run Diagnostics
+</button>
+
+<div id="diagnosticResults"></div>
 
 </div>
 
@@ -353,101 +344,25 @@ Kernel Diagnostics
 
 <script>
 
-const ENGINE_KEY = "gravemarch_v25_kernel";
-const ACTIVE_KEY = "gravemarch_v25_workspace";
-const NAV_KEY = "gravemarch_v25_nav";
+const STORAGE_KEY = "gravemarch_engine4_0";
 
-const VALID_LIFECYCLES = [
-"active",
-"draft",
-"approved",
-"deprecated",
-"archived",
-"locked",
-"historical"
-];
+let data = JSON.parse(
+localStorage.getItem(STORAGE_KEY)
+) || {
 
-const VALID_MODULES = [
-"canon",
-"production",
-"dialogue",
-"archive",
-"assets"
-];
+protocols:[],
+boundaries:[],
+constitution:[],
+stability:[]
 
-const VALID_PARTITIONS = [
-"lore_partition",
-"canon_partition",
-"dialogue_partition",
-"asset_partition",
-"production_partition"
-];
-
-let engine = JSON.parse(
-localStorage.getItem(ENGINE_KEY)
-) || {};
-
-let activeWorkspace = localStorage.getItem(ACTIVE_KEY);
-
-if(!activeWorkspace){
-
-activeWorkspace = "default_workspace";
-
-engine[activeWorkspace] = [];
-
-persist();
-
-}
-
-if(!engine[activeWorkspace]){
-
-engine[activeWorkspace] = [];
-
-persist();
-
-}
+};
 
 function persist(){
 
 localStorage.setItem(
-ENGINE_KEY,
-JSON.stringify(engine)
+STORAGE_KEY,
+JSON.stringify(data)
 );
-
-}
-
-function getEntries(){
-
-return engine[activeWorkspace] || [];
-
-}
-
-function saveEntries(data){
-
-engine[activeWorkspace] = data;
-
-persist();
-
-}
-
-function preserveText(text){
-
-return text.trim();
-
-}
-
-function normalize(text){
-
-return text.trim().toLowerCase();
-
-}
-
-function createID(){
-
-return "KRN-" + Math.random()
-.toString(36)
-.substring(2,10)
-.toUpperCase();
 
 }
 
@@ -455,508 +370,343 @@ function showPanel(id){
 
 document.querySelectorAll(".panel")
 .forEach(panel=>{
-
 panel.classList.remove("active");
-
 });
 
 document.getElementById(id)
 .classList.add("active");
 
-localStorage.setItem(
-NAV_KEY,
-id
-);
+}
+
+function saveProtocol(){
+
+const title =
+document.getElementById("protocolTitle").value;
+
+const desc =
+document.getElementById("protocolDesc").value;
+
+if(!title) return;
+
+data.protocols.push({
+title,desc
+});
+
+persist();
+renderProtocols();
 
 }
 
-function restoreNavigation(){
+function renderProtocols(){
 
-const last = localStorage.getItem(NAV_KEY);
+let html = "";
 
-if(last){
+data.protocols.forEach(item=>{
 
-showPanel(last);
+html += `
+<div class="federation">
 
-}
+<strong>${item.title}</strong>
 
-}
+<br><br>
 
-function updateWorkspaceLabel(){
+${item.desc}
 
-document.getElementById("workspaceLabel")
-.textContent = activeWorkspace;
-
-}
-
-function validateEntry(entry){
-
-const errors = [];
-
-if(!entry.id){
-
-errors.push("Missing kernel ID");
-
-}
-
-if(!entry.title){
-
-errors.push("Missing title");
-
-}
-
-if(!VALID_MODULES.includes(entry.module)){
-
-errors.push("Invalid module");
-
-}
-
-if(!VALID_PARTITIONS.includes(entry.partition)){
-
-errors.push("Invalid partition");
-
-}
-
-if(!VALID_LIFECYCLES.includes(entry.lifecycle)){
-
-errors.push("Invalid lifecycle");
-
-}
-
-return errors;
-
-}
-
-function registerKernelEntry(){
-
-const entries = getEntries();
-
-const entry = {
-
-id:createID(),
-
-title:preserveText(
-document.getElementById("entryTitle").value
-),
-
-module:document.getElementById("moduleInput").value,
-
-partition:document.getElementById("partitionInput").value,
-
-lifecycle:document.getElementById("lifecycleInput").value,
-
-description:preserveText(
-document.getElementById("entryDescription").value
-),
-
-searchIndex:"",
-
-created:new Date().toISOString()
-
-};
-
-entry.searchIndex = normalize(
-[
-entry.title,
-entry.module,
-entry.partition,
-entry.lifecycle,
-entry.description
-].join(" ")
-);
-
-const errors = validateEntry(entry);
-
-if(errors.length > 0){
-
-alert(
-"Kernel Validation Failed:\\n" +
-errors.join("\\n")
-);
-
-return;
-
-}
-
-entries.push(entry);
-
-saveEntries(entries);
-
-renderState();
-renderPartitions();
-renderDiagnostics();
-updateStats();
-
-document.getElementById("entryTitle").value="";
-document.getElementById("entryDescription").value="";
-
-}
-
-function renderState(){
-
-const entries = getEntries();
-
-if(entries.length===0){
-
-document.getElementById("stateView").innerHTML = `
-<p class="small">
-No kernel entries registered.
-</p>
+</div>
 `;
 
-return;
+});
+
+document.getElementById("protocolList")
+.innerHTML = html;
+
+}
+
+function saveBoundary(){
+
+const title =
+document.getElementById("boundaryTitle").value;
+
+const desc =
+document.getElementById("boundaryDesc").value;
+
+if(!title) return;
+
+data.boundaries.push({
+title,desc
+});
+
+persist();
+renderBoundaries();
+
+}
+
+function renderBoundaries(){
+
+let html = "";
+
+data.boundaries.forEach(item=>{
+
+html += `
+<div class="entry">
+
+<strong>${item.title}</strong>
+
+<br><br>
+
+${item.desc}
+
+</div>
+`;
+
+});
+
+document.getElementById("boundaryList")
+.innerHTML = html;
+
+}
+
+function saveConstitution(){
+
+const title =
+document.getElementById("constitutionTitle").value;
+
+const desc =
+document.getElementById("constitutionDesc").value;
+
+if(!title) return;
+
+data.constitution.push({
+title,desc
+});
+
+persist();
+renderConstitution();
+
+}
+
+function renderConstitution(){
+
+let html = "";
+
+data.constitution.forEach(item=>{
+
+html += `
+<div class="federation">
+
+<strong>${item.title}</strong>
+
+<br><br>
+
+${item.desc}
+
+</div>
+`;
+
+});
+
+document.getElementById("constitutionList")
+.innerHTML = html;
+
+}
+
+function saveStability(){
+
+const name =
+document.getElementById("stabilityName").value;
+
+const value =
+parseInt(
+document.getElementById("stabilityValue").value || 0
+);
+
+if(!name) return;
+
+data.stability.push({
+name,value
+});
+
+persist();
+renderStability();
+
+}
+
+function renderStability(){
+
+let html = "";
+
+data.stability.forEach(item=>{
+
+html += `
+<div class="metric">
+
+<strong>${item.name}</strong>
+
+<div class="bar">
+<div class="fill"
+style="width:${item.value}%">
+</div>
+</div>
+
+<br>
+
+${item.value}%
+
+</div>
+`;
+
+});
+
+document.getElementById("stabilityList")
+.innerHTML = html;
+
+}
+
+function generateAdvisories(){
+
+let advisories = [];
+
+if(data.protocols.length > 3){
+
+advisories.push(
+"Federation synchronization remaining sovereignty-safe."
+);
+
+}
+
+if(data.stability.some(s=>s.value > 80)){
+
+advisories.push(
+"Inter-civilization stability remaining deterministic."
+);
+
+}
+
+if(data.boundaries.length > 2){
+
+advisories.push(
+"Sovereign boundary integrity stabilizing federation exchange."
+);
+
+}
+
+if(data.constitution.length === 0){
+
+advisories.push(
+"Federation constitutional laws insufficiently defined."
+);
+
+}
+
+if(advisories.length === 0){
+
+advisories.push(
+"Civilization federation stable."
+);
 
 }
 
 let html = "";
 
-entries.slice().reverse().forEach(entry=>{
+advisories.forEach(item=>{
 
 html += `
+<div class="entry">
 
-<div class="card kernel-card">
-
-<h3>
-${entry.title}
-</h3>
-
-<span class="tag">
-${entry.module}
-</span>
-
-<span class="kernel-tag">
-${entry.lifecycle}
-</span>
-
-<span class="tag">
-${entry.partition}
-</span>
-
-<p>
-${entry.description}
-</p>
+${item}
 
 </div>
-
 `;
 
 });
 
-document.getElementById("stateView").innerHTML = html;
+document.getElementById("advisoryResults")
+.innerHTML = html;
 
 }
 
-function runSearch(){
+function runDiagnostics(){
 
-const query = normalize(
-document.getElementById("searchInput").value
-);
+let warnings = [];
 
-const filter = document.getElementById("moduleFilter").value;
+if(data.protocols.length === 0){
 
-const entries = getEntries();
-
-let results = entries.filter(entry=>
-
-entry.searchIndex.includes(query)
-
-);
-
-if(filter){
-
-results = results.filter(entry=>
-
-entry.module === filter
-
+warnings.push(
+"No federation protocols detected"
 );
 
 }
 
-const priority = {
-active:7,
-approved:6,
-draft:5,
-locked:4,
-historical:3,
-archived:2,
-deprecated:1
-};
+if(data.boundaries.length === 0){
 
-results.sort((a,b)=>{
+warnings.push(
+"No sovereign boundaries detected"
+);
 
-return priority[b.lifecycle] - priority[a.lifecycle];
+}
 
-});
+if(data.stability.length === 0){
+
+warnings.push(
+"No federation stability anchors recorded"
+);
+
+}
 
 let html = `
-<p class="small">
-${results.length} deterministic matches found.
-</p>
+<div class="entry">
+Federation Protocols:
+${data.protocols.length}
+</div>
+
+<div class="entry">
+Sovereign Boundaries:
+${data.boundaries.length}
+</div>
+
+<div class="entry">
+Federation Constitutional Laws:
+${data.constitution.length}
+</div>
+
+<div class="entry">
+Stability Anchors:
+${data.stability.length}
+</div>
 `;
 
-results.forEach(entry=>{
+if(warnings.length){
 
 html += `
+<div class="entry warning">
 
-<div class="card kernel-card">
+Warnings:
+<br><br>
 
-<h3>
-${entry.title}
-</h3>
-
-<span class="tag">
-${entry.module}
-</span>
-
-<span class="kernel-tag">
-${entry.lifecycle}
-</span>
-
-<span class="tag">
-${entry.partition}
-</span>
-
-<p>
-${entry.description}
-</p>
+${warnings.join("<br><br>")}
 
 </div>
-
 `;
 
-});
-
-document.getElementById("searchResults").innerHTML = html;
-
-}
-
-function renderPartitions(){
-
-const entries = getEntries();
-
-let partitions = {};
-
-entries.forEach(entry=>{
-
-partitions[entry.partition] =
-(partitions[entry.partition] || 0) + 1;
-
-});
-
-let html = "";
-
-Object.keys(partitions).forEach(partition=>{
+}else{
 
 html += `
-
-<div class="card">
-
-<h3>
-${partition}
-</h3>
-
-<p>
-Entries:
-${partitions[partition]}
-</p>
-
+<div class="entry good">
+Federated civilization integrity maintained.
 </div>
-
-`;
-
-});
-
-document.getElementById("partitionView").innerHTML = html;
-
-}
-
-function renderDiagnostics(){
-
-const entries = getEntries();
-
-let modules = {};
-let lifecycles = {};
-
-entries.forEach(entry=>{
-
-modules[entry.module] =
-(modules[entry.module] || 0) + 1;
-
-lifecycles[entry.lifecycle] =
-(lifecycles[entry.lifecycle] || 0) + 1;
-
-});
-
-document.getElementById("diagnosticsView").innerHTML = `
-
-<div class="card">
-
-<p>
-Kernel Entries:
-<strong>${entries.length}</strong>
-</p>
-
-<p>
-Active Modules:
-<strong>${Object.keys(modules).length}</strong>
-</p>
-
-<p>
-Lifecycle States:
-<strong>${Object.keys(lifecycles).length}</strong>
-</p>
-
-<p>
-Kernel Stability:
-<strong class="good">
-stable
-</strong>
-</p>
-
-</div>
-
 `;
 
 }
 
-function detectDuplicates(){
-
-const entries = getEntries();
-
-let duplicates = 0;
-
-for(let i=0;i<entries.length;i++){
-
-for(let j=i+1;j<entries.length;j++){
-
-if(
-normalize(entries[i].title) ===
-normalize(entries[j].title)
-&&
-entries[i].module === entries[j].module
-){
-
-duplicates++;
+document.getElementById("diagnosticResults")
+.innerHTML = html;
 
 }
 
-}
-
-}
-
-return duplicates;
-
-}
-
-function runValidation(){
-
-const entries = getEntries();
-
-let malformed = 0;
-let duplicates = detectDuplicates();
-let partitionErrors = 0;
-
-entries.forEach(entry=>{
-
-const errors = validateEntry(entry);
-
-if(errors.length > 0){
-
-malformed++;
-
-}
-
-if(!VALID_PARTITIONS.includes(entry.partition)){
-
-partitionErrors++;
-
-}
-
-});
-
-document.getElementById("validationResults").innerHTML = `
-
-<div class="card">
-
-<p>
-Malformed Kernel Entries:
-<strong class="error">${malformed}</strong>
-</p>
-
-<p>
-Duplicate Routing Conflicts:
-<strong class="warning">${duplicates}</strong>
-</p>
-
-<p>
-Partition Routing Errors:
-<strong class="warning">${partitionErrors}</strong>
-</p>
-
-<p>
-Kernel Integrity:
-<strong class="good">
-${malformed===0 && partitionErrors===0 ? "stable" : "review required"}
-</strong>
-</p>
-
-</div>
-
-`;
-
-}
-
-function updateStats(){
-
-const entries = getEntries();
-
-let modules = {};
-let partitions = {};
-
-entries.forEach(entry=>{
-
-modules[entry.module] =
-(modules[entry.module] || 0) + 1;
-
-partitions[entry.partition] =
-(partitions[entry.partition] || 0) + 1;
-
-});
-
-let html = `
-Workspace:
-${activeWorkspace}
-<br><br>
-
-Kernel Entries:
-${entries.length}
-<br><br>
-`;
-
-Object.keys(modules).forEach(module=>{
-
-html += `${module}: ${modules[module]}<br>`;
-
-});
-
-html += `<br>`;
-
-Object.keys(partitions).forEach(partition=>{
-
-html += `${partition}: ${partitions[partition]}<br>`;
-
-});
-
-document.getElementById("kernelStats").innerHTML = html;
-
-}
-
-renderState();
-renderPartitions();
-renderDiagnostics();
-updateWorkspaceLabel();
-updateStats();
-restoreNavigation();
+renderProtocols();
+renderBoundaries();
+renderConstitution();
+renderStability();
 
 </script>
 
