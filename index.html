@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Gravemarch Engine — E4.0</title>
+<title>Gravemarch Engine — E8.0</title>
 
 <style>
 
@@ -94,7 +92,7 @@ border-radius:10px;
 white-space:pre-wrap;
 }
 
-.federation{
+.absolute{
 padding:14px;
 margin-top:14px;
 background:#1d1d1d;
@@ -144,14 +142,6 @@ color:white;
 cursor:pointer;
 }
 
-.good{
-color:#7bd88f;
-}
-
-.warning{
-color:#ffcc66;
-}
-
 </style>
 </head>
 
@@ -160,31 +150,31 @@ color:#ffcc66;
 <div class="sidebar">
 
 <div class="logo">
-Gravemarch E4.0
+Gravemarch E8.0
 </div>
 
 <button class="nav-btn" onclick="showPanel('dashboard')">
-Federation Core
+Absolute Core
 </button>
 
-<button class="nav-btn" onclick="showPanel('protocols')">
-Protocol Layer
+<button class="nav-btn" onclick="showPanel('sync')">
+Absolute Synchronization
 </button>
 
-<button class="nav-btn" onclick="showPanel('boundaries')">
-Sovereign Boundaries
+<button class="nav-btn" onclick="showPanel('sovereign')">
+Sovereign Absolute
 </button>
 
 <button class="nav-btn" onclick="showPanel('constitution')">
-Federation Constitution
+Constitutional Absolute
 </button>
 
 <button class="nav-btn" onclick="showPanel('stability')">
-Stability Layer
+Absolute Stability
 </button>
 
 <button class="nav-btn" onclick="showPanel('advisory')">
-Federation Advisory
+Absolute Advisory
 </button>
 
 <button class="nav-btn" onclick="showPanel('diagnostics')">
@@ -198,93 +188,95 @@ Diagnostics
 <div id="dashboard" class="panel active">
 
 <div class="title">
-Deterministic Civilization Federation Layer
+Deterministic Civilization Absolute Layer
 </div>
 
 <div class="card">
 
-<h3 class="good">
-Sovereign Federation Infrastructure Initialized
+<h3>
+Absolute Continuity Infrastructure Initialized
 </h3>
 
 <p>
-E4.0 transforms sovereign civilization systems into deterministic federation infrastructure.
+E8.0 transforms civilization omega continuity into deterministic civilization absolute infrastructure.
 </p>
 
 </div>
 
-<div class="federation">
+<div class="absolute">
 
 Civilization A
-↔ Federation Protocol
+↔ Absolute Synchronization
 ↔ Civilization B
+↔ Shared Final Stability
+↔ Federation Absolute Equilibrium
 
 WITHOUT:
-identity collapse
-dependency fusion
-continuity corruption
+absolute authoritarianism
+final domination
+recursive absolute hierarchy systems
 
 </div>
 
 </div>
 
-<div id="protocols" class="panel">
+<div id="sync" class="panel">
 
 <div class="title">
-Federation Protocol Layer
+Absolute Synchronization Layer
 </div>
 
-<input id="protocolTitle"
-placeholder="Federation protocol">
+<input id="syncTitle"
+placeholder="Absolute protocol">
 
-<textarea id="protocolDesc"
+<textarea id="syncDesc"
 rows="5"
-placeholder="Safe interaction pathway"></textarea>
+placeholder="Final continuity synchronization"></textarea>
 
-<button onclick="saveProtocol()">
-Save Federation Protocol
+<button onclick="saveSync()">
+Save Absolute Protocol
 </button>
 
-<div id="protocolList"></div>
+<div id="syncList"></div>
 
 </div>
 
-<div id="boundaries" class="panel">
+<div id="sovereign" class="panel">
 
 <div class="title">
-Sovereign Boundary Architecture
+Sovereign Absolute Architecture
 </div>
 
-<input id="boundaryTitle"
-placeholder="Boundary structure">
+<input id="sovereignTitle"
+placeholder="Absolute structure">
 
-<textarea id="boundaryDesc"
+<textarea id="sovereignDesc"
 rows="5"
-placeholder="Sovereignty-preserving interaction"></textarea>
+placeholder="Absolute continuity without coercion"></textarea>
 
-<button onclick="saveBoundary()">
-Save Boundary Structure
+<button onclick="saveSovereign()">
+Save Absolute Structure
 </button>
 
-<div id="boundaryList"></div>
+<div id="sovereignList"></div>
 
 </div>
 
 <div id="constitution" class="panel">
 
 <div class="title">
-Constitutional Federation Mapping
+Constitutional Absolute Mapping
 </div>
 
 <input id="constitutionTitle"
-placeholder="Federation law">
+placeholder="Absolute law">
 
 <textarea id="constitutionDesc"
 rows="5"
-placeholder="Constitutional integrity chain"></textarea>
+placeholder="Constitutional final pathway"></textarea>
 
 <button onclick="saveConstitution()">
-Save Federation Law
+Save Absolute Law
 </button>
 
 <div id="constitutionList"></div>
@@ -294,18 +286,18 @@ Save Federation Law
 <div id="stability" class="panel">
 
 <div class="title">
-Inter-Civilization Stability Layer
+Absolute Stability Layer
 </div>
 
 <input id="stabilityName"
-placeholder="Federation anchor">
+placeholder="Absolute anchor">
 
 <input id="stabilityValue"
 type="number"
-placeholder="Stability strength 0-100">
+placeholder="Absolute stability 0-100">
 
 <button onclick="saveStability()">
-Save Stability Anchor
+Save Absolute Anchor
 </button>
 
 <div id="stabilityList"></div>
@@ -315,11 +307,11 @@ Save Stability Anchor
 <div id="advisory" class="panel">
 
 <div class="title">
-Deterministic Federation Advisory Layer
+Deterministic Absolute Advisory Layer
 </div>
 
 <button onclick="generateAdvisories()">
-Generate Federation Guidance
+Generate Absolute Guidance
 </button>
 
 <div id="advisoryResults"></div>
@@ -329,7 +321,7 @@ Generate Federation Guidance
 <div id="diagnostics" class="panel">
 
 <div class="title">
-Federation Civilization Diagnostics
+Absolute Civilization Diagnostics
 </div>
 
 <button onclick="runDiagnostics()">
@@ -344,208 +336,128 @@ Run Diagnostics
 
 <script>
 
-const STORAGE_KEY = "gravemarch_engine4_0";
+const STORAGE_KEY = "gravemarch_engine8_0";
 
-let data = JSON.parse(
-localStorage.getItem(STORAGE_KEY)
-) || {
-
-protocols:[],
-boundaries:[],
+let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+sync:[],
+sovereign:[],
 constitution:[],
 stability:[]
-
 };
 
 function persist(){
-
-localStorage.setItem(
-STORAGE_KEY,
-JSON.stringify(data)
-);
-
+localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
 function showPanel(id){
-
-document.querySelectorAll(".panel")
-.forEach(panel=>{
+document.querySelectorAll(".panel").forEach(panel=>{
 panel.classList.remove("active");
 });
-
-document.getElementById(id)
-.classList.add("active");
-
+document.getElementById(id).classList.add("active");
 }
 
-function saveProtocol(){
-
-const title =
-document.getElementById("protocolTitle").value;
-
-const desc =
-document.getElementById("protocolDesc").value;
+function saveSync(){
+const title = document.getElementById("syncTitle").value;
+const desc = document.getElementById("syncDesc").value;
 
 if(!title) return;
 
-data.protocols.push({
-title,desc
-});
-
+data.sync.push({title,desc});
 persist();
-renderProtocols();
-
+renderSync();
 }
 
-function renderProtocols(){
-
+function renderSync(){
 let html = "";
 
-data.protocols.forEach(item=>{
-
+data.sync.forEach(item=>{
 html += `
-<div class="federation">
-
+<div class="absolute">
 <strong>${item.title}</strong>
-
 <br><br>
-
 ${item.desc}
-
 </div>
 `;
-
 });
 
-document.getElementById("protocolList")
-.innerHTML = html;
-
+document.getElementById("syncList").innerHTML = html;
 }
 
-function saveBoundary(){
-
-const title =
-document.getElementById("boundaryTitle").value;
-
-const desc =
-document.getElementById("boundaryDesc").value;
+function saveSovereign(){
+const title = document.getElementById("sovereignTitle").value;
+const desc = document.getElementById("sovereignDesc").value;
 
 if(!title) return;
 
-data.boundaries.push({
-title,desc
-});
-
+data.sovereign.push({title,desc});
 persist();
-renderBoundaries();
-
+renderSovereign();
 }
 
-function renderBoundaries(){
-
+function renderSovereign(){
 let html = "";
 
-data.boundaries.forEach(item=>{
-
+data.sovereign.forEach(item=>{
 html += `
 <div class="entry">
-
 <strong>${item.title}</strong>
-
 <br><br>
-
 ${item.desc}
-
 </div>
 `;
-
 });
 
-document.getElementById("boundaryList")
-.innerHTML = html;
-
+document.getElementById("sovereignList").innerHTML = html;
 }
 
 function saveConstitution(){
-
-const title =
-document.getElementById("constitutionTitle").value;
-
-const desc =
-document.getElementById("constitutionDesc").value;
+const title = document.getElementById("constitutionTitle").value;
+const desc = document.getElementById("constitutionDesc").value;
 
 if(!title) return;
 
-data.constitution.push({
-title,desc
-});
-
+data.constitution.push({title,desc});
 persist();
 renderConstitution();
-
 }
 
 function renderConstitution(){
-
 let html = "";
 
 data.constitution.forEach(item=>{
-
 html += `
-<div class="federation">
-
+<div class="absolute">
 <strong>${item.title}</strong>
-
 <br><br>
-
 ${item.desc}
-
 </div>
 `;
-
 });
 
-document.getElementById("constitutionList")
-.innerHTML = html;
-
+document.getElementById("constitutionList").innerHTML = html;
 }
 
 function saveStability(){
-
-const name =
-document.getElementById("stabilityName").value;
-
-const value =
-parseInt(
-document.getElementById("stabilityValue").value || 0
-);
+const name = document.getElementById("stabilityName").value;
+const value = parseInt(document.getElementById("stabilityValue").value || 0);
 
 if(!name) return;
 
-data.stability.push({
-name,value
-});
-
+data.stability.push({name,value});
 persist();
 renderStability();
-
 }
 
 function renderStability(){
-
 let html = "";
 
 data.stability.forEach(item=>{
-
 html += `
 <div class="metric">
-
 <strong>${item.name}</strong>
 
 <div class="bar">
-<div class="fill"
-style="width:${item.value}%">
-</div>
+<div class="fill" style="width:${item.value}%"></div>
 </div>
 
 <br>
@@ -554,157 +466,119 @@ ${item.value}%
 
 </div>
 `;
-
 });
 
-document.getElementById("stabilityList")
-.innerHTML = html;
-
+document.getElementById("stabilityList").innerHTML = html;
 }
 
 function generateAdvisories(){
 
 let advisories = [];
 
-if(data.protocols.length > 3){
-
+if(data.sync.length > 3){
 advisories.push(
-"Federation synchronization remaining sovereignty-safe."
+"Federation absolute continuity remaining sovereignty-safe."
 );
-
 }
 
 if(data.stability.some(s=>s.value > 80)){
-
 advisories.push(
-"Inter-civilization stability remaining deterministic."
+"Final coherence integrity remaining stable."
 );
-
 }
 
-if(data.boundaries.length > 2){
-
+if(data.sovereign.length > 2){
 advisories.push(
-"Sovereign boundary integrity stabilizing federation exchange."
+"Sovereign absolute pathways stabilizing final continuity."
 );
-
 }
 
 if(data.constitution.length === 0){
-
 advisories.push(
-"Federation constitutional laws insufficiently defined."
+"Constitutional absolute mappings insufficiently defined."
 );
-
 }
 
 if(advisories.length === 0){
-
 advisories.push(
-"Civilization federation stable."
+"Civilization absolute continuity stable."
 );
-
 }
 
 let html = "";
 
 advisories.forEach(item=>{
-
-html += `
-<div class="entry">
-
-${item}
-
-</div>
-`;
-
+html += `<div class="entry">${item}</div>`;
 });
 
-document.getElementById("advisoryResults")
-.innerHTML = html;
-
+document.getElementById("advisoryResults").innerHTML = html;
 }
 
 function runDiagnostics(){
 
 let warnings = [];
 
-if(data.protocols.length === 0){
-
+if(data.sync.length === 0){
 warnings.push(
-"No federation protocols detected"
+"No absolute synchronization protocols detected"
 );
-
 }
 
-if(data.boundaries.length === 0){
-
+if(data.sovereign.length === 0){
 warnings.push(
-"No sovereign boundaries detected"
+"No sovereign absolute systems detected"
 );
-
 }
 
 if(data.stability.length === 0){
-
 warnings.push(
-"No federation stability anchors recorded"
+"No final anchors recorded"
 );
-
 }
 
 let html = `
 <div class="entry">
-Federation Protocols:
-${data.protocols.length}
+Absolute Synchronization Protocols:
+${data.sync.length}
 </div>
 
 <div class="entry">
-Sovereign Boundaries:
-${data.boundaries.length}
+Sovereign Absolute Systems:
+${data.sovereign.length}
 </div>
 
 <div class="entry">
-Federation Constitutional Laws:
+Constitutional Absolute Laws:
 ${data.constitution.length}
 </div>
 
 <div class="entry">
-Stability Anchors:
+Absolute Anchors:
 ${data.stability.length}
 </div>
 `;
 
 if(warnings.length){
-
 html += `
-<div class="entry warning">
-
+<div class="entry">
 Warnings:
 <br><br>
-
 ${warnings.join("<br><br>")}
-
 </div>
 `;
-
 }else{
-
 html += `
-<div class="entry good">
-Federated civilization integrity maintained.
+<div class="entry">
+Absolute civilization integrity maintained.
 </div>
 `;
-
 }
 
-document.getElementById("diagnosticResults")
-.innerHTML = html;
-
+document.getElementById("diagnosticResults").innerHTML = html;
 }
 
-renderProtocols();
-renderBoundaries();
+renderSync();
+renderSovereign();
 renderConstitution();
 renderStability();
 
