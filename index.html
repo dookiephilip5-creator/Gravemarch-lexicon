@@ -1,588 +1,296 @@
-<!DOCTYPE html>
+html = r'''<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gravemarch Engine — E8.0</title>
-
+<title>Gravemarch Engine E13.1</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-
-body{
-margin:0;
-background:#050505;
-color:#f2f2f2;
-font-family:Arial,sans-serif;
-display:flex;
-height:100vh;
-overflow:hidden;
-}
-
-.sidebar{
-width:320px;
-background:#101010;
-border-right:1px solid #333;
-padding:20px;
-overflow-y:auto;
-box-sizing:border-box;
-}
-
-.logo{
-font-size:30px;
-font-weight:bold;
-color:#c0392b;
-margin-bottom:20px;
-}
-
-.nav-btn{
-width:100%;
-padding:14px;
-margin-bottom:10px;
-background:#181818;
-border:1px solid #333;
-border-radius:10px;
-color:white;
-cursor:pointer;
-text-align:left;
-}
-
-.nav-btn:hover{
-background:#222;
-}
-
-.main{
-flex:1;
-padding:20px;
-overflow-y:auto;
-box-sizing:border-box;
-}
-
-.panel{
-display:none;
-background:#131313;
-border:1px solid #333;
-border-radius:16px;
-padding:20px;
-margin-bottom:20px;
-}
-
-.active{
-display:block;
-}
-
-.title{
-font-size:30px;
-color:#c0392b;
-margin-bottom:16px;
-}
-
-.card{
-background:#111;
-border:1px solid #333;
-border-radius:12px;
-padding:16px;
-margin-top:14px;
-}
-
-.entry{
-padding:12px;
-margin-top:12px;
-background:#151515;
-border-left:4px solid #7bd88f;
-border-radius:10px;
-white-space:pre-wrap;
-}
-
-.absolute{
-padding:14px;
-margin-top:14px;
-background:#1d1d1d;
-border-left:4px solid #c0392b;
-border-radius:10px;
-}
-
-.metric{
-margin-top:12px;
-padding:12px;
-background:#181818;
-border-radius:10px;
-border:1px solid #333;
-}
-
-.bar{
-height:18px;
-background:#222;
-border-radius:10px;
-overflow:hidden;
-margin-top:8px;
-}
-
-.fill{
-height:100%;
-background:#7bd88f;
-}
-
-textarea,input{
-width:100%;
-padding:12px;
-margin-top:10px;
-background:#0f0f0f;
-border:1px solid #333;
-border-radius:10px;
-color:white;
-box-sizing:border-box;
-}
-
-button{
-padding:12px 16px;
-margin-top:12px;
-background:#c0392b;
-border:none;
-border-radius:10px;
-color:white;
-cursor:pointer;
-}
-
+/*
+Gravemarch Engine E13.1 — Product Foundation Refactor
+© 2026 Philip Dookie. All rights reserved.
+Mission: A Tool for the Last True Creators.
+Offline-only. No external requests. No dependencies.
+*/
+:root{--bg:#030303;--panel:#101010;--panel2:#161616;--line:#2a2a2a;--text:#ededed;--muted:#9a9a9a;--ok:#7fffd4;--bad:#8b0000;--warn:#ffbf47}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;height:100vh;display:flex;overflow:hidden}
+aside{width:310px;background:#070707;border-right:1px solid var(--line);padding:16px;overflow:auto}
+main{flex:1;padding:18px;overflow:auto}
+h1{font-size:24px;margin:0 0 4px;color:var(--ok)}h2{font-size:18px;margin:0 0 14px;color:var(--muted)}
+button{background:#111;border:1px solid var(--line);color:var(--text);padding:11px;border-radius:8px;cursor:pointer;font-weight:bold}
+button:hover{border-color:var(--ok)}.nav{width:100%;margin:5px 0;text-align:left}.danger{border-color:var(--bad);color:#ff9a9a}.ok{color:var(--ok)}
+.panel{display:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}.active{display:block}
+.card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input,textarea,select{width:100%;background:#050505;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;margin:6px 0}
+textarea{min-height:88px}.log{border-left:4px solid var(--ok);background:#151515;padding:10px;border-radius:8px;margin:8px 0;white-space:pre-wrap}
+.alert{border-left-color:var(--bad)}.warn{border-left-color:var(--warn)}.small{font-size:12px;color:var(--muted)}
+.badge{display:inline-block;border:1px solid var(--line);border-radius:20px;padding:4px 8px;margin:2px;color:var(--ok);font-size:12px}
+hr{border:0;border-top:1px solid var(--line);margin:14px 0}
+@media(max-width:850px){body{display:block;height:auto;overflow:auto}aside{width:100%;height:auto}main{overflow:visible}.grid{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
+<aside>
+<h1>GRAVEMARCH</h1>
+<h2>E13.1 Product Foundation Refactor</h2>
+<div class="small">© 2026 Philip Dookie. All rights reserved.</div>
+<hr>
+<button class="nav" onclick="show('dash')">Command Dashboard</button>
+<button class="nav" onclick="show('lex')">Lexicon Synapse</button>
+<button class="nav" onclick="show('lore')">Lore Database</button>
+<button class="nav" onclick="show('chars')">Character Sandbox</button>
+<button class="nav" onclick="show('sim')">Interrogation Chat</button>
+<button class="nav" onclick="show('diag')">Logic Gates & Diagnostics</button>
+<button class="nav" onclick="show('save')">Save / Export</button>
+<button class="nav" onclick="show('security')">Product Security</button>
+<hr>
+<button class="nav danger" onclick="hardReset()">Hard Reset Local Data</button>
+</aside>
 
-<div class="sidebar">
-
-<div class="logo">
-Gravemarch E8.0
-</div>
-
-<button class="nav-btn" onclick="showPanel('dashboard')">
-Absolute Core
-</button>
-
-<button class="nav-btn" onclick="showPanel('sync')">
-Absolute Synchronization
-</button>
-
-<button class="nav-btn" onclick="showPanel('sovereign')">
-Sovereign Absolute
-</button>
-
-<button class="nav-btn" onclick="showPanel('constitution')">
-Constitutional Absolute
-</button>
-
-<button class="nav-btn" onclick="showPanel('stability')">
-Absolute Stability
-</button>
-
-<button class="nav-btn" onclick="showPanel('advisory')">
-Absolute Advisory
-</button>
-
-<button class="nav-btn" onclick="showPanel('diagnostics')">
-Diagnostics
-</button>
-
-</div>
-
-<div class="main">
-
-<div id="dashboard" class="panel active">
-
-<div class="title">
-Deterministic Civilization Absolute Layer
-</div>
-
+<main>
+<section id="dash" class="panel active">
+<h1>Offline Storytelling & Simulation Engine</h1>
+<h2>A Tool for the Last True Creators.</h2>
 <div class="card">
-
-<h3>
-Absolute Continuity Infrastructure Initialized
-</h3>
-
-<p>
-E8.0 transforms civilization omega continuity into deterministic civilization absolute infrastructure.
-</p>
-
+<b>System Rules</b><br>
+<span class="badge">100% Offline</span><span class="badge">Zero Dependencies</span><span class="badge">Vanilla HTML/CSS/JS</span><span class="badge">LocalStorage</span><span class="badge">No Cloud Requests</span>
 </div>
-
-<div class="absolute">
-
-Civilization A
-↔ Absolute Synchronization
-↔ Civilization B
-↔ Shared Final Stability
-↔ Federation Absolute Equilibrium
-
-WITHOUT:
-absolute authoritarianism
-final domination
-recursive absolute hierarchy systems
-
+<div class="grid">
+<div class="card"><b>Kernel Status</b><div id="kernelStatus"></div></div>
+<div class="card"><b>Project Metrics</b><div id="metrics"></div></div>
 </div>
-
+<div class="card">
+<b>Consolidation Note</b>
+<p>This build converts the previous recursive layers into a stable product shell. The old systems are preserved as DNA: memory, emotion, trust, attachment, belonging, culture, civilization, diagnostics, and authorship now feed the actual app modules.</p>
 </div>
+</section>
 
-<div id="sync" class="panel">
+<section id="lex" class="panel">
+<h1>Lexicon Synapse</h1>
+<h2>Offline dictionary + thesaurus + custom lore search.</h2>
+<input id="lexQuery" placeholder="Search word or phrase">
+<button onclick="searchLexicon()">Search Synapse</button>
+<div id="lexOut"></div>
+</section>
 
-<div class="title">
-Absolute Synchronization Layer
+<section id="lore" class="panel">
+<h1>Lore Database</h1>
+<h2>Local custom canon, phrases, rules, and worldbuilding notes.</h2>
+<input id="loreKey" placeholder="Lore Key / Keyword">
+<select id="loreType">
+<option>World Law</option><option>Faction</option><option>Character Note</option><option>Location</option><option>Magic/System Rule</option><option>Custom Phrase</option>
+</select>
+<textarea id="loreNote" placeholder="Lore note"></textarea>
+<button onclick="addLore()">Save Lore</button>
+<div id="loreOut"></div>
+</section>
+
+<section id="chars" class="panel">
+<h1>Character Sandbox</h1>
+<h2>Profile Vault + Psyche Vault + History Vault.</h2>
+<div class="grid">
+<div>
+<h3>Profile Vault</h3>
+<input id="cName" placeholder="Name">
+<input id="cFaction" placeholder="Faction">
+<textarea id="cAppearance" placeholder="Appearance"></textarea>
 </div>
-
-<input id="syncTitle"
-placeholder="Absolute protocol">
-
-<textarea id="syncDesc"
-rows="5"
-placeholder="Final continuity synchronization"></textarea>
-
-<button onclick="saveSync()">
-Save Absolute Protocol
-</button>
-
-<div id="syncList"></div>
-
+<div>
+<h3>Psyche Vault</h3>
+<input id="cMotive" placeholder="Core Motive">
+<input id="cTriggers" placeholder="Psychological / physiological triggers, comma-separated">
+<input id="cBreaking" placeholder="Breaking Points / Heat Limit">
 </div>
-
-<div id="sovereign" class="panel">
-
-<div class="title">
-Sovereign Absolute Architecture
 </div>
+<h3>History Vault</h3>
+<textarea id="cHistory" placeholder="Past traumas, narrative anchors, world-law ties"></textarea>
+<input id="cThreshold" type="number" min="0" max="100" placeholder="Civilizational stability strike threshold, e.g. 35">
+<button onclick="addCharacter()">Save Character</button>
+<div id="charOut"></div>
+</section>
 
-<input id="sovereignTitle"
-placeholder="Absolute structure">
+<section id="sim" class="panel">
+<h1>Deterministic Interrogation Chat</h1>
+<h2>Offline character response logic. No AI calls. No cloud.</h2>
+<select id="chatChar"></select>
+<textarea id="chatIn" placeholder="Ask or confront the selected character"></textarea>
+<button onclick="interrogate()">Interrogate</button>
+<div id="chatOut"></div>
+</section>
 
-<textarea id="sovereignDesc"
-rows="5"
-placeholder="Absolute continuity without coercion"></textarea>
+<section id="diag" class="panel">
+<h1>Narrative Logic Gates & Diagnostics</h1>
+<h2>World-law stability, character strike logic, plot-hole warnings.</h2>
+<input id="lawName" placeholder="World Law Name">
+<select id="lawState"><option>Stable</option><option>Broken</option><option>Contradicted</option><option>Under Stress</option></select>
+<textarea id="lawNote" placeholder="Law note / contradiction details"></textarea>
+<button onclick="addLaw()">Record World Law</button>
+<hr>
+<label>Civilizational Stability</label>
+<input id="civStability" type="number" min="0" max="100">
+<button onclick="runDiagnostics()">Run Diagnostics</button>
+<div id="diagOut"></div>
+</section>
 
-<button onclick="saveSovereign()">
-Save Absolute Structure
-</button>
+<section id="save" class="panel">
+<h1>Sovereign Save / Export</h1>
+<h2>Local ownership of project data.</h2>
+<button onclick="exportProject()">Export JSON</button>
+<input type="file" id="importFile" accept=".json" onchange="importProject(event)">
+<textarea id="exportBox" placeholder="Exported project JSON appears here"></textarea>
+</section>
 
-<div id="sovereignList"></div>
-
+<section id="security" class="panel">
+<h1>Product Security Layer</h1>
+<h2>Release identity, copyright, and obfuscation prep.</h2>
+<div class="card">
+<b>Copyright Notice</b>
+<div class="log">© 2026 Philip Dookie. All rights reserved. Gravemarch Engine. A Tool for the Last True Creators.</div>
 </div>
-
-<div id="constitution" class="panel">
-
-<div class="title">
-Constitutional Absolute Mapping
+<div class="card">
+<b>Release Strategy</b>
+<ul>
+<li>Standalone offline asset.</li>
+<li>One-time payment. User keeps it forever.</li>
+<li>No subscriptions. No cloud dependency. No server overhead.</li>
+<li>Final public build should be obfuscated after testing.</li>
+<li>Trademark app name/logo before major commercial release.</li>
+</ul>
 </div>
-
-<input id="constitutionTitle"
-placeholder="Absolute law">
-
-<textarea id="constitutionDesc"
-rows="5"
-placeholder="Constitutional final pathway"></textarea>
-
-<button onclick="saveConstitution()">
-Save Absolute Law
-</button>
-
-<div id="constitutionList"></div>
-
-</div>
-
-<div id="stability" class="panel">
-
-<div class="title">
-Absolute Stability Layer
-</div>
-
-<input id="stabilityName"
-placeholder="Absolute anchor">
-
-<input id="stabilityValue"
-type="number"
-placeholder="Absolute stability 0-100">
-
-<button onclick="saveStability()">
-Save Absolute Anchor
-</button>
-
-<div id="stabilityList"></div>
-
-</div>
-
-<div id="advisory" class="panel">
-
-<div class="title">
-Deterministic Absolute Advisory Layer
-</div>
-
-<button onclick="generateAdvisories()">
-Generate Absolute Guidance
-</button>
-
-<div id="advisoryResults"></div>
-
-</div>
-
-<div id="diagnostics" class="panel">
-
-<div class="title">
-Absolute Civilization Diagnostics
-</div>
-
-<button onclick="runDiagnostics()">
-Run Diagnostics
-</button>
-
-<div id="diagnosticResults"></div>
-
-</div>
-
-</div>
+</section>
+</main>
 
 <script>
+/*
+Gravemarch Engine E13.1 — Product Foundation Refactor
+© 2026 Philip Dookie. All rights reserved.
+Offline-only local browser application.
+*/
 
-const STORAGE_KEY = "gravemarch_engine8_0";
-
-let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
-sync:[],
-sovereign:[],
-constitution:[],
-stability:[]
+const KEY="gravemarch_e13_1_product";
+const starterDict={
+sovereign:{definition:"Having independent authority, control, or self-governing power.",synonyms:["independent","autonomous","self-ruling"],usage:"A sovereign creator owns their tools and creative direction."},
+continuity:{definition:"Consistent preservation of events, logic, identity, or sequence over time.",synonyms:["consistency","persistence","coherence"],usage:"Narrative continuity prevents contradictions between chapters."},
+lore:{definition:"Collected knowledge, history, rules, legends, and background of a fictional world.",synonyms:["mythos","worldbuilding","canon"],usage:"Strong lore grounds characters in the world."},
+motive:{definition:"The reason behind a character's action, desire, or decision.",synonyms:["drive","purpose","reason"],usage:"A clear motive prevents random character behavior."},
+diagnostic:{definition:"A process used to detect problems, instability, or errors.",synonyms:["analysis","inspection","check"],usage:"Diagnostics flag broken world laws."}
 };
 
-function persist(){
-localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+let S=JSON.parse(localStorage.getItem(KEY))||{
+meta:{name:"Untitled Project",created:new Date().toISOString(),version:"E13.1"},
+dict:starterDict,
+lore:[
+{key:"Gravemarch",type:"Brand",note:"Offline creator engine for storytelling, lore, simulation, and diagnostics."},
+{key:"World Law",type:"System Rule",note:"A fictional rule that must remain consistent unless intentionally broken and logged."}
+],
+characters:[],
+laws:[],
+civ:{stability:70},
+events:[]
+};
+
+function save(){localStorage.setItem(KEY,JSON.stringify(S));renderAll()}
+function log(x,type="ok"){S.events.push({t:new Date().toISOString(),x,type});localStorage.setItem(KEY,JSON.stringify(S))}
+function show(id){document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");renderAll()}
+function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+function words(s){return String(s||"").toLowerCase().split(/[^a-z0-9']+/).filter(Boolean)}
+function hasAny(text,arr){let w=words(text);return arr.some(a=>w.includes(String(a).toLowerCase().trim()))}
+
+function renderAll(){renderMetrics();renderLore();renderChars();renderChatSelect();renderDiag()}
+function renderMetrics(){
+document.getElementById("kernelStatus").innerHTML=`<div class="log">OFFLINE MODE ACTIVE<br>No external requests. Local browser storage only.</div>`;
+document.getElementById("metrics").innerHTML=`Lore: ${S.lore.length}<br>Characters: ${S.characters.length}<br>World Laws: ${S.laws.length}<br>Events: ${S.events.length}<br>Stability: ${S.civ.stability}`;
 }
 
-function showPanel(id){
-document.querySelectorAll(".panel").forEach(panel=>{
-panel.classList.remove("active");
-});
-document.getElementById(id).classList.add("active");
+function searchLexicon(){
+let q=document.getElementById("lexQuery").value.trim().toLowerCase(), d=S.dict[q], lore=S.lore.filter(x=>(x.key+" "+x.note+" "+x.type).toLowerCase().includes(q));
+let out="";
+if(d)out+=`<div class="card"><b>Standard Definition: ${esc(q)}</b><br>${esc(d.definition)}<br><br><b>Synonyms:</b> ${esc((d.synonyms||[]).join(", "))}<br><br><b>Usage:</b> ${esc(d.usage)}</div>`;
+else out+=`<div class="log warn">No standard dictionary entry found. Add a local dictionary database later in /data/dictionary.</div>`;
+out+=`<div class="card"><b>Custom Lore Matches</b>${lore.length?lore.map(x=>`<div class="log"><b>${esc(x.key)}</b> [${esc(x.type)}]<br>${esc(x.note)}</div>`).join(""):"<div class='log warn'>No lore match.</div>"}</div>`;
+document.getElementById("lexOut").innerHTML=out;
 }
 
-function saveSync(){
-const title = document.getElementById("syncTitle").value;
-const desc = document.getElementById("syncDesc").value;
-
-if(!title) return;
-
-data.sync.push({title,desc});
-persist();
-renderSync();
+function addLore(){
+let key=loreKey.value.trim(),type=loreType.value,note=loreNote.value.trim();if(!key||!note)return;
+S.lore.push({key,type,note});log("Lore saved: "+key);save();loreKey.value=loreNote.value="";
+}
+function renderLore(){
+document.getElementById("loreOut").innerHTML=S.lore.slice().reverse().map(x=>`<div class="log"><b>${esc(x.key)}</b> [${esc(x.type)}]<br>${esc(x.note)}</div>`).join("");
 }
 
-function renderSync(){
-let html = "";
-
-data.sync.forEach(item=>{
-html += `
-<div class="absolute">
-<strong>${item.title}</strong>
-<br><br>
-${item.desc}
-</div>
-`;
-});
-
-document.getElementById("syncList").innerHTML = html;
+function addCharacter(){
+let ch={
+name:cName.value.trim(),faction:cFaction.value.trim(),appearance:cAppearance.value.trim(),
+motive:cMotive.value.trim(),triggers:cTriggers.value.split(",").map(x=>x.trim()).filter(Boolean),
+breaking:cBreaking.value.trim(),history:cHistory.value.trim(),threshold:Number(cThreshold.value||35),
+memory:[],state:"stable"
+};
+if(!ch.name)return;
+S.characters.push(ch);log("Character saved: "+ch.name);save();
+["cName","cFaction","cAppearance","cMotive","cTriggers","cBreaking","cHistory","cThreshold"].forEach(id=>document.getElementById(id).value="")
+}
+function renderChars(){
+document.getElementById("charOut").innerHTML=S.characters.map(c=>`<div class="card"><b>${esc(c.name)}</b> — ${esc(c.faction)}<br><span class="small">Threshold: ${c.threshold}</span><br><b>Motive:</b> ${esc(c.motive)}<br><b>Triggers:</b> ${esc(c.triggers.join(", "))}<br><b>Breaking:</b> ${esc(c.breaking)}<br><b>History:</b> ${esc(c.history)}</div>`).join("");
+}
+function renderChatSelect(){
+let o=S.characters.map((c,i)=>`<option value="${i}">${esc(c.name)}</option>`).join("");
+document.getElementById("chatChar").innerHTML=o;
 }
 
-function saveSovereign(){
-const title = document.getElementById("sovereignTitle").value;
-const desc = document.getElementById("sovereignDesc").value;
-
-if(!title) return;
-
-data.sovereign.push({title,desc});
-persist();
-renderSovereign();
+function interrogate(){
+let i=chatChar.value,msg=chatIn.value.trim();if(i===""||!msg)return;
+let c=S.characters[i], lower=msg.toLowerCase(), response="";
+let triggerHit=c.triggers.find(t=>lower.includes(t.toLowerCase()));
+if(triggerHit)response=`${c.name} reacts sharply. The word "${triggerHit}" touches a programmed trigger. Their motive resurfaces: ${c.motive}`;
+else if(hasAny(msg,words(c.history)))response=`${c.name} connects your question to their history. ${c.history}`;
+else if(lower.includes("why")||lower.includes("motive"))response=`${c.name}: "My motive is simple: ${c.motive}."`;
+else if(lower.includes("break")||lower.includes("limit"))response=`${c.name}: "My limit is ${c.breaking}. Push past that and the story changes."`;
+else response=`${c.name} remains controlled. Their current state is "${c.state}", guided by motive: ${c.motive}`;
+c.memory.push({q:msg,a:response,t:new Date().toISOString()});log("Interrogation: "+c.name);
+chatOut.innerHTML=`<div class="log"><b>You:</b> ${esc(msg)}<br><br><b>${esc(c.name)}:</b> ${esc(response)}</div>`+chatOut.innerHTML;
+chatIn.value="";save();
 }
 
-function renderSovereign(){
-let html = "";
-
-data.sovereign.forEach(item=>{
-html += `
-<div class="entry">
-<strong>${item.title}</strong>
-<br><br>
-${item.desc}
-</div>
-`;
-});
-
-document.getElementById("sovereignList").innerHTML = html;
+function addLaw(){
+let name=lawName.value.trim(),state=lawState.value,note=lawNote.value.trim();if(!name)return;
+S.laws.push({name,state,note,t:new Date().toISOString()});log("World law recorded: "+name+" = "+state,state==="Stable"?"ok":"warn");save();lawName.value=lawNote.value="";
 }
-
-function saveConstitution(){
-const title = document.getElementById("constitutionTitle").value;
-const desc = document.getElementById("constitutionDesc").value;
-
-if(!title) return;
-
-data.constitution.push({title,desc});
-persist();
-renderConstitution();
-}
-
-function renderConstitution(){
-let html = "";
-
-data.constitution.forEach(item=>{
-html += `
-<div class="absolute">
-<strong>${item.title}</strong>
-<br><br>
-${item.desc}
-</div>
-`;
-});
-
-document.getElementById("constitutionList").innerHTML = html;
-}
-
-function saveStability(){
-const name = document.getElementById("stabilityName").value;
-const value = parseInt(document.getElementById("stabilityValue").value || 0);
-
-if(!name) return;
-
-data.stability.push({name,value});
-persist();
-renderStability();
-}
-
-function renderStability(){
-let html = "";
-
-data.stability.forEach(item=>{
-html += `
-<div class="metric">
-<strong>${item.name}</strong>
-
-<div class="bar">
-<div class="fill" style="width:${item.value}%"></div>
-</div>
-
-<br>
-
-${item.value}%
-
-</div>
-`;
-});
-
-document.getElementById("stabilityList").innerHTML = html;
-}
-
-function generateAdvisories(){
-
-let advisories = [];
-
-if(data.sync.length > 3){
-advisories.push(
-"Federation absolute continuity remaining sovereignty-safe."
-);
-}
-
-if(data.stability.some(s=>s.value > 80)){
-advisories.push(
-"Final coherence integrity remaining stable."
-);
-}
-
-if(data.sovereign.length > 2){
-advisories.push(
-"Sovereign absolute pathways stabilizing final continuity."
-);
-}
-
-if(data.constitution.length === 0){
-advisories.push(
-"Constitutional absolute mappings insufficiently defined."
-);
-}
-
-if(advisories.length === 0){
-advisories.push(
-"Civilization absolute continuity stable."
-);
-}
-
-let html = "";
-
-advisories.forEach(item=>{
-html += `<div class="entry">${item}</div>`;
-});
-
-document.getElementById("advisoryResults").innerHTML = html;
-}
-
 function runDiagnostics(){
-
-let warnings = [];
-
-if(data.sync.length === 0){
-warnings.push(
-"No absolute synchronization protocols detected"
-);
+S.civ.stability=Number(civStability.value||S.civ.stability||70);
+let broken=S.laws.filter(l=>["Broken","Contradicted","Under Stress"].includes(l.state));
+let out="";
+out+=broken.length?`<div class="log alert"><b>World Law Warnings:</b><br>${broken.map(l=>esc(l.name+" — "+l.state+": "+l.note)).join("<br>")}</div>`:`<div class="log">World laws stable.</div>`;
+S.characters.forEach(c=>{
+let lawTie=broken.find(l=>(c.history+" "+c.motive).toLowerCase().includes(l.name.toLowerCase()));
+if(S.civ.stability<=c.threshold||lawTie){
+c.state="preparing_to_strike";
+out+=`<div class="log alert"><b>${esc(c.name)} Triggered</b><br>Reason: ${S.civ.stability<=c.threshold?"civilizational stability below threshold. ":""}${lawTie?"linked world law broken: "+esc(lawTie.name):""}<br>Prompt: ${esc(c.name)} begins acting from motive: ${esc(c.motive)}</div>`;
+}else c.state="stable";
+});
+document.getElementById("diagOut").innerHTML=out;log("Diagnostics executed");save();
+}
+function renderDiag(){
+civStability.value=S.civ.stability;
 }
 
-if(data.sovereign.length === 0){
-warnings.push(
-"No sovereign absolute systems detected"
-);
+function exportProject(){
+let data=JSON.stringify(S,null,2);
+exportBox.value=data;
+log("Project exported to JSON box");save();
+}
+function importProject(e){
+let f=e.target.files[0];if(!f)return;
+let r=new FileReader();
+r.onload=()=>{try{S=JSON.parse(r.result);save();log("Project imported")}catch(err){alert("Invalid JSON import.")}};
+r.readAsText(f);
+}
+function hardReset(){
+if(confirm("Erase all local Gravemarch E13.1 data?")){
+localStorage.removeItem(KEY);location.reload();
+}
 }
 
-if(data.stability.length === 0){
-warnings.push(
-"No final anchors recorded"
-);
-}
-
-let html = `
-<div class="entry">
-Absolute Synchronization Protocols:
-${data.sync.length}
-</div>
-
-<div class="entry">
-Sovereign Absolute Systems:
-${data.sovereign.length}
-</div>
-
-<div class="entry">
-Constitutional Absolute Laws:
-${data.constitution.length}
-</div>
-
-<div class="entry">
-Absolute Anchors:
-${data.stability.length}
-</div>
-`;
-
-if(warnings.length){
-html += `
-<div class="entry">
-Warnings:
-<br><br>
-${warnings.join("<br><br>")}
-</div>
-`;
-}else{
-html += `
-<div class="entry">
-Absolute civilization integrity maintained.
-</div>
-`;
-}
-
-document.getElementById("diagnosticResults").innerHTML = html;
-}
-
-renderSync();
-renderSovereign();
-renderConstitution();
-renderStability();
-
+renderAll();
 </script>
-
 </body>
-</html>
+</html>'''
