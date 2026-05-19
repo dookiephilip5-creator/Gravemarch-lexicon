@@ -4,98 +4,111 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Offline Creator Engine</title>
+
 <style>
+/* =========================================================
+   OFFLINE CREATOR ENGINE
+   FOUNDATION BUILD v1.0
+   © 2026
+   Pure Offline HTML/CSS/JS
+   No Frameworks
+   No Cloud
+========================================================= */
+
 :root{
   --bg:#050607;
   --panel:#101316;
   --panel2:#15191d;
-  --line:#2b3338;
-  --crimson:#8b1024;
-  --crimson2:#d7263d;
+  --line:#2a3337;
   --mint:#67ffbf;
-  --text:#e7eee9;
-  --muted:#7f8b86;
+  --mintSoft:#2ee6a2;
+  --crimson:#8f1025;
+  --crimsonBright:#e02b46;
+  --text:#e8f0ea;
+  --muted:#7b8782;
 }
 
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-body{
+html,body{
   margin:0;
+  width:100%;
+  height:100%;
   background:var(--bg);
   color:var(--text);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  height:100vh;
   overflow:hidden;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
 }
 
-button,input,textarea,select{
-  font:inherit;
-}
-
-button{
-  background:#11171a;
-  color:var(--mint);
-  border:1px solid var(--line);
-  padding:9px 12px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-button:hover{
-  border-color:var(--mint);
-}
-
-.danger{
-  color:#ffd8de;
-  border-color:var(--crimson);
-  background:#19070b;
-}
+/* =========================================================
+   LAYOUT
+========================================================= */
 
 .app{
-  height:100vh;
+  width:100%;
+  height:100%;
   display:grid;
-  grid-template-rows:auto 1fr auto;
+  grid-template-rows:58px 1fr 30px;
 }
 
-.topbar,
-.statusbar{
+.topbar{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:10px 14px;
-  background:#080a0c;
+  gap:12px;
+  padding:0 14px;
+  background:#07090b;
   border-bottom:1px solid var(--line);
 }
 
 .statusbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 12px;
+  background:#07090b;
   border-top:1px solid var(--line);
-  border-bottom:0;
   color:var(--muted);
   font-size:12px;
 }
 
 .brand{
-  color:var(--mint);
   font-weight:800;
+  color:var(--mint);
   letter-spacing:.08em;
+  white-space:nowrap;
+}
+
+.worldLabel{
+  font-size:12px;
+  color:var(--muted);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .sidebarToggle{
-  color:var(--crimson2);
-  font-size:22px;
+  border:none;
+  background:none;
+  color:var(--crimsonBright);
+  font-size:24px;
+  cursor:pointer;
+  padding:0;
 }
 
 .main{
+  width:100%;
+  height:100%;
   display:grid;
   grid-template-columns:0 1fr;
-  height:100%;
-  transition:.2s;
+  overflow:hidden;
+  transition:.2s ease;
 }
 
 .main.open{
-  grid-template-columns:310px 1fr;
+  grid-template-columns:320px 1fr;
 }
 
 .sidebar{
@@ -104,6 +117,35 @@ button:hover{
   border-right:1px solid var(--line);
   padding:12px;
 }
+
+.workspace{
+  overflow:auto;
+  padding:18px;
+}
+
+/* =========================================================
+   PANEL
+========================================================= */
+
+.panel{
+  width:100%;
+  max-width:1100px;
+  margin:auto;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 0 40px rgba(0,0,0,.25);
+}
+
+.panel h1{
+  margin-top:0;
+  color:var(--mint);
+}
+
+/* =========================================================
+   GROUPS
+========================================================= */
 
 .group{
   border:1px solid var(--line);
@@ -114,53 +156,58 @@ button:hover{
 }
 
 .group h3{
-  margin:0 0 8px;
-  font-size:13px;
+  margin:0 0 10px;
   color:var(--mint);
-  text-transform:uppercase;
+  font-size:13px;
   letter-spacing:.08em;
+  text-transform:uppercase;
 }
 
-.group button,
-.group input,
-.group select{
+/* =========================================================
+   FORMS
+========================================================= */
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
   width:100%;
   margin:4px 0;
-}
-
-.workspace{
-  overflow:auto;
-  padding:18px;
-}
-
-.panel{
-  max-width:1100px;
-  margin:auto;
-  background:var(--panel);
+  padding:10px 12px;
+  background:#11161a;
   border:1px solid var(--line);
-  border-radius:16px;
-  padding:16px;
-  box-shadow:0 0 30px rgba(0,0,0,.25);
-}
-
-.panel h1{
-  margin-top:0;
   color:var(--mint);
+  border-radius:10px;
+  cursor:pointer;
 }
 
-textarea,
+button:hover{
+  border-color:var(--mint);
+}
+
+button.danger{
+  border-color:var(--crimson);
+  color:#ffdbe0;
+  background:#19070a;
+}
+
 input,
+textarea,
 select{
   width:100%;
+  margin:4px 0;
+  padding:10px;
   background:#050708;
-  color:var(--text);
   border:1px solid var(--line);
   border-radius:10px;
-  padding:10px;
+  color:var(--text);
 }
 
 textarea{
-  min-height:240px;
   resize:vertical;
   line-height:1.8;
 }
@@ -170,11 +217,9 @@ textarea{
   font-size:18px;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
+/* =========================================================
+   CARDS
+========================================================= */
 
 .card{
   border:1px solid var(--line);
@@ -190,7 +235,7 @@ textarea{
 
 .alert{
   border-color:var(--crimson);
-  color:#ffd9df;
+  color:#ffd8df;
 }
 
 .small{
@@ -198,13 +243,19 @@ textarea{
   color:var(--muted);
 }
 
-.hidden{
-  display:none;
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
+/* =========================================================
+   ZEN MODE
+========================================================= */
+
 .zen .topbar,
-.zen .sidebar,
-.zen .statusbar{
+.zen .statusbar,
+.zen .sidebar{
   display:none;
 }
 
@@ -223,18 +274,15 @@ textarea{
   border-radius:0;
 }
 
-/* MOBILE / PORTRAIT FIX */
+/* =========================================================
+   MOBILE FIX
+========================================================= */
 
 @media(max-width:800px){
-
-  body{
-    overflow:hidden;
-  }
 
   .main{
     display:block;
     position:relative;
-    height:100%;
   }
 
   .sidebar{
@@ -246,7 +294,6 @@ textarea{
     height:calc(100vh - 58px);
     z-index:100;
     transition:left .2s ease;
-    border-right:1px solid var(--line);
     box-shadow:0 0 40px rgba(0,0,0,.6);
   }
 
@@ -258,25 +305,15 @@ textarea{
     width:100%;
     height:100%;
     padding:14px;
-    overflow:auto;
   }
 
   .panel{
-    width:100%;
     max-width:none;
     padding:14px;
   }
 
   .grid{
     grid-template-columns:1fr;
-  }
-
-  .main.open{
-    grid-template-columns:none;
-  }
-
-  textarea{
-    min-height:180px;
   }
 
   .manuscript{
@@ -286,205 +323,367 @@ textarea{
 }
 </style>
 </head>
+
 <body>
+
 <div class="app" id="app">
+
+  <!-- TOPBAR -->
+
   <div class="topbar">
     <button class="sidebarToggle" onclick="toggleSidebar()">☰</button>
-    <div class="brand">OFFLINE CREATOR ENGINE</div>
-    <div class="small" id="activeWorld">No World Loaded</div>
+
+    <div class="brand">
+      OFFLINE CREATOR ENGINE
+    </div>
+
+    <div class="worldLabel" id="worldLabel">
+      No World Loaded
+    </div>
   </div>
 
+  <!-- MAIN -->
+
   <div class="main" id="main">
+
+    <!-- SIDEBAR -->
+
     <aside class="sidebar">
+
       <div class="group">
         <h3>Franchise Tree</h3>
+
         <input id="newWorldName" placeholder="New world name">
-        <button onclick="createWorld()">Create World</button>
+
+        <button onclick="createWorld()">
+          Create World
+        </button>
+
         <select id="worldSelect" onchange="loadWorld(this.value)"></select>
-        <button class="danger" onclick="deleteWorld()">Delete Active World</button>
+
+        <button class="danger" onclick="deleteWorld()">
+          Delete Active World
+        </button>
       </div>
 
       <div class="group">
-        <h3>Modules</h3>
-        <button onclick="showModule('manuscript')">Manuscript Workspace</button>
-        <button onclick="showModule('lore')">Lore Database</button>
-        <button onclick="showModule('entries')">Entry Archive</button>
-        <button onclick="showModule('characters')">Character Vault</button>
-        <button onclick="showModule('chronology')">Chronology Matrix</button>
-        <button onclick="showModule('diagnostics')">Diagnostics</button>
-        <button onclick="showModule('reference')">Global Reference</button>
+        <h3>Workspace</h3>
+
+        <button onclick="showModule('manuscript')">
+          Manuscript Workspace
+        </button>
+
+        <button onclick="showModule('lore')">
+          Lore Database
+        </button>
+
+        <button onclick="showModule('entries')">
+          Entry Archive
+        </button>
+
+        <button onclick="showModule('characters')">
+          Character Vault
+        </button>
+
+        <button onclick="showModule('chronology')">
+          Chronology Matrix
+        </button>
+
+        <button onclick="showModule('diagnostics')">
+          Diagnostics
+        </button>
+
+        <button onclick="showModule('reference')">
+          Global Reference
+        </button>
       </div>
 
       <div class="group">
         <h3>Forge Core</h3>
-        <button onclick="extractCore()">Forge Core Extract</button>
-        <input type="file" id="injectFile" accept=".json" onchange="injectCore(event)">
-        <button onclick="saveActiveWorld()">Manual Save</button>
+
+        <button onclick="extractCore()">
+          Forge Core Extract
+        </button>
+
+        <input
+          type="file"
+          accept=".json"
+          onchange="injectCore(event)"
+        >
+
+        <button onclick="saveWorld(false)">
+          Manual Save
+        </button>
       </div>
 
       <div class="group">
         <h3>Engine Governor</h3>
-        <button onclick="toggleZen()">Zen Mode Toggle</button>
+
+        <button onclick="toggleZen()">
+          Zen Mode Toggle
+        </button>
       </div>
+
     </aside>
+
+    <!-- WORKSPACE -->
 
     <main class="workspace">
       <section class="panel" id="screen"></section>
     </main>
+
   </div>
 
+  <!-- STATUS -->
+
   <div class="statusbar">
-    <span id="saveStatus">Stable diagnostics online.</span>
-    <span>© 2026 Offline Creator Engine. All rights reserved.</span>
+    <span id="saveStatus">
+      Stable diagnostics online.
+    </span>
+
+    <span>
+      © 2026 Offline Creator Engine
+    </span>
   </div>
+
 </div>
 
 <script>
-/*
-OFFLINE CREATOR ENGINE
-© 2026. All rights reserved.
-Pure offline HTML/CSS/JS foundation.
-No frameworks. No cloud. No external requests.
-*/
+/* =========================================================
+   OFFLINE CREATOR ENGINE
+   FOUNDATION BUILD v1.0
+========================================================= */
 
-const ENGINE_VERSION="1.0.0-foundation";
-const INDEX_KEY="OCE_MASTER_INDEX";
-let activeId=null;
-let active=null;
-let currentModule="manuscript";
-let saveTimer=null;
+const ENGINE_VERSION = "1.0.0";
+const MASTER_INDEX = "OCE_MASTER_INDEX";
 
-const blankWorld=name=>({
-  meta:{
-    engine:"Offline Creator Engine",
-    version:ENGINE_VERSION,
-    id:"oce_"+Date.now(),
-    name:name||"Untitled World",
-    createdAt:new Date().toISOString(),
-    updatedAt:new Date().toISOString()
-  },
-  manifesto:"",
-  manuscript:{chapters:[{id:"ch_1",title:"Chapter 1",body:""}],activeChapter:"ch_1"},
-  lore:[],
-  entries:[],
-  characters:[],
-  chronology:[],
-  diagnostics:[],
-  worldState:{stability:100,laws:[]}
-});
+let activeWorld = null;
+let activeWorldId = null;
+let currentModule = "manuscript";
+
+/* =========================================================
+   STORAGE
+========================================================= */
 
 function getIndex(){
-  return JSON.parse(localStorage.getItem(INDEX_KEY)||"[]");
+  return JSON.parse(localStorage.getItem(MASTER_INDEX) || "[]");
 }
+
 function setIndex(index){
-  localStorage.setItem(INDEX_KEY,JSON.stringify(index));
+  localStorage.setItem(MASTER_INDEX, JSON.stringify(index));
 }
+
 function projectKey(id){
-  return "OCE_PROJECT_"+id;
+  return "OCE_PROJECT_" + id;
 }
-function boot(){
-  renderWorldList();
-  const index=getIndex();
-  if(index[0]) loadWorld(index[0].id);
-  else showWelcome();
-  saveTimer=setInterval(()=>{if(active)saveActiveWorld(true)},60000);
-  window.addEventListener("beforeunload",()=>{if(active)saveActiveWorld(true)});
+
+/* =========================================================
+   WORLD TEMPLATE
+========================================================= */
+
+function blankWorld(name){
+
+  return {
+
+    meta:{
+      engine:"Offline Creator Engine",
+      version:ENGINE_VERSION,
+      id:"oce_" + Date.now(),
+      name:name || "Untitled World",
+      createdAt:new Date().toISOString(),
+      updatedAt:new Date().toISOString()
+    },
+
+    manifesto:"",
+
+    manuscript:{
+      activeChapter:"chapter_1",
+      chapters:[
+        {
+          id:"chapter_1",
+          title:"Chapter 1",
+          body:""
+        }
+      ]
+    },
+
+    lore:[],
+    entries:[],
+    characters:[],
+    chronology:[],
+    diagnostics:[],
+
+    worldState:{
+      stability:100,
+      laws:[]
+    }
+  };
 }
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
 function toggleSidebar(){
   document.getElementById("main").classList.toggle("open");
 }
+
+/* =========================================================
+   ZEN MODE
+========================================================= */
+
 function toggleZen(){
   document.body.classList.toggle("zen");
 }
+
+/* =========================================================
+   CREATE WORLD
+========================================================= */
+
 function createWorld(){
-  const name=document.getElementById("newWorldName").value.trim();
-  if(!name)return alert("Enter a world name.");
-  const world=blankWorld(name);
-  const index=getIndex();
-  index.push({id:world.meta.id,name:world.meta.name,updatedAt:world.meta.updatedAt});
+
+  const input = document
+    .getElementById("newWorldName");
+
+  const name = input.value.trim();
+
+  if(!name){
+    alert("Enter a world name.");
+    return;
+  }
+
+  const world = blankWorld(name);
+
+  localStorage.setItem(
+    projectKey(world.meta.id),
+    JSON.stringify(world)
+  );
+
+  const index = getIndex();
+
+  index.push({
+    id:world.meta.id,
+    name:world.meta.name,
+    updatedAt:world.meta.updatedAt
+  });
+
   setIndex(index);
-  localStorage.setItem(projectKey(world.meta.id),JSON.stringify(world));
-  document.getElementById("newWorldName").value="";
+
+  input.value = "";
+
   renderWorldList();
+
   loadWorld(world.meta.id);
 }
+
+/* =========================================================
+   WORLD LIST
+========================================================= */
+
 function renderWorldList(){
-  const sel=document.getElementById("worldSelect");
-  const index=getIndex();
-  sel.innerHTML=index.map(w=>`<option value="${w.id}">${escapeHTML(w.name)}</option>`).join("");
+
+  const select = document
+    .getElementById("worldSelect");
+
+  const index = getIndex();
+
+  select.innerHTML = index.map(world => `
+    <option value="${world.id}">
+      ${escapeHTML(world.name)}
+    </option>
+  `).join("");
 }
+
+/* =========================================================
+   LOAD WORLD
+========================================================= */
+
 function loadWorld(id){
-  if(!id)return;
-  if(active)saveActiveWorld(true);
-  const raw=localStorage.getItem(projectKey(id));
-  if(!raw)return;
-  activeId=id;
-  active=JSON.parse(raw);
-  document.getElementById("activeWorld").textContent="World: "+active.meta.name;
-  document.getElementById("worldSelect").value=id;
+
+  if(!id) return;
+
+  const raw = localStorage.getItem(projectKey(id));
+
+  if(!raw) return;
+
+  activeWorld = JSON.parse(raw);
+  activeWorldId = id;
+
+  document.getElementById("worldLabel")
+    .textContent = "World: " + activeWorld.meta.name;
+
+  document.getElementById("worldSelect")
+    .value = id;
+
   showModule(currentModule);
 }
-function saveActiveWorld(silent=false){
-  if(!active)return;
-  active.meta.updatedAt=new Date().toISOString();
-  localStorage.setItem(projectKey(active.meta.id),JSON.stringify(active));
-  const index=getIndex().map(w=>w.id===active.meta.id?{id:active.meta.id,name:active.meta.name,updatedAt:active.meta.updatedAt}:w);
-  setIndex(index);
-  renderWorldList();
-  document.getElementById("saveStatus").textContent=silent?"Autosaved.":"Manual save complete.";
+
+/* =========================================================
+   SAVE WORLD
+========================================================= */
+
+function saveWorld(silent=true){
+
+  if(!activeWorld) return;
+
+  activeWorld.meta.updatedAt =
+    new Date().toISOString();
+
+  localStorage.setItem(
+    projectKey(activeWorld.meta.id),
+    JSON.stringify(activeWorld)
+  );
+
+  document.getElementById("saveStatus")
+    .textContent = silent
+    ? "Autosaved."
+    : "Manual save complete.";
 }
+
+/* =========================================================
+   DELETE WORLD
+========================================================= */
+
 function deleteWorld(){
-  if(!active)return;
-  if(!confirm("Delete this world from browser storage? Export first if needed."))return;
-  localStorage.removeItem(projectKey(active.meta.id));
-  setIndex(getIndex().filter(w=>w.id!==active.meta.id));
-  active=null;activeId=null;
+
+  if(!activeWorld) return;
+
+  if(!confirm(
+    "Delete active world from browser storage?"
+  )) return;
+
+  localStorage.removeItem(
+    projectKey(activeWorld.meta.id)
+  );
+
+  const next = getIndex().filter(
+    world => world.id !== activeWorld.meta.id
+  );
+
+  setIndex(next);
+
+  activeWorld = null;
+  activeWorldId = null;
+
   renderWorldList();
-  showWelcome();
+
+  welcomeScreen();
 }
-function extractCore(){
-  if(!active)return alert("No world loaded.");
-  saveActiveWorld(true);
-  const blob=new Blob([JSON.stringify(active,null,2)],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download=active.meta.name.replace(/\s+/g,"_")+".oce.json";
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-function injectCore(e){
-  const file=e.target.files[0];
-  if(!file)return;
-  const reader=new FileReader();
-  reader.onload=()=>{
-    try{
-      const data=JSON.parse(reader.result);
-      if(!data.meta||!data.meta.id)throw Error("Invalid save.");
-      data.meta.id="oce_"+Date.now();
-      data.meta.updatedAt=new Date().toISOString();
-      const index=getIndex();
-      index.push({id:data.meta.id,name:data.meta.name+" Injected",updatedAt:data.meta.updatedAt});
-      data.meta.name=data.meta.name+" Injected";
-      setIndex(index);
-      localStorage.setItem(projectKey(data.meta.id),JSON.stringify(data));
-      renderWorldList();
-      loadWorld(data.meta.id);
-    }catch(err){alert("Forge Core Inject failed. Invalid file.");}
-  };
-  reader.readAsText(file);
-}
-function showWelcome(){
-  document.getElementById("activeWorld").textContent="No World Loaded";
-  document.getElementById("screen").innerHTML=`
-    <h1>A Tool for the Last True Creators.</h1>
-    <p>This is the clean offline foundation. Create a world to begin.</p>
-    <div class="card"><b>Status:</b> No cloud. No frameworks. No external requests.</div>
-  `;
-}
-function showModule(name){
-  currentModule=name;
-  if(!active&&name!=="reference")return showWelcome();
-  const map={
+
+/* =========================================================
+   MODULE SWITCH
+========================================================= */
+
+function showModule(module){
+
+  currentModule = module;
+
+  if(!activeWorld && module !== "reference"){
+    welcomeScreen();
+    return;
+  }
+
+  const modules = {
     manuscript:renderManuscript,
     lore:renderLore,
     entries:renderEntries,
@@ -493,143 +692,529 @@ function showModule(name){
     diagnostics:renderDiagnostics,
     reference:renderReference
   };
-  map[name]();
+
+  modules[module]();
 }
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+function welcomeScreen(){
+
+  document.getElementById("screen").innerHTML = `
+    <h1>A Tool for the Last True Creators.</h1>
+
+    <div class="card">
+      This is the clean offline foundation build.
+      Create a world to begin.
+    </div>
+
+    <div class="card">
+      <b>Status:</b>
+      No frameworks. No cloud. No external requests.
+    </div>
+  `;
+}
+
+/* =========================================================
+   MANUSCRIPT
+========================================================= */
+
 function renderManuscript(){
-  function switchChapter(id){
-  active.manuscript.activeChapter=id;
-  saveActiveWorld(true);
+
+  const chapters =
+    activeWorld.manuscript.chapters;
+
+  const chapter =
+    chapters.find(c =>
+      c.id === activeWorld.manuscript.activeChapter
+    ) || chapters[0];
+
+  document.getElementById("screen").innerHTML = `
+    <h1>Manuscript Workspace</h1>
+
+    <select onchange="switchChapter(this.value)">
+      ${chapters.map(c => `
+        <option
+          value="${c.id}"
+          ${c.id===chapter.id ? "selected" : ""}
+        >
+          ${escapeHTML(c.title)}
+        </option>
+      `).join("")}
+    </select>
+
+    <input
+      value="${escapeHTML(chapter.title)}"
+      oninput="updateChapterTitle(this.value)"
+      placeholder="Chapter title"
+    >
+
+    <textarea
+      class="manuscript"
+      oninput="updateChapterBody(this.value)"
+      placeholder="Begin writing..."
+    >${escapeHTML(chapter.body)}</textarea>
+
+    <button onclick="addChapter()">
+      Add Chapter
+    </button>
+
+    <button class="danger" onclick="deleteChapter()">
+      Delete Chapter
+    </button>
+
+    <button onclick="exportManuscript()">
+      Export Manuscript TXT
+    </button>
+
+    <div class="small">
+      Chapters: ${chapters.length}
+    </div>
+  `;
+}
+
+function switchChapter(id){
+
+  activeWorld.manuscript.activeChapter = id;
+
+  saveWorld();
+
+  renderManuscript();
+}
+
+function addChapter(){
+
+  const count =
+    activeWorld.manuscript.chapters.length + 1;
+
+  const chapter = {
+    id:"chapter_" + Date.now(),
+    title:"Chapter " + count,
+    body:""
+  };
+
+  activeWorld.manuscript.chapters.push(chapter);
+
+  activeWorld.manuscript.activeChapter =
+    chapter.id;
+
+  saveWorld();
+
   renderManuscript();
 }
 
 function deleteChapter(){
-  const chapters=active.manuscript.chapters;
 
-  if(chapters.length<=1){
+  const chapters =
+    activeWorld.manuscript.chapters;
+
+  if(chapters.length <= 1){
     alert("At least one chapter must remain.");
     return;
   }
 
-  if(!confirm("Delete this chapter? Export your save first if needed."))return;
+  if(!confirm("Delete current chapter?")) return;
 
-  const activeChapter=active.manuscript.activeChapter;
-  active.manuscript.chapters=chapters.filter(c=>c.id!==activeChapter);
-  active.manuscript.activeChapter=active.manuscript.chapters[0].id;
+  const current =
+    activeWorld.manuscript.activeChapter;
 
-  saveActiveWorld(true);
+  activeWorld.manuscript.chapters =
+    chapters.filter(c => c.id !== current);
+
+  activeWorld.manuscript.activeChapter =
+    activeWorld.manuscript.chapters[0].id;
+
+  saveWorld();
+
   renderManuscript();
 }
-  const chapters=active.manuscript.chapters;
-  const ch=chapters.find(c=>c.id===active.manuscript.activeChapter)||chapters[0];
 
-  document.getElementById("screen").innerHTML=`
-    <h1>Manuscript Workspace</h1>
+function updateChapterTitle(value){
 
-    <select onchange="switchChapter(this.value)">
-      ${chapters.map(c=>`<option value="${c.id}" ${c.id===ch.id?"selected":""}>${escapeHTML(c.title)}</option>`).join("")}
-    </select>
+  const chapter =
+    activeWorld.manuscript.chapters.find(
+      c => c.id === activeWorld.manuscript.activeChapter
+    );
 
-    <input value="${escapeHTML(ch.title)}" oninput="updateChapterTitle(this.value)" placeholder="Chapter title">
+  chapter.title = value;
 
-    <textarea class="manuscript" oninput="updateChapterBody(this.value)" placeholder="Begin writing...">${escapeHTML(ch.body)}</textarea>
+  saveWorld();
+}
 
-    <button onclick="addChapter()">Add Chapter</button>
-    <button class="danger" onclick="deleteChapter()">Delete Chapter</button>
-    <button onclick="exportManuscript()">Export Manuscript TXT</button>
+function updateChapterBody(value){
 
-    <div class="small">
-      Chapters: ${chapters.length} | Active: ${escapeHTML(ch.title)}
+  const chapter =
+    activeWorld.manuscript.chapters.find(
+      c => c.id === activeWorld.manuscript.activeChapter
+    );
+
+  chapter.body = value;
+
+  saveWorld();
+}
+
+function exportManuscript(){
+
+  const text =
+    activeWorld.manuscript.chapters
+      .map(ch => `${ch.title}\n\n${ch.body}`)
+      .join("\n\n---\n\n");
+
+  const blob = new Blob([text],{
+    type:"text/plain"
+  });
+
+  const a = document.createElement("a");
+
+  a.href = URL.createObjectURL(blob);
+
+  a.download =
+    activeWorld.meta.name.replace(/\s+/g,"_")
+    + "_manuscript.txt";
+
+  a.click();
+
+  URL.revokeObjectURL(a.href);
+}
+
+/* =========================================================
+   SIMPLE MODULES
+========================================================= */
+
+function renderLore(){
+  renderSimpleModule(
+    "Lore Database",
+    "lore",
+    ["title","type","body"]
+  );
+}
+
+function renderEntries(){
+  renderSimpleModule(
+    "Entry Archive",
+    "entries",
+    ["title","type","tone","body"]
+  );
+}
+
+function renderCharacters(){
+  renderSimpleModule(
+    "Character Vault",
+    "characters",
+    ["name","profile","psyche","history"]
+  );
+}
+
+function renderChronology(){
+  renderSimpleModule(
+    "Chronology Matrix",
+    "chronology",
+    ["title","marker","chapter","body"]
+  );
+}
+
+/* =========================================================
+   GENERIC MODULE
+========================================================= */
+
+function renderSimpleModule(title,key,fields){
+
+  document.getElementById("screen").innerHTML = `
+    <h1>${title}</h1>
+
+    <div class="grid">
+      ${fields.map(field => `
+        <input
+          id="field_${field}"
+          placeholder="${field}"
+        >
+      `).join("")}
+    </div>
+
+    <button onclick='addItem("${key}",${JSON.stringify(fields)})'>
+      Add Entry
+    </button>
+
+    ${
+      activeWorld[key].map((item,index)=>`
+        <div class="card">
+          <b>
+            ${escapeHTML(
+              item.title ||
+              item.name ||
+              "Untitled"
+            )}
+          </b>
+
+          <p>
+            ${escapeHTML(
+              item.body ||
+              item.profile ||
+              item.psyche ||
+              item.history ||
+              ""
+            )}
+          </p>
+
+          <button onclick='sendToManuscript("${key}",${index})'>
+            Send to Manuscript
+          </button>
+
+          <button class="danger" onclick='removeItem("${key}",${index})'>
+            Delete
+          </button>
+        </div>
+      `).join("")
+    }
+  `;
+}
+
+function addItem(key,fields){
+
+  const item = {
+    id:key + "_" + Date.now()
+  };
+
+  fields.forEach(field => {
+    item[field] =
+      document.getElementById("field_" + field).value;
+  });
+
+  activeWorld[key].push(item);
+
+  saveWorld();
+
+  showModule(currentModule);
+}
+
+function removeItem(key,index){
+
+  activeWorld[key].splice(index,1);
+
+  saveWorld();
+
+  showModule(currentModule);
+}
+
+function sendToManuscript(key,index){
+
+  const item = activeWorld[key][index];
+
+  const text =
+    "\n\n" +
+    (
+      item.body ||
+      item.profile ||
+      item.psyche ||
+      item.history ||
+      item.title ||
+      item.name ||
+      ""
+    );
+
+  const chapter =
+    activeWorld.manuscript.chapters.find(
+      c => c.id === activeWorld.manuscript.activeChapter
+    );
+
+  chapter.body += text;
+
+  saveWorld();
+
+  alert("Sent to manuscript.");
+}
+
+/* =========================================================
+   DIAGNOSTICS
+========================================================= */
+
+function renderDiagnostics(){
+
+  const alerts = [];
+
+  if(activeWorld.lore.length===0){
+    alerts.push("No lore entries created.");
+  }
+
+  if(activeWorld.characters.length===0){
+    alerts.push("No characters created.");
+  }
+
+  document.getElementById("screen").innerHTML = `
+    <h1>Diagnostics / Law Matrix</h1>
+
+    <div class="card">
+      <b>World Stability:</b>
+      ${activeWorld.worldState.stability}%
+    </div>
+
+    ${
+      alerts.length
+      ? alerts.map(a=>`
+        <div class="card alert">
+          ⚠ ${escapeHTML(a)}
+        </div>
+      `).join("")
+      : `
+        <div class="card">
+          Stable foundation.
+        </div>
+      `
+    }
+  `;
+}
+
+/* =========================================================
+   REFERENCE
+========================================================= */
+
+function renderReference(){
+
+  document.getElementById("screen").innerHTML = `
+    <h1>Global Reference Vault</h1>
+
+    <div class="card">
+      Dictionary/thesaurus integration arrives in
+      future foundation builds.
     </div>
   `;
 }
-function updateChapterTitle(v){active.manuscript.chapters.find(c=>c.id===active.manuscript.activeChapter).title=v;saveActiveWorld(true)}
-function updateChapterBody(v){active.manuscript.chapters.find(c=>c.id===active.manuscript.activeChapter).body=v;saveActiveWorld(true)}
-function addChapter(){
-  const n=active.manuscript.chapters.length+1;
-  const ch={id:"ch_"+Date.now(),title:"Chapter "+n,body:""};
-  active.manuscript.chapters.push(ch);
-  active.manuscript.activeChapter=ch.id;
-  saveActiveWorld(true);renderManuscript();
-}
-function exportManuscript(){
-  const text=active.manuscript.chapters.map(c=>`${c.title}\n\n${c.body}`).join("\n\n---\n\n");
-  const blob=new Blob([text],{type:"text/plain"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download=active.meta.name.replace(/\s+/g,"_")+"_manuscript.txt";
+
+/* =========================================================
+   EXPORT / IMPORT
+========================================================= */
+
+function extractCore(){
+
+  if(!activeWorld){
+    alert("No active world.");
+    return;
+  }
+
+  saveWorld();
+
+  const blob = new Blob(
+    [JSON.stringify(activeWorld,null,2)],
+    {type:"application/json"}
+  );
+
+  const a = document.createElement("a");
+
+  a.href = URL.createObjectURL(blob);
+
+  a.download =
+    activeWorld.meta.name.replace(/\s+/g,"_")
+    + ".oce.json";
+
   a.click();
+
   URL.revokeObjectURL(a.href);
 }
-function renderLore(){renderListModule("Lore Database","lore",["title","type","body"])}
-function renderEntries(){renderListModule("Entry Archive","entries",["title","type","tone","body"])}
-function renderCharacters(){renderListModule("Character Vault","characters",["name","profile","psyche","history"])}
-function renderChronology(){renderListModule("Chronology Matrix","chronology",["title","marker","chapter","body"])}
-function renderDiagnostics(){
-  const alerts=[];
-  if(active.lore.length===0)alerts.push("No lore entries created.");
-  if(active.characters.length===0)alerts.push("No characters created.");
-  if(active.manuscript.chapters.every(c=>!c.body.trim()))alerts.push("Manuscript is empty.");
-  document.getElementById("screen").innerHTML=`
-    <h1>Diagnostics / Law Matrix</h1>
-    <div class="card"><b>World Stability:</b> ${active.worldState.stability}%</div>
-    ${alerts.map(a=>`<div class="card alert">⚠ ${escapeHTML(a)}</div>`).join("")||'<div class="card"><b>Stable:</b> No foundation conflicts detected.</div>'}
-  `;
+
+function injectCore(event){
+
+  const file = event.target.files[0];
+
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+
+    try{
+
+      const data = JSON.parse(reader.result);
+
+      if(!data.meta || !data.meta.name){
+        throw Error("Invalid save.");
+      }
+
+      data.meta.id =
+        "oce_" + Date.now();
+
+      data.meta.updatedAt =
+        new Date().toISOString();
+
+      localStorage.setItem(
+        projectKey(data.meta.id),
+        JSON.stringify(data)
+      );
+
+      const index = getIndex();
+
+      index.push({
+        id:data.meta.id,
+        name:data.meta.name,
+        updatedAt:data.meta.updatedAt
+      });
+
+      setIndex(index);
+
+      renderWorldList();
+
+      loadWorld(data.meta.id);
+
+    }catch(err){
+
+      alert("Forge Core Inject failed.");
+
+    }
+  };
+
+  reader.readAsText(file);
 }
-function renderReference(){
-  document.getElementById("screen").innerHTML=`
-    <h1>Global Reference Vault</h1>
-    <input id="refSearch" placeholder="Search word or lore term..." oninput="searchReference(this.value)">
-    <div id="refResult" class="card">Dictionary/thesaurus file support comes later. Current base checks active world lore and entries.</div>
-  `;
+
+/* =========================================================
+   AUTOSAVE
+========================================================= */
+
+setInterval(()=>{
+  if(activeWorld){
+    saveWorld();
+  }
+},60000);
+
+window.addEventListener("beforeunload",()=>{
+  if(activeWorld){
+    saveWorld();
+  }
+});
+
+/* =========================================================
+   UTILS
+========================================================= */
+
+function escapeHTML(str){
+
+  return String(str || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
 }
-function searchReference(q){
-  const box=document.getElementById("refResult");
-  if(!q.trim()){box.textContent="Enter a term.";return}
-  const term=q.toLowerCase();
-  const hits=active?[...active.lore,...active.entries].filter(x=>JSON.stringify(x).toLowerCase().includes(term)):[];
-  box.innerHTML=hits.length?hits.map(h=>`<div class="card"><b>${escapeHTML(h.title||h.name||"Entry")}</b><br>${escapeHTML(h.body||h.profile||"")}</div>`).join(""):"No active-world match found.";
+
+/* =========================================================
+   BOOT
+========================================================= */
+
+function boot(){
+
+  renderWorldList();
+
+  const index = getIndex();
+
+  if(index[0]){
+    loadWorld(index[0].id);
+  }else{
+    welcomeScreen();
+  }
 }
-function renderListModule(title,key,fields){
-  document.getElementById("screen").innerHTML=`
-    <h1>${title}</h1>
-    <div class="grid">${fields.map(f=>`<input id="f_${f}" placeholder="${f}">`).join("")}</div>
-    <textarea id="f_body_extra" placeholder="Main text / notes"></textarea>
-    <button onclick='addItem("${key}",${JSON.stringify(fields)})'>Add Entry</button>
-    <div>${active[key].map((item,i)=>`
-      <div class="card">
-        <b>${escapeHTML(item.title||item.name||item.type||"Untitled")}</b>
-        <p>${escapeHTML(item.body||item.profile||item.psyche||item.history||"")}</p>
-        <button onclick='sendToManuscript("${key}",${i})'>Send to Manuscript</button>
-        <button class="danger" onclick='removeItem("${key}",${i})'>Delete</button>
-      </div>`).join("")}</div>
-  `;
-}
-function addItem(key,fields){
-  const obj={id:key+"_"+Date.now(),createdAt:new Date().toISOString()};
-  fields.forEach(f=>obj[f]=document.getElementById("f_"+f)?.value||"");
-  const extra=document.getElementById("f_body_extra").value;
-  if(extra&&!obj.body)obj.body=extra;
-  active[key].push(obj);
-  saveActiveWorld(true);
-  showModule(currentModule);
-}
-function removeItem(key,i){
-  active[key].splice(i,1);
-  saveActiveWorld(true);
-  showModule(currentModule);
-}
-function sendToManuscript(key,i){
-  const item=active[key][i];
-  const text="\n\n"+(item.body||item.profile||item.psyche||item.history||item.title||item.name||"");
-  const ch=active.manuscript.chapters.find(c=>c.id===active.manuscript.activeChapter);
-  ch.body+=text;
-  saveActiveWorld(true);
-  alert("Sent to manuscript.");
-}
-function escapeHTML(s){
-  return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
-}
+
 boot();
 </script>
+
 </body>
 </html>
