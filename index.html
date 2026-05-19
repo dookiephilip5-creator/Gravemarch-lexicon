@@ -496,14 +496,50 @@ function showModule(name){
   map[name]();
 }
 function renderManuscript(){
-  const ch=active.manuscript.chapters.find(c=>c.id===active.manuscript.activeChapter)||active.manuscript.chapters[0];
+  function switchChapter(id){
+  active.manuscript.activeChapter=id;
+  saveActiveWorld(true);
+  renderManuscript();
+}
+
+function deleteChapter(){
+  const chapters=active.manuscript.chapters;
+
+  if(chapters.length<=1){
+    alert("At least one chapter must remain.");
+    return;
+  }
+
+  if(!confirm("Delete this chapter? Export your save first if needed."))return;
+
+  const activeChapter=active.manuscript.activeChapter;
+  active.manuscript.chapters=chapters.filter(c=>c.id!==activeChapter);
+  active.manuscript.activeChapter=active.manuscript.chapters[0].id;
+
+  saveActiveWorld(true);
+  renderManuscript();
+}
+  const chapters=active.manuscript.chapters;
+  const ch=chapters.find(c=>c.id===active.manuscript.activeChapter)||chapters[0];
+
   document.getElementById("screen").innerHTML=`
     <h1>Manuscript Workspace</h1>
-    <input value="${escapeHTML(ch.title)}" oninput="updateChapterTitle(this.value)">
+
+    <select onchange="switchChapter(this.value)">
+      ${chapters.map(c=>`<option value="${c.id}" ${c.id===ch.id?"selected":""}>${escapeHTML(c.title)}</option>`).join("")}
+    </select>
+
+    <input value="${escapeHTML(ch.title)}" oninput="updateChapterTitle(this.value)" placeholder="Chapter title">
+
     <textarea class="manuscript" oninput="updateChapterBody(this.value)" placeholder="Begin writing...">${escapeHTML(ch.body)}</textarea>
+
     <button onclick="addChapter()">Add Chapter</button>
+    <button class="danger" onclick="deleteChapter()">Delete Chapter</button>
     <button onclick="exportManuscript()">Export Manuscript TXT</button>
-    <div class="small">Kinetic formatting base: spacing and SFX are preserved as typed.</div>
+
+    <div class="small">
+      Chapters: ${chapters.length} | Active: ${escapeHTML(ch.title)}
+    </div>
   `;
 }
 function updateChapterTitle(v){active.manuscript.chapters.find(c=>c.id===active.manuscript.activeChapter).title=v;saveActiveWorld(true)}
